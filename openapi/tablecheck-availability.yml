@@ -1,0 +1,1041 @@
+# Test and edit this file at https://editor.swagger.io/
+
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: TableCheck API - Availability V1
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+
+servers:
+
+
+
+  - url: https://api.tablecheck.com/api/availability/v1/
+    description: Production (uses live data)
+
+paths:
+  /shops:
+    get:
+      summary: Search for availability across all shops
+      operationId: listShops
+      tags:
+        - shops
+      parameters:
+        - name: pax
+          in: query
+          description: Desired number of guests for which to search for availability.
+          required: false
+          example: 2
+          schema:
+            type: number
+            format: integer
+        - name: datetime
+          in: query
+          description: Desired datetime around which to search for availability.
+          required: false
+          example: "2026-07-06T17:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: mini
+          in: query
+          description: If true, returns only availablity without including shop info.
+          required: false
+          schema:
+            type: boolean
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: slugs
+          in: query
+          description: Array or comma-separated list of specific slugs to return.
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - name: sort
+          in: query
+          description: The field by which to sort the results. Distance sort is applied only if geo parameters are present.
+          required: false
+          schema:
+            type: string
+            default: distance
+            enum:
+              - distance
+              - slug
+              - name
+              - budget_lunch
+              - budget_dinner
+        - name: sort_order
+          in: query
+          description: asc or desc.
+          required: false
+          schema:
+            default: asc
+            enum:
+              - asc
+              - desc
+            type: string
+        - name: name
+          in: query
+          description: Filter by the shop name.
+          required: false
+          schema:
+            type: string
+        - name: geo_latitude
+          in: query
+          description: The latitude of the geocode center point used to evaluate distance query.
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: geo_longitude
+          in: query
+          description: The longitude of the geocode center point used to evaluate distance query.
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: geo_distance
+          in: query
+          description: The maximum distance in meters from the geocode center point from which to return results.
+          required: false
+          schema:
+            type: number
+            format: float
+        - name: cuisines
+          in: query
+          description: Filter by a list of cuisine values (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: Filter by a list of tag values (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+        - name: seat_types
+          in: query
+          description: Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        - name: smoking
+          in: query
+          description: Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed.
+          required: false
+          schema:
+            type: string
+            enum:
+              - smoking
+              - non_smoking
+        - name: service_modes
+          in: query
+          description: Service mode selection of dining, pickup, etc. (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+            enum:
+              - dining
+              - pickup
+              - delivery
+              - voucher
+        - name: budget_lunch_min
+          in: query
+          description: Minimum of lunch budget range filter.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 0
+        - name: budget_lunch_max
+          in: query
+          description: Maximum of lunch budget range filter.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 0
+        - name: budget_dinner_min
+          in: query
+          description: Minimum of dinner budget range filter.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 0
+        - name: budget_dinner_max
+          in: query
+          description: Maximum of dinner budget range filter.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 0
+        - name: address_city
+          in: query
+          description: Filter by the shop's address city, ward, or municipality.
+          required: false
+          schema:
+            type: string
+        - name: address_region
+          in: query
+          description: Filter by the shop's address region, state, or province.
+          required: false
+          schema:
+            type: string
+        - name: address_postal_code
+          in: query
+          description: Filter by the shop's address postal code.
+          required: false
+          schema:
+            type: string
+        - name: address_country
+          in: query
+          description: Filter by the shop's address country.
+          required: false
+          schema:
+            type: string
+        - name: search_after
+          in: query
+          description: Use for pagination. Set this value to obtain the next page of results.
+          required: false
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of shops
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopsListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /shops/{shop_id}:
+    get:
+      summary: Fetch info of a specific shop. Does not include availability.
+      operationId: showShopById
+      tags:
+        - shops
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The id or slug of the shop to retrieve
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /timetable/{shop_id}:
+    get:
+      summary: Fetch availability timetable of a specific shop.
+      operationId: showTimetableByShopId
+      tags:
+        - timetable
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The id or slug of the shop timetable to retrieve
+          schema:
+            type: string
+        - name: pax
+          in: query
+          description: Desired number of guests for which to search for availability.
+          required: false
+          example: 2
+          schema:
+            type: number
+            format: integer
+        - name: datetime
+          in: query
+          description: Desired datetime around which to search for availability.
+          required: false
+          example: "2026-07-06T17:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: datetime_min
+          in: query
+          description: Lower-bound datetime for range query.
+          required: false
+          example: "2026-07-06T16:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: datetime_max
+          in: query
+          description: Upper-bound datetime for range query.
+          required: false
+          example: "2026-07-06T16:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: date
+          in: query
+          description: Desired date in which to search availability.
+          required: false
+          example: "2026-07-06"
+          schema:
+            type: string
+            format: date
+        - name: date_min
+          in: query
+          description: Lower-bound date for range query.
+          required: false
+          example: "2026-07-06"
+          schema:
+            type: string
+            format: date
+        - name: date_max
+          in: query
+          description: Upper-bound date for range query.
+          required: false
+          example: "2026-07-08"
+          schema:
+            type: string
+            format: date
+        - name: time
+          in: query
+          description: Desired time of day in which to search availability. Can be specified as time string or integer seconds.
+          required: false
+          example: '17:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: time_min
+          in: query
+          description: Lower-bound time of day for range query. Can be specified as time string or integer seconds.
+          required: false
+          example: '15:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: time_max
+          in: query
+          description: Upper-bound time of day for range query. Can be specified as time string or integer seconds.
+          required: false
+          example: '20:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: seat_types
+          in: query
+          description: Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        - name: smoking
+          in: query
+          description: Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed.
+          required: false
+          schema:
+            type: string
+            enum:
+              - smoking
+              - non_smoking
+        - name: service_category_id
+          in: query
+          required: false
+          description: The id of the service category
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimetableShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /calendar/{shop_id}:
+    get:
+      summary: Fetch availability calendar of a specific shop.
+      operationId: showCalendarByShopId
+      tags:
+        - calendar
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The id or slug of the shop calendar to retrieve
+          schema:
+            type: string
+        - name: pax
+          in: query
+          description: Desired number of guests for which to search for availability.
+          required: false
+          example: 2
+          schema:
+            type: number
+            format: integer
+        - name: datetime
+          in: query
+          description: Desired datetime around which to search for availability.
+          required: false
+          example: "2026-07-06T17:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: datetime_min
+          in: query
+          description: Lower-bound datetime for range query.
+          required: false
+          example: "2026-07-06T16:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: datetime_max
+          in: query
+          description: Upper-bound datetime for range query.
+          required: false
+          example: "2026-07-06T16:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: date
+          in: query
+          description: Desired date in which to search availability.
+          required: false
+          example: "2026-07-06"
+          schema:
+            type: string
+            format: date
+        - name: date_min
+          in: query
+          description: Lower-bound date for range query.
+          required: false
+          example: "2026-07-06"
+          schema:
+            type: string
+            format: date
+        - name: date_max
+          in: query
+          description: Upper-bound date for range query.
+          required: false
+          example: "2026-07-08"
+          schema:
+            type: string
+            format: date
+        - name: time
+          in: query
+          description: Desired time of day in which to search availability. Can be specified as time string or integer seconds.
+          required: false
+          example: '17:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: time_min
+          in: query
+          description: Lower-bound time of day for range query. Can be specified as time string or integer seconds.
+          required: false
+          example: '15:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: time_max
+          in: query
+          description: Upper-bound time of day for range query. Can be specified as time string or integer seconds.
+          required: false
+          example: '20:00'
+          schema:
+            type: string
+            format: time-of-day
+        - name: seat_types
+          in: query
+          description: Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        - name: smoking
+          in: query
+          description: Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed.
+          required: false
+          schema:
+            type: string
+            enum:
+              - smoking
+              - non_smoking
+        - name: service_category_id
+          in: query
+          required: false
+          description: The id of the service category
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /availability_tables/{shop_id}:
+    get:
+      summary: Fetch availability tables of a specific shop.
+      tags:
+        - availability
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The id or slug of the shop to retrieve
+          schema:
+            type: string
+        - name: pax
+          in: query
+          required: true
+          description: Desired number of guests for which to search for availability.
+          example: 2
+          schema:
+            type: number
+            format: integer
+        - name: datetime
+          in: query
+          required: true
+          description: Desired datetime around which to search for availability.
+          example: "2026-07-06T17:00:00.000Z"
+          schema:
+            type: string
+            format: date-time
+        - name: seat_types
+          in: query
+          description: Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)
+          required: false
+          schema:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        - name: service_category_id
+          in: query
+          required: false
+          description: The id of the service category
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AvailabilityTableShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+
+  schemas:
+    Shop:
+      required:
+        - id
+        - name_translations
+      properties: &SHOP_PROPERTIES
+        id:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        slug:
+          type: string
+          example: my-shop-slug
+        name_translations:
+          type: object
+          format: translations
+          example:
+            en: "Paris Cafe"
+            fr: "Café de Paris"
+            ja: "カフェデパリ"
+        alt_name:
+          type: string
+          example: "カフェデパリ"
+        location_name_translations:
+          type: object
+          format: translations
+          example:
+            en: "Hotel Kyoto"
+            fr: "Hôtel Kyoto"
+            ja: "ホテル京都"
+        alt_location_name:
+          type: string
+          example: "ホテルキョウト"
+        latitude:
+          type: number
+          format: float
+          example: 35.0116
+        longitude:
+          type: number
+          format: float
+          example: 135.7680
+        google_place_ref:
+          type: string
+          example: "ChIJ39ZjD-GLGGARBF5Aq0l7iPE"
+        google_place_cid:
+          description: "DEPRECATED. Use google_place_ref instead."
+          type: string
+          example: "Use-google_place_ref-instead"
+        country:
+          type: string
+          format: country
+          example: JP
+        currency:
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        phone:
+          type: string
+          format: phone-e164
+          example: "+81355650112"
+        phone_natl:
+          type: string
+          format: phone-national
+          example: "03-5565-0112"
+        homepage_url:
+          type: string
+          format: url
+          example: 'https://www.myrestaurant.com/ja'
+        homepage_url_translations:
+          type: object
+          format: translations
+          example:
+            en: 'https://www.myrestaurant.com/en'
+            ja: 'https://www.myrestaurant.com/ja'
+        tablecheck_shop_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/my-shop-slug
+        tablecheck_booking_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
+        tags:
+          type: array
+          example:
+            - outdoor
+            - quiet
+          items:
+            type: string
+        cuisines:
+          type: array
+          example:
+            - sushi
+            - tempura
+          items:
+            type: string
+        budget_lunch:
+          type: string
+          format: float
+          example: "10000.0"
+        budget_dinner:
+          type: string
+          format: float
+          example: "10000.0"
+        updated_at:
+          type: string
+          format: date-time
+        content_title_translations:
+          type: object
+          format: translations
+          description: Short catchphrase for the restaurant.
+          example:
+            en: "A truly great restuarant"
+            ja: "本当にすごいレストランです"
+        content_body_translations:
+          type: object
+          format: translations
+          description: Paragraph of content about the restaurant.
+          example:
+            en: "I love this restuarant!"
+            ja: "このレストラン大好きです！"
+        show_pax_senior:
+          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
+          type: boolean
+        show_pax_child:
+          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
+          type: boolean
+        show_pax_baby:
+          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
+          type: boolean
+        pax_senior_age_min:
+          description: The minimum age for a person to be considered a senior.
+          type: number
+          format: integer
+          example: 65
+        pax_child_age_max:
+          description: The maximum age for a person to be considered a child.
+          type: number
+          format: integer
+          example: 12
+        pax_baby_age_max:
+          description: The maximum age for a person to be considered a baby.
+          type: number
+          format: integer
+          example: 5
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            '$ref': "#/components/schemas/ServiceCategory"
+        address:
+          $ref: "#/components/schemas/Address"
+        alt_address:
+          $ref: "#/components/schemas/Address"
+        images:
+          description: List of images depicting the shop. Consistent sizing of images is not guaranteed.
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageEmbed"
+        image_url:
+          type: string
+          format: url
+          description: (Deprecated) Please use "images" field instead.
+
+    Address:
+      properties:
+        street:
+          type: string
+          example: "2-14-5 Ginza"
+        street2:
+          type: string
+          example: "Dai-27 Chuo Bldg 4F"
+        city:
+          type: string
+          example: "Chuo-ku"
+        region:
+          type: string
+          example: "Tokyo"
+        postal_code:
+          type: string
+          example: "104-0061"
+        country:
+          type: string
+          example: "JP"
+
+    ServiceCategory:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: '5e281bfa7df93f63e0000003'
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: 'This is the sushi bar at our restaurant.'
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: "#/components/schemas/ImageEmbed"
+        image_url:
+          description: (Deprecated) Please use "image" field instead.
+          type: string
+          format: url
+
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          description: The dimensions of the image as a large size JPEG.
+          type: array
+          example: [1280, 960]
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes. Note that "original" size variant may be a format other than JPEG.
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageVariant"
+        tags:
+          description: Identifier tags associated with the image.
+          type: array
+          example: [primary]
+        created_at:
+          type: string
+          format: date-time
+
+    ImageVariant:
+      properties:
+        variant:
+          type: string
+          enum: ["original","large","medium","small"]
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          type: array
+          example: [2000, 1500]
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShopAvailability"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    ShopShowResponse:
+      type: object
+      properties:
+        shop:
+          $ref: "#/components/schemas/Shop"
+
+    ShopAvailability:
+      properties:
+        availability:
+          type: array
+          example:
+            - "2018-11-10T02:30:00.000Z"
+            - "2018-11-10T02:45:00.000Z"
+            - "2018-11-10T05:30:00.000Z"
+        availability_cached_at:
+          type: string
+          format: date-time
+        <<: *SHOP_PROPERTIES
+
+    TimetableShowResponse:
+      type: object
+      properties:
+        timetable:
+          type: object
+          properties:
+            id:
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            slug:
+              type: string
+              example: my-shop-slug
+            availability:
+              type: array
+              items:
+                format: date-time
+              example:
+                - "2018-11-10T02:30:00.000Z"
+                - "2018-11-10T02:45:00.000Z"
+                - "2018-11-10T05:30:00.000Z"
+            availability_cached_at:
+              type: string
+              format: date-time
+
+    CalendarShowResponse:
+      type: object
+      properties:
+        calendar:
+          type: object
+          properties:
+            id:
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            slug:
+              type: string
+              example: my-shop-slug
+            availability:
+              type: array
+              items:
+                format: date
+              example:
+                - "2018-11-10"
+                - "2018-11-11"
+                - "2018-11-13"
+            availability_cached_at:
+              type: string
+              format: date-time
+
+    AvailabilityTableShowResponse:
+      type: object
+      properties:
+        timetable:
+          type: object
+          properties:
+            id:
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            slug:
+              type: string
+              example: my-shop-slug
+            tables:
+              type: array
+              items:
+                type: string
+                format: bson-id
+              example:
+                - 65e963e36ff2a92b0fb1fcfd
+                - 65e963756ff2a92b0fb1fcf6
+            table_combos:
+              type: array
+              items:
+                type: string
+                format: bson-id
+              example:
+                - 65e963e36ff2a92b0fb1fcfd
+                - 65e963756ff2a92b0fb1fcf6
+    PaginationData:
+      type: object
+      properties:
+        search_after:
+          description: The value to use as the search_after parameter for the next page of results.
+          type: string
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        page_count:
+          type: number
+          format: integer
+          example: 8
+        item_count:
+          type: number
+          format: integer
+          example: 742
+
+    Error:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+
+security:
+  - ApiKeyAuth: []

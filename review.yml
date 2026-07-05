@@ -1,0 +1,135 @@
+aid: tablecheck
+name: TableCheck
+review:
+  question: Does TableCheck expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-05'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Every documented TableCheck API component
+    (Availability, Web Booking, Booking, CRM, POS, Site Controller) is
+    request/response JSON REST over HTTPS under https://api.tablecheck.com/api.
+    There is no server-push transport - no WebSocket and no Server-Sent Events
+    (SSE) - documented on any TableCheck component to model. The "near real-time"
+    availability behavior of the Availability API is delivered by polling REST
+    endpoints (search, timetable, calendar), not by a streaming channel.
+findings:
+  summary: |
+    TableCheck does not publish a documented public WebSocket API. TableCheck is
+    a restaurant booking and guest-experience platform. Its public API is a
+    JSON document-based REST API served only in a Production environment at
+    https://api.tablecheck.com/api, partitioned into versioned components with
+    the path shape /<component>/<component_version>/<resource>. Authentication is
+    an API key (a secret_key) sent in the Authorization HTTP header
+    (securityScheme type apiKey, in: header, name: AUTHORIZATION). All six
+    documented components are plain HTTPS REST; each ships an OpenAPI 3.0.0
+    description reachable at .../<component>/v1/docs. No realtime, bidirectional,
+    or streaming WebSocket (ws:// or wss://) endpoint, and no SSE stream, is
+    documented anywhere in the TableCheck API space.
+  accessModel: |
+    Partner-gated. TableCheck provides only a Production API environment. One
+    secret_key per environment is issued by the TableCheck API team
+    (api@tablecheck.com) at the time API access is approved; there is no
+    self-serve key issuance or sandbox environment. The Booking API (writing
+    reservations directly into TableCheck's inventory backend) is available only
+    by special arrangement - most integrators are expected to use the read-only
+    Web Booking API plus TableCheck's hosted web booking flow instead.
+  openSource: |
+    TableCheck is an engineering-forward company with public open-source
+    presence on GitHub (github.com/tablecheck and github.com/TableCheck-Labs),
+    but the reservation/availability/CRM/POS platform APIs themselves are a
+    hosted commercial product, not an open-source or self-hostable server.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.tablecheck.com/api
+      documented: true
+      note: All six components (availability, web_booking, booking, crm, pos, site) are JSON REST over HTTPS. Production only; no sandbox.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events stream is documented on any TableCheck component.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the TableCheck API space as of the review date.
+  endpointsConfirmedRest:
+    - GET  https://api.tablecheck.com/api/availability/v1/shops
+    - GET  https://api.tablecheck.com/api/availability/v1/shops/{shop_id}
+    - GET  https://api.tablecheck.com/api/availability/v1/timetable/{shop_id}
+    - GET  https://api.tablecheck.com/api/availability/v1/calendar/{shop_id}
+    - GET  https://api.tablecheck.com/api/availability/v1/availability_tables/{shop_id}
+    - GET  https://api.tablecheck.com/api/web_booking/v1/reservations
+    - GET  https://api.tablecheck.com/api/web_booking/v1/reservations/{reservation_id_or_ref}
+    - GET    https://api.tablecheck.com/api/booking/v1/reservations
+    - POST   https://api.tablecheck.com/api/booking/v1/reservations
+    - GET    https://api.tablecheck.com/api/booking/v1/reservations/{reservation_id_or_ref}
+    - PUT    https://api.tablecheck.com/api/booking/v1/reservations/{reservation_id_or_ref}
+    - PUT    https://api.tablecheck.com/api/booking/v1/reservations/{reservation_id_or_ref}/cancel
+    - POST   https://api.tablecheck.com/api/booking/v1/blockages
+    - GET    https://api.tablecheck.com/api/booking/v1/blockages/{blockage_id}
+    - PUT    https://api.tablecheck.com/api/booking/v1/blockages/{blockage_id}
+    - DELETE https://api.tablecheck.com/api/booking/v1/blockages/{blockage_id}
+    - GET    https://api.tablecheck.com/api/booking/v1/reservation_flags
+    - GET    https://api.tablecheck.com/api/booking/v1/shops
+    - GET    https://api.tablecheck.com/api/crm/v1/customers
+    - POST   https://api.tablecheck.com/api/crm/v1/customers
+    - GET    https://api.tablecheck.com/api/crm/v1/customers/{customer_id}
+    - PUT    https://api.tablecheck.com/api/crm/v1/customers/{customer_id}
+    - DELETE https://api.tablecheck.com/api/crm/v1/customers/{customer_id}
+    - POST   https://api.tablecheck.com/api/crm/v1/customer_search
+    - GET    https://api.tablecheck.com/api/crm/v1/memberships
+    - GET    https://api.tablecheck.com/api/crm/v1/membership_programs
+    - GET    https://api.tablecheck.com/api/crm/v1/reservations
+    - GET    https://api.tablecheck.com/api/crm/v1/franchises
+    - GET    https://api.tablecheck.com/api/pos/v1/shops
+    - GET    https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/pos_journals
+    - POST   https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/pos_journals
+    - PUT    https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/pos_journals/void
+    - GET    https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/reservations
+    - GET    https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/tables
+    - POST   https://api.tablecheck.com/api/pos/v1/shops/{shop_id}/table_status/update
+    - GET    https://api.tablecheck.com/api/site/v1/shops
+    - GET    https://api.tablecheck.com/api/site/v1/shops/{shop_id}
+  endpointsModeled: false
+  endpointsModeledNote: |
+    Endpoints above are transcribed from TableCheck's own published OpenAPI 3.0
+    documents (served at .../<component>/v1/docs) and the Confluence API space,
+    not modeled. The OpenAPI files under openapi/ are TableCheck's published
+    specifications, copied verbatim (with one minimal fix: a duplicate YAML
+    anchor &ForbiddenError in the POS spec was de-duplicated so strict parsers
+    accept it; no endpoint or schema content was changed).
+sources:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API
+    type: Documentation
+    note: TableCheck API Confluence space - index of all API components.
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44630975/Getting+Started
+    type: Documentation
+    note: Production-only base https://api.tablecheck.com/api; secret_key in Authorization header; JSON REST; access approved by api@tablecheck.com.
+  - url: https://api.tablecheck.com/api/availability/v1/docs
+    type: OpenAPI
+    note: Availability V1 OpenAPI 3.0.0. All REST; no WebSocket.
+  - url: https://api.tablecheck.com/api/web_booking/v1/docs
+    type: OpenAPI
+    note: Web Booking V1 OpenAPI 3.0.0, read-only reservations. All REST.
+  - url: https://api.tablecheck.com/api/booking/v1/docs
+    type: OpenAPI
+    note: Booking V1 OpenAPI 3.0.0 - by special arrangement. All REST.
+  - url: https://api.tablecheck.com/api/crm/v1/docs
+    type: OpenAPI
+    note: CRM V1 OpenAPI 3.0.0 - customers, memberships, reservations. All REST.
+  - url: https://api.tablecheck.com/api/pos/v1/docs
+    type: OpenAPI
+    note: POS V1 OpenAPI 3.0.0 - journals, tables, table status. All REST.
+  - url: https://api.tablecheck.com/api/site/v1/docs
+    type: OpenAPI
+    note: Site Controller V1 OpenAPI 3.0.0 - shops. All REST.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket (or SSE) protocol surface exists on any TableCheck API
+    component. Every documented component is request/response JSON REST over
+    HTTPS. No AsyncAPI document was created because there is no server-push
+    transport on TableCheck's own API to model.

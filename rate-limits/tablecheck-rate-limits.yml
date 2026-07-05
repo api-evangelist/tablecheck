@@ -1,0 +1,50 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: TableCheck
+providerId: tablecheck
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: true
+tags:
+- Restaurant
+- Reservations
+- Rate Limiting
+- Quotas
+description: >-
+  TableCheck publishes a fixed API rate limit of 10,000 requests per rolling
+  5-minute period, applied independently (non-fungible) to each API component -
+  so you may send up to 10,000 requests to, for example, the Availability
+  component and a separate 10,000 to the CRM component within the same 5-minute
+  window. Exceeding the limit returns HTTP 429 Too Many Requests, and requests
+  are refused until the next 5-minute period begins. TableCheck describes the
+  limit as a hard maximum, not a service-level guarantee.
+notes: >-
+  Numbers are grounded in TableCheck's public "Rate Limits & Cutoff" API
+  documentation. TableCheck reserves the right to immediately cut off access if
+  usage threatens platform stability, notifying the integrator of re-enablement
+  steps afterward.
+sources:
+- https://tablecheck.atlassian.net/wiki/spaces/API/pages/44630975/Getting+Started
+- https://tablecheck.atlassian.net/wiki/spaces/API
+responseCodes:
+  throttled: 429
+limits:
+- name: Per-Component Request Rate
+  scope: component
+  metric: requests
+  limit: 10000 per 5 minutes
+  notes: Applied independently to each API component; limits do not pool across components.
+- name: Pagination Page Size
+  scope: request
+  metric: items
+  limit: 200 max per page (default 100)
+  notes: List endpoints accept per_page up to 200 with a default of 100, paged by a zero-based page parameter.
+policies:
+- name: Hard Cutoff
+  description: The published limit is a hard maximum, not an SLA. TableCheck may immediately suspend access if usage threatens platform stability, with re-enablement instructions to follow.
+- name: Backoff Strategy
+  description: On a 429 response, wait until the next 5-minute window and implement exponential backoff with jitter before retrying.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

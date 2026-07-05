@@ -1,0 +1,638 @@
+# Test and edit this file at https://editor.swagger.io/
+
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: TableCheck API - Site Controller V1
+  description: Add here
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+
+servers:
+
+
+
+  - url: https://api.tablecheck.com/api/site/v1/
+    description: Production (uses live data)
+
+paths:
+  /shops:
+    get:
+      summary: List all Shops
+      operationId: listShops
+      tags:
+        - shops
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: slugs
+          in: query
+          description: Array or comma-separated list of specific slugs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: franchise_ids
+          in: query
+          description: Array or comma-separated list of specific Franchise IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of Shops
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopsListResponse"
+        '403': &ForbiddenError
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+
+  /shops/{shop_id}:
+    get:
+      summary: Fetch a specific shop
+      operationId: showShopById
+      tags:
+        - shops
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The id or slug of the shop to retrieve
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Shop settings including Sheets and Tables
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopShowResponse"
+        '403': *ForbiddenError
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+
+  schemas:
+    Address:
+      properties:
+        street:
+          type: string
+          example: "2-14-5 Ginza"
+        street2:
+          type: string
+          example: "Dai-27 Chuo Bldg 4F"
+        city:
+          type: string
+          example: "Chuo-ku"
+        region:
+          type: string
+          example: "Tokyo"
+        postal_code:
+          type: string
+          example: "104-0061"
+        country:
+          type: string
+          example: "JP"
+
+    DurationRule:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the DurationRule.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e3
+        num_people:
+          description: Minimum no. of guests for which this DurationRule will be applied.
+          type: number
+          format: integer
+          example: 3
+        duration:
+          description: The default reservation duration is set to this value (in seconds).
+          type: number
+          format: integer
+          example: 7200
+        is_end_of_meal:
+          description: Extends reservation duration to end of meal.
+          type: boolean
+          example: true
+
+    TimeCutoff:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the TimeCutoff.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e4
+        month:
+          description: Number of months within/after an online reservation can be booked.
+          type: number
+          format: integer
+          example: 2
+        month_day:
+          description: Number of days used in month cutoff calculation if set.
+          type: number
+          format: integer
+          example: 15
+        month_time:
+          description: Number of seconds used in month cutoff calculation if set.
+          type: number
+          format: integer
+          example: 7200
+        day:
+          description: Number of days within/after an online reservation can be booked.
+          type: number
+          format: integer
+          example: 7
+        day_time:
+          description: Number of seconds used in day cutoff calculation if set.
+          type: number
+          format: integer
+          example: 7200
+        time:
+          description: Number of seconds within/after an online reservation can be booked.
+          type: number
+          format: integer
+          example: 7200
+
+    Turnover:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Turnover.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e4
+        start_time:
+          description: |-
+            The earliest hour of day (expressed in seconds) at which reservations may start in the turnover.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the earliest time, or round earlier to the nearest possible time.
+          type: number
+          format: integer
+          example: 72000
+        last_order_time:
+          description: |-
+            The latest hour of day (expressed in seconds) at which reservations may start in the turnover.
+            If not specified, reservations may only start exact at start_time.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the latest time, or round later to the nearest possible time.
+          type: number
+          format: integer
+          example: 75600
+        end_time:
+          description: |-
+            The latest hour of day (expressed in seconds) at which reservations may end in the turnover.
+            If not specified, there is no turnover restriction on when reservations may end.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the latest time, or round later to the nearest possible time.
+          type: number
+          format: integer
+          example: 90000
+
+    FloorPlan:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the FloorPlan.
+          type: string
+          format: bson-id
+          example: 5ca1fd6893e433ae5357ed5d
+        name:
+          description: The name of the FloorPlan (internal use only).
+          type: string
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/Section"
+        tables:
+          type: array
+          items:
+            $ref: "#/components/schemas/Table"
+        table_combos:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableCombo"
+
+    Section:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Section.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        name:
+          description: The name of the Section (internal use only).
+          type: string
+
+    Table:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Table.
+          type: string
+          format: bson-id
+          example: ea1fd65d5357ed3ac5893e43
+        section_id:
+          description: TableCheck's database ID of the Section to which the Table belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        name:
+          description: The name of the Section (internal use only).
+          type: string
+        min_pax:
+          description: Minimum number of guests which may be seated at the Table.
+          type: number
+          format: integer
+          example: 2
+        max_pax:
+          description: Maximum number of guests which may be seated at the Table.
+          type: number
+          format: integer
+          example: 4
+        is_online:
+          description: Indicates that the Table is available for online booking.
+          type: boolean
+        is_smoking:
+          description: Indicates that the Table is in a smoking-allowed area.
+          type: boolean
+        seat_type:
+          description: Seating type of the Table.
+          type: string
+          enum: ["open","counter","outside","curtain","private","tatami"]
+        position_left:
+          description: Visual horizontal (x-axis) pixel position on floor layout map.
+          type: number
+          format: integer
+          example: 240
+        position_top:
+          description: Visual vertical (y-axis) pixel position on floor layout map.
+          type: number
+          format: integer
+          example: 240
+        size:
+          description: Visual table size used for floor layout map.
+          type: string
+          enum: ["sm","md","lg"]
+        shape:
+          description: Visual table shape used for floor layout map.
+          type: string
+          enum: ["square","circle","rect"]
+        rotation:
+          description: Visual table rotation in degrees used for floor layout map.
+          type: number
+          format: integer
+          enum: [0.0,45.0,90.0,135.0]
+        turnovers:
+          description: Turnover settings which additionally constrain seating times. Overrides Sheet-level turnovers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Turnover"
+
+    TableCombo:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the TableCombo.
+          type: string
+          format: bson-id
+          example: ea1fd65d5357ed3ac5893e43
+        section_id:
+          description: TableCheck's database ID of the Section to which the TableCombo belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        table_ids:
+          description: The IDs of the Tables within the TableCombo.
+          type: array
+          items:
+            type: string
+            format: bson-id
+            example: ea1fd65d5357ed3ac5893e43
+        min_pax:
+          description: Minimum number of guests which may be seated at the TableCombo. May be different than the sum of the Tables' min pax.
+          type: number
+          format: integer
+          example: 2
+        max_pax:
+          description: Maximum number of guests which may be seated at the TableCombo. May be different than the sum of the Tables' max pax.
+          type: number
+          format: integer
+          example: 4
+        is_online:
+          description: Indicates that the TableCombo is available for online booking.
+          type: boolean
+        is_smoking:
+          description: Indicates that the TableCombo is in a smoking-allowed area.
+          type: boolean
+        seat_type:
+          description: Seating type of the TableCombo.
+          type: string
+          enum: ["open","counter","outside","curtain","private","tatami"]
+        turnovers:
+          description: Turnover settings which additionally constrain seating times. Overrides Sheet-level turnovers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Turnover"
+
+    Meal:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Meal period.
+          type: string
+          format: bson-id
+          example: ea1fd65d5357ed3ac5893e43
+        sheet_id:
+          description: TableCheck's database ID of the Sheet to which the Meal belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        date:
+           description: The date of Meal period.
+           type: string
+           format: date
+        start_at:
+          description: The start time of Meal period.
+          type: string
+          format: date-time
+        last_order_at:
+          description: The last booking time of Meal period. Reservations should not start after this time.
+          type: string
+          format: date-time
+        end_at:
+          description: The last booking time of Meal period. Reservations should not end after this time, unless the Meal period is continuous with the next Meal period.
+          type: string
+          format: date-time
+    Sheet:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Sheet.
+          type: string
+          format: bson-id
+          example: ea1fd65dac5893e435357ed3
+        name:
+          description: The name of the Sheet.
+          type: string
+          example: Weekday Dinner
+        sheet_type:
+          description: Type of sheet.
+          type: string
+          enum: ["regular","irregular","closed"]
+        days:
+          description: |
+            TableCheck's database ID of the FloorPlan to which the Sheet belongs.
+            Weekday values are "m", "tu", "w", "th", "f", "sa", "su".
+            The value "h" indicates that the Sheet applies on holidays.
+          type: string
+          enum: ["m","tu","w","th","f","sa","su","h"]
+        start_date:
+          description: Start date of the sheet.
+          type: string
+          format: date
+          example: '2021-01-01'
+        end_date:
+          description: End date of the sheet.
+          type: string
+          format: date
+          example: '2021-02-28'
+        start_time:
+          description: |-
+            The earliest hour of day (expressed in seconds) at which reservations may start in the sheet.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the earliest time, or round earlier to the nearest possible time.
+          type: number
+          format: integer
+          example: 72000
+        last_order_time:
+          description: |-
+            The latest hour of day (expressed in seconds) at which reservations may start in the sheet.
+            If not specified, reservations may only start exact at start_time.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the latest time, or round later to the nearest possible time.
+          type: number
+          format: integer
+          example: 75600
+        end_time:
+          description: |-
+            The latest hour of day (expressed in seconds) at which reservations may end in the sheet.
+            If not specified, there is no turnover restriction on when reservations may end.
+            May be a value greater than 24-hours (86400 seconds), which indicates the next day.
+            In case of Daylight Saving Time ambiguity, use the latest time, or round later to the nearest possible time.
+          type: number
+          format: integer
+          example: 90000
+        floor_plan_id:
+          description: TableCheck's database ID of the FloorPlan to which the Sheet belongs.
+          type: string
+          format: bson-id
+          example: 5357ed53aea1fd6dc5893e43
+        meal:
+          description: The meal name of the Sheet.
+          type: string
+          enum: ["all_day","breakfast","lunch","tea","dinner","night"]
+        is_online:
+          description: Indicates that the Sheet is available for online booking.
+          type: boolean
+        turnovers:
+          description: Turnover settings which additionally constrain seating times.
+          type: array
+          items:
+            $ref: "#/components/schemas/Turnover"
+        min_time_cutoff:
+          description: A rule which specifies the furthest time in advance a reservation may be booked. Overrides Shop-level setting if specified.
+          $ref: "#/components/schemas/TimeCutoff"
+        max_time_cutoff:
+          description: A rule which specifies the closest time a reservation may be booked. Overrides Shop-level setting if specified.
+          $ref: "#/components/schemas/TimeCutoff"
+        duration_rules:
+          description: Rules which specify duration of reservation based on pax. Overrides Shop-level DurationRules if specified.
+          type: array
+          items:
+            $ref: "#/components/schemas/DurationRule"
+
+    ShopMini:
+      type: object
+      properties: &ShopMiniParams
+        id:
+          description: TableCheck's database ID of the Shop.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        slug:
+          description: TableCheck's web ID of Shop.
+          type: string
+          example: my-own-shop
+        name_translations:
+          type: object
+          format: translations
+          example:
+            en: "Paris Cafe"
+            fr: "Café de Paris"
+            ja: "カフェデパリ"
+        latitude:
+          type: number
+          format: float
+          example: 35.0116
+        longitude:
+          type: number
+          format: float
+          example: 135.7680
+        country:
+          type: string
+          format: country
+          example: JP
+        currency:
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+
+    Shop:
+      type: object
+      properties:
+        <<: *ShopMiniParams
+        min_pax:
+          description: Minimum number of guests required for making online reservations.
+          type: number
+          format: integer
+          example: 1
+        max_pax:
+          description: Maximum number of guests allowed when making online reservations.
+          type: number
+          format: integer
+          example: 25
+        time_interval:
+          description: Time interval for list of reservable times for online reservations in seconds. Default is 15 minutes.
+          type: number
+          format: integer
+          example: 900
+        reservation_buffer:
+          description: Buffer time in seconds before next online reservation can start on a table.
+          type: number
+          format: integer
+          example: 900
+        address:
+          $ref: "#/components/schemas/Address"
+        min_time_cutoff:
+          description: A rule which specifies the furthest time in advance a reservation may be booked.
+          $ref: "#/components/schemas/TimeCutoff"
+        max_time_cutoff:
+          description: A rule which specifies the closest time a reservation may be booked.
+          $ref: "#/components/schemas/TimeCutoff"
+        duration_rules:
+          description: Rules which specify duration of reservation based on pax.
+          type: array
+          items:
+            $ref: "#/components/schemas/DurationRule"
+        meals:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meal"
+        sheets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sheet"
+        floor_plans:
+          type: array
+          items:
+            $ref: "#/components/schemas/FloorPlan"
+
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShopMini"
+
+    ShopShowResponse:
+      type: object
+      properties:
+        shop:
+          $ref: "#/components/schemas/Shop"
+
+    ForbiddenError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+
+security:
+  - ApiKeyAuth: []

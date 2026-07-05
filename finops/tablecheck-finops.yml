@@ -1,0 +1,94 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: TableCheck
+providerId: tablecheck
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Restaurant
+- Reservations
+- Hospitality
+- SaaS
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of TableCheck spend. TableCheck is a per-location SaaS platform,
+  not a usage-metered API product: the dominant cost is a per-venue
+  subscription quoted by TableCheck sales, plus any enterprise/group agreement.
+  Direct online reservations taken through TableCheck's own booking widget are
+  commission-free, so unlike cover-fee marketplaces there is generally no
+  per-cover charge on first-party bookings. API access (Availability, Web
+  Booking, Booking, CRM, POS, Site Controller) is partner-gated and enabled for
+  platform customers/partners rather than billed as a separate line item; there
+  is no public per-request API price. Rate limiting (10,000 requests / 5 min per
+  component) is a stability control, not a metered charge.
+notes: >-
+  No public per-unit or per-location rates are available; figures are quoted by
+  TableCheck sales. Treat the billing model below as structural (subscription +
+  commission-free direct bookings + enterprise), not as reconciled pricing.
+sources:
+- https://www.tablecheck.com/en/join/
+- https://tablecheck.atlassian.net/wiki/spaces/API
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: TableCheck
+serviceCategory: Restaurant Reservation and Guest Management
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: TableCheck for Restaurants
+  ServiceCategory: Restaurant Reservation and Guest Management
+  ProviderName: TableCheck
+  PublisherName: TableCheck
+  InvoiceIssuerName: TableCheck
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: location_subscription
+  description: Per-venue platform subscription; the primary TableCheck charge, quoted per location.
+  unit: locations
+  aggregation: sum
+  dimensions:
+  - account
+  - location
+- name: direct_reservations
+  description: Reservations booked via TableCheck's own widget; commission-free (tracked for value, not billed per cover).
+  unit: covers
+  aggregation: sum
+  dimensions:
+  - account
+  - location
+- name: api_requests
+  description: Partner API requests across components; rate-limited (10k / 5 min per component) but not metered for billing.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - component
+principles:
+- name: Visibility
+  description: Track spend per location and per brand; monitor which venues use API integrations (POS, CRM, Availability) so subscription cost maps to usage.
+- name: Allocation
+  description: Map each per-location subscription to the owning venue, brand, or franchise cost center.
+- name: Optimization
+  description: Favor commission-free direct bookings through TableCheck's own widget over cover-fee marketplaces; consolidate group locations under an enterprise agreement to negotiate per-location rates.
+- name: Accountability
+  description: Assign an owner per location/brand and review subscription spend against booking volume and covers seated each billing period.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

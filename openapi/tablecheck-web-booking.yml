@@ -1,0 +1,568 @@
+# Test and edit this file at https://editor.swagger.io/
+
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: TableCheck API - Web Booking V1
+  description: The Web Booking API allows you to query reservations which your diner users booked via the TableCheck website.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+
+servers:
+
+
+
+  - url: https://api.tablecheck.com/api/web_booking/v1/
+    description: Production (uses live data)
+
+paths:
+  /reservations:
+    get:
+      summary: List all Reservations
+      operationId: listReservations
+      tags:
+        - reservations
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific reservation IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        - name: shop_ids
+          in: query
+          description: Array or comma-separated list of shop IDs to filter reservations.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: start_at_min
+          in: query
+          description: Search lower bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: start_at_max
+          in: query
+          description: Search upper bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 200
+        - name: sort
+          in: query
+          description: The field by which to sort the results.
+          required: false
+          schema:
+            type: string
+            default: start_at
+            enum: ["created_at","updated_at","start_at"]
+        - name: sort_order
+          in: query
+          description: The direction to sort the results (asc or desc.)
+          required: false
+          schema:
+            default: asc
+            enum: ["asc","desc"]
+            type: string
+        - name: customer_ids
+          in: query
+          description: Array or comma-separated list of customer IDs to filter reservations.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: f2ab06ff5d03d98e316513e1
+        - name: service_category_ids
+          in: query
+          description: Array or comma-separated list of service category IDs to filter reservations.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: 6513e1b06ff2a98e31f5d03d
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of reservations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationsListResponse"
+        '400': &BadRequest
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403': &ForbiddenError
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '422': &UnprocessableEntityError
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/UnprocessableEntityError"
+
+  /reservations/{reservation_id_or_ref}:
+    get:
+      summary: Fetch a specific Reservation
+      operationId: showReservationById
+      tags:
+        - reservations
+      parameters:
+        - name: reservation_id_or_ref
+          in: path
+          required: true
+          description: The ID or ref of the Reservation to retrieve
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: The specified Reservation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationShowResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': &NotFoundError
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+        '422': *UnprocessableEntityError
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+
+  schemas:
+    Reservation:
+      type: object
+      required:
+        - start_at
+        - pax
+        - last_name
+        - locale
+        - phone
+      properties:
+        id:
+          description: TableCheck's database ID of the Reservation.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        ref:
+          description: The Reservation ID according to your system.
+          type: string
+          example: AbC123DeF
+        code:
+          description: TableCheck's short code for the Reservation. May be displayed to user.
+          type: string
+          example: ABC123
+        url:
+          description: TableCheck's short URL to manage the Reservation. May be displayed to user.
+          type: string
+          format: url
+          example: https://tblc.hk/rABC123
+        created_at:
+          description: The timestamp of when the Reservation was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the Reservation was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        shop_slug:
+          description: TableCheck's web ID of Shop to which the Reservation belongs.
+          type: string
+          example: my-shop-slug
+        shop_id:
+          description: The ID of Shop to which the Reservation belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        start_at:
+          description: The time at which the party wishes to arrive for the Reservation. Must match the Blockage start_at value.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        pax:
+          description: The party size of the Reservation. Must match the Blockage pax value.
+          type: number
+          format: integer
+          example: 3
+        memo:
+          description: Free-text memo which may include payment info, special requests, allergies, etc.
+          type: string
+        customer_ref:
+          description: Your identifier for the Customer, which you may set via the URL parameter "customer_ref" when linking to the booking form. This field will be null if you do not set "customer_ref" in the URL.
+          type: string
+        first_name:
+          description: The Customer's given name. Preferred to be in English.
+          type: string
+        last_name:
+          description: The Customer's family name. Preferred to be in English.
+          type: string
+        alt_first_name:
+          description: An alternate given name for the Customer, e.g. in Chinese characters.
+          type: string
+        alt_last_name:
+          description: An alternate family name for the Customer, e.g. in Chinese characters.
+          type: string
+        gender:
+          description: The Customer's gender.
+          type: string
+          enum: ["male","female"]
+        locale:
+          description: The language in which Customer should receive messages.
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        email:
+          description: The Customer's email address.
+          type: string
+          format: email
+        phone:
+          description: The Customer's phone number, which may be either a landline or mobile number.
+          type: string
+          format: phone-e164
+          example: '+81312345678'
+        sms_number:
+          description: The Customer's mobile phone number for SMS notifications.
+          type: string
+          format: phone-e164
+          example: '+818012345678'
+        enable_sms:
+          description: Indicates whether the Customer would like to receive SMS notifications for this reservation. Default false.
+          type: boolean
+        allow_marketing:
+          description: Indicates whether the restaurant is allowed to do direct marketing to the Customer's email or phone. Default false.
+          type: boolean
+        customer_id:
+          description: TableCheck's database ID of the Customer.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        status:
+          description: The status of the Reservation.
+          type: string
+          enum: ["tentative","pending","request","accepted","confirmed","attended","cancelled","noshow","rejected","iou_prepay","iou_auth"]
+        cancel_reason_type:
+          description: The enumerated reason for cancellation.
+          type: string
+          enum: ["mistake","shop","travel","deal","delay","personal","covid","other"]
+        cancel_reason:
+          description: Free-text reason for cancellation.
+          type: string
+          example: 'Cancelled due to weather'
+        cancel_policy_html:
+          description: HTML representation of the venue's cancellation policy, including any applicable cancel fee rules.
+          type: string
+          format: html
+        is_tablecheck:
+          description: Indicates whether the reservation was booked through via the TableCheck online booking page.
+          type: boolean
+        can_cancel:
+          description: Indicates whether the end user should be allowed to cancel the reservation.
+          type: boolean
+        can_amend:
+          description: Indicates whether the end user should be allowed to amend the reservation.
+          type: boolean
+        can_confirm:
+          description: Indicates whether the end user should be allowed to set the reservation status to "confirmed".
+          type: boolean
+        # booking_fee_amt:
+        #   description: Special charge collected by TableCheck which is separate from all other payment amounts. It is not reflected in payment_total_amt, grand_total_amt or other fields.
+        #   type: string
+        #   format: amt
+        allow_provider_marketing:
+          description: Whether the diner has opted-in to receive the provider's (i.e. your) marketing mails.
+          type: boolean
+        currency:
+          description: The ISO currency code of the reservation's payment transactions.
+          type: string
+          format: currency
+        payment_type:
+          description: The type of payment action.
+          type: string
+          enum: ['prepay', 'auth', 'store', 'none']
+        payment_group_fee_amt:
+          description: The table charge (per-group fee) used for payment, if applicable.
+          type: string
+          format: amt
+        payment_pax_fee_amt:
+          description: The cover charge (per-pax fee) used for payment, if applicable.
+          type: string
+          format: amt
+        payment_subtotal_amt:
+          description: The subtotal for online payment, which includes order amounts, per-group fee, and per-pax fee. It does not include discount, service fee, delivery fee or tax.
+          type: string
+          format: amt
+        payment_discount_amt:
+          description: The discount amount applicable to online payment, e.g. from an applied promo code.
+          type: string
+          format: amt
+        payment_service_fee_amt:
+          description: The service fee applicable to online payment.
+          type: string
+          format: amt
+        payment_total_amt:
+          description: The final total amount to be charged as an online payment. If this amount is zero, then there is no payment to be charged.
+          type: string
+          format: amt
+        payment_tax_amt:
+          description: The tax fee applicable to online payment.
+          type: string
+          format: amt
+        cash_subtotal_amt:
+          description: The portion of the order total which is due at the venue.
+          type: string
+          format: amt
+        cash_discount_amt:
+          description: The discount amount applicable to the amount due at the venue, e.g. from an applied promo code.
+          type: string
+          format: amt
+        cash_service_fee_amt:
+          description: The service fee applicable to the amount due at the venue.
+          type: string
+          format: amt
+        cash_tax_amt:
+          description: The tax applicable to the amount due at the venue.
+          type: string
+          format: amt
+        cash_total_amt:
+          description: The final amount due at the venue, i.e. not to be charged by online payment.
+          type: string
+          format: amt
+        grand_total_amt:
+          description: The sum of cash_total_amt and payment_total_amt, which represents the total monetary amount for the booking.
+          type: string
+          format: amt
+        orders:
+          description: The ordered items in the reservation.
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservationOrder"
+
+    ReservationOrder:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Order.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        menu_item_name_translations:
+          description: An array of translation strings of the menu item name.
+          type: array
+          items:
+            type: object
+          example:
+            en: Sushi
+            ja: 寿司
+        price:
+          description: The price of a single menu item within the order.
+          type: string
+          format: decimal
+        qty:
+          description: The quantity of the Order, i.e. the number of menu item to purchase.
+          type: number
+          format: integer
+
+    ReservationsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reservation"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    ReservationShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Reservation"
+
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        # page_count:
+        #   type: number
+        #   format: integer
+        #   example: 8
+        # item_count:
+        #   type: number
+        #   format: integer
+        #   example: 742
+
+    BadRequestError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+
+    ForbiddenError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+
+    NotFoundError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+
+    UnprocessableEntityError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+
+security:
+  - ApiKeyAuth: []

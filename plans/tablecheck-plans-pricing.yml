@@ -1,0 +1,101 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: TableCheck
+providerId: tablecheck
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Restaurant
+- Reservations
+- Hospitality
+- SaaS
+- Plans
+description: >-
+  TableCheck is sold as a per-venue SaaS platform to restaurants and hospitality
+  operators; it does not publish public, self-serve pricing. Plans, tiers, and
+  per-location rates are quoted by TableCheck sales on request
+  (sales-support@tablecheck.com). Online reservations taken through TableCheck's
+  own booking widget are marketed as commission-free ("free online reservations"),
+  which differentiates TableCheck from cover-fee marketplaces; paid subscription
+  covers the management platform (dashboard, guest CRM, SMS/notifications, POS
+  integration, reporting). API access is not a separate priced product - it is
+  partner-gated and enabled on approval for platform customers and integration
+  partners. Exact figures below are NOT reconciled and must be confirmed with
+  TableCheck sales.
+notes: >-
+  No public price list exists; the tiers below are modeled placeholders to
+  capture TableCheck's structure (per-location subscription + commission-free
+  direct bookings + custom/enterprise), not quoted prices. Reconcile against a
+  TableCheck sales quote before treating any figure as authoritative.
+sources:
+- https://www.tablecheck.com/en/join/
+- https://www.tablecheck.com/en/join/features/boost-bookings/
+- https://tablecheck.atlassian.net/wiki/spaces/API
+plans:
+- id: tablecheck-restaurant
+  name: TableCheck for Restaurants (Per Location)
+  type: paid
+  description: >-
+    Per-venue subscription to the TableCheck reservation and guest-experience
+    platform: reservation dashboard, availability, guest CRM/database, SMS and
+    email notifications, POS integration, and reporting. Direct online
+    reservations through TableCheck's booking widget are commission-free. Price
+    is quoted per location by TableCheck sales.
+  entries:
+  - label: Per-Location Subscription
+    name: per_location_subscription
+    type: flat
+    metric: location
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per venue; not publicly listed)
+    userMultiplied: true
+  - label: Direct Online Reservations
+    name: direct_online_reservations
+    type: usage
+    metric: covers
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: commission-free for bookings via TableCheck's own widget
+    userMultiplied: false
+  elements:
+  - name: Reservation Dashboard
+  - name: Availability Management
+  - name: Guest CRM and Database
+  - name: SMS and Email Notifications
+  - name: POS Integration
+  - name: Reporting and Analytics
+- id: tablecheck-enterprise
+  name: Enterprise / Group
+  type: enterprise
+  description: >-
+    Custom agreement for restaurant groups, hotels, and multi-location or
+    multi-brand operators - white-label branding, group-wide guest data,
+    dedicated support, and negotiated per-location terms. Includes partner API
+    access (Availability, Web Booking, Booking, CRM, POS, Site Controller) under
+    a secret_key issued by the TableCheck API team.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: White-Label Branding
+  - name: Multi-Location Management
+  - name: Partner API Access
+  - name: Dedicated Support and SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

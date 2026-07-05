@@ -1,0 +1,192 @@
+aid: tablecheck
+url: https://raw.githubusercontent.com/api-evangelist/tablecheck/refs/heads/main/apis.yml
+name: TableCheck
+kind: company
+description: TableCheck is a restaurant booking and guest-experience platform (founded
+  2011, headquartered in Tokyo, Japan) used by thousands of restaurants across 35+
+  countries to consolidate reservations, availability, guest CRM, memberships, and
+  POS integration into one system. TableCheck exposes a production JSON/REST API,
+  partitioned into components - Availability, Web Booking, Booking, CRM, POS, and
+  Site Controller - under https://api.tablecheck.com/api. Access is partner-gated,
+  and a per-environment secret_key is issued by the TableCheck API team on approval, while
+  some components (notably the direct Booking API) are available only by special
+  arrangement. Each component publishes an OpenAPI 3.0 description.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Restaurant
+- Reservations
+- Booking
+- Hospitality
+- Availability
+- Guest CRM
+- Point of Sale
+- Japan
+created: '2026-07-05'
+modified: '2026-07-05'
+specificationVersion: '0.19'
+apis:
+- aid: tablecheck:tablecheck-availability-api
+  name: TableCheck Availability API
+  tags:
+  - Availability
+  - Shops
+  - Timetable
+  - Reservations
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/availability/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-availability.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Obtain near real-time table availability for online reservation booking.
+    Search availability across all shops for a party size and datetime, fetch a shop's
+    availability timetable and calendar, and list bookable tables for a specific shop.
+- aid: tablecheck:tablecheck-web-booking-api
+  name: TableCheck Web Booking API
+  tags:
+  - Web Booking
+  - Reservations
+  - Read Only
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  baseURL: https://api.tablecheck.com/api/web_booking/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/web_booking/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-web-booking.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Read-only API to query reservations that diner users booked via the
+    TableCheck website. List reservations with created_at, updated_at, and start_at
+    range filters, and fetch a specific reservation by ID or ref. Bookings themselves
+    are made by linking users into TableCheck's hosted web flow.
+- aid: tablecheck:tablecheck-booking-api
+  name: TableCheck Booking API
+  tags:
+  - Booking
+  - Reservations
+  - Blockages
+  - Shops
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  baseURL: https://api.tablecheck.com/api/booking/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/booking/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-booking.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Book reservations directly into TableCheck's inventory backend. Create,
+    read, update, and cancel reservations; manage blockages and reservation flags;
+    and list shops. Available by special arrangement with TableCheck - in most cases
+    the Web Booking API is used instead.
+- aid: tablecheck:tablecheck-crm-api
+  name: TableCheck CRM API
+  tags:
+  - CRM
+  - Customers
+  - Memberships
+  - Guests
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  baseURL: https://api.tablecheck.com/api/crm/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/crm/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-crm.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Obtain full customer, reservation, membership, and related guest data
+    for restaurant operators. Manage customers (list, create, amend, delete, bulk
+    search/export), memberships and membership programs, reservations and reservation
+    flags, plus shops and franchises.
+- aid: tablecheck:tablecheck-pos-api
+  name: TableCheck POS API
+  tags:
+  - Point of Sale
+  - POS Journals
+  - Tables
+  - Reservations
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  baseURL: https://api.tablecheck.com/api/pos/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/pos/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-pos.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Connect Point-of-Sale systems to restaurants on the TableCheck platform.
+    List shops, manage POS journals per shop (create, read, update, delete, void),
+    read and update reservations, list tables, and read and update table status.
+- aid: tablecheck:tablecheck-site-controller-api
+  name: TableCheck Site Controller API
+  tags:
+  - Site Controller
+  - Shops
+  - Channel Manager
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  baseURL: https://api.tablecheck.com/api/site/v1
+  properties:
+  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+    type: Documentation
+  - url: https://api.tablecheck.com/api/site/v1/docs
+    type: APIReference
+  - url: openapi/tablecheck-site-controller.yml
+    type: OpenAPI
+  - url: collections/tablecheck.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tablecheck.opencollection.json
+    type: OpenCollection
+  description: Site-controller component for reading shop inventory across the platform.
+    List shops (filtered by IDs, slugs, or franchise IDs) and fetch a specific shop,
+    for channel-manager and site-integration use cases.
+common:
+- type: GitHubOrganization
+  url: https://github.com/tablecheck
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tablecheck
+- type: Website
+  url: https://www.tablecheck.com
+- type: Documentation
+  url: https://tablecheck.atlassian.net/wiki/spaces/API
+- type: Plans
+  url: plans/tablecheck-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/tablecheck-rate-limits.yml
+- type: FinOps
+  url: finops/tablecheck-finops.yml
+- url: https://www.tablecheck.com/en/blog/
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

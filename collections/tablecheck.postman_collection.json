@@ -1,0 +1,1545 @@
+{
+  "info": {
+    "name": "TableCheck API",
+    "description": "TableCheck restaurant booking and guest-management platform API. Production-only JSON REST under https://api.tablecheck.com/api, partitioned into components (Availability, Web Booking, Booking, CRM, POS, Site Controller). Partner-gated: set your secret_key in the Authorization header. Requests generated from TableCheck's published OpenAPI 3.0 documents.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{secret_key}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "secret_key",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Availability",
+      "item": [
+        {
+          "name": "Search for availability across all shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/availability/v1/shops",
+              "host": [
+                "https://api.tablecheck.com/api/availability/v1"
+              ],
+              "path": [
+                "shops"
+              ]
+            },
+            "description": "Search for availability across all shops"
+          }
+        },
+        {
+          "name": "Fetch info of a specific shop. Does not include availability.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/availability/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch info of a specific shop. Does not include availability."
+          }
+        },
+        {
+          "name": "Fetch availability timetable of a specific shop.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/availability/v1/timetable/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/availability/v1"
+              ],
+              "path": [
+                "timetable",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch availability timetable of a specific shop."
+          }
+        },
+        {
+          "name": "Fetch availability calendar of a specific shop.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/availability/v1/calendar/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/availability/v1"
+              ],
+              "path": [
+                "calendar",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch availability calendar of a specific shop."
+          }
+        },
+        {
+          "name": "Fetch availability tables of a specific shop.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/availability/v1/availability_tables/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/availability/v1"
+              ],
+              "path": [
+                "availability_tables",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch availability tables of a specific shop."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Web Booking",
+      "item": [
+        {
+          "name": "List all Reservations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/web_booking/v1/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/web_booking/v1"
+              ],
+              "path": [
+                "reservations"
+              ]
+            },
+            "description": "List all Reservations"
+          }
+        },
+        {
+          "name": "Fetch a specific Reservation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/web_booking/v1/reservations/:reservation_id_or_ref",
+              "host": [
+                "https://api.tablecheck.com/api/web_booking/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id_or_ref"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id_or_ref",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Reservation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Create Blockage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/blockages",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "blockages"
+              ]
+            },
+            "description": "Create Blockage",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Fetch a specific Blockage",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/blockages/:blockage_id",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "blockages",
+                ":blockage_id"
+              ],
+              "variable": [
+                {
+                  "key": "blockage_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Blockage"
+          }
+        },
+        {
+          "name": "Update Blockage",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/blockages/:blockage_id",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "blockages",
+                ":blockage_id"
+              ],
+              "variable": [
+                {
+                  "key": "blockage_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Blockage",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Delete Blockage",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/blockages/:blockage_id",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "blockages",
+                ":blockage_id"
+              ],
+              "variable": [
+                {
+                  "key": "blockage_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Delete Blockage"
+          }
+        },
+        {
+          "name": "List all Reservations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservations"
+              ]
+            },
+            "description": "List all Reservations"
+          }
+        },
+        {
+          "name": "Create Reservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservations"
+              ]
+            },
+            "description": "Create Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Fetch a specific Reservation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservations/:reservation_id_or_ref",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id_or_ref"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id_or_ref",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Reservation"
+          }
+        },
+        {
+          "name": "Update Reservation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservations/:reservation_id_or_ref",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id_or_ref"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id_or_ref",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Reservation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservations/:reservation_id_or_ref/cancel",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id_or_ref",
+                "cancel"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id_or_ref",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Cancel Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "List all Reservation Flags",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservation_flags",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservation_flags"
+              ]
+            },
+            "description": "List all Reservation Flags"
+          }
+        },
+        {
+          "name": "Fetch a specific Reservation Flag",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/reservation_flags/:reservation_flag_id",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "reservation_flags",
+                ":reservation_flag_id"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_flag_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Reservation Flag"
+          }
+        },
+        {
+          "name": "List all shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/shops",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "shops"
+              ]
+            },
+            "description": "List all shops"
+          }
+        },
+        {
+          "name": "Fetch a specific shop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/booking/v1/shops/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/booking/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific shop"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CRM",
+      "item": [
+        {
+          "name": "List all Reservations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservations"
+              ]
+            },
+            "description": "List all Reservations"
+          }
+        },
+        {
+          "name": "Create Reservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservations"
+              ]
+            },
+            "description": "Create Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Fetch a specific Reservation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservations/:reservation_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Reservation"
+          }
+        },
+        {
+          "name": "Update Reservation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservations/:reservation_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservations",
+                ":reservation_id"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "List all Reservation Flags",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservation_flags",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservation_flags"
+              ]
+            },
+            "description": "List all Reservation Flags"
+          }
+        },
+        {
+          "name": "Fetch a specific Reservation Flag",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/reservation_flags/:reservation_flag_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "reservation_flags",
+                ":reservation_flag_id"
+              ],
+              "variable": [
+                {
+                  "key": "reservation_flag_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Reservation Flag"
+          }
+        },
+        {
+          "name": "List all Memberships",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/memberships",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "memberships"
+              ]
+            },
+            "description": "List all Memberships"
+          }
+        },
+        {
+          "name": "Create Membership",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/memberships",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "memberships"
+              ]
+            },
+            "description": "Create Membership",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Fetch a specific Membership",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/memberships/:membership_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "variable": [
+                {
+                  "key": "membership_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Membership"
+          }
+        },
+        {
+          "name": "Update Membership",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/memberships/:membership_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "variable": [
+                {
+                  "key": "membership_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Membership",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Destroy the membership",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/memberships/:membership_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "variable": [
+                {
+                  "key": "membership_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Destroy the membership"
+          }
+        },
+        {
+          "name": "List all Membership Programs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/membership_programs",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "membership_programs"
+              ]
+            },
+            "description": "List all Membership Programs"
+          }
+        },
+        {
+          "name": "Fetch a specific Membership Program",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/membership_programs/:membership_program_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "membership_programs",
+                ":membership_program_id"
+              ],
+              "variable": [
+                {
+                  "key": "membership_program_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Membership Program"
+          }
+        },
+        {
+          "name": "List all Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customers",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customers"
+              ]
+            },
+            "description": "List all Customers"
+          }
+        },
+        {
+          "name": "Create a new customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customers",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customers"
+              ]
+            },
+            "description": "Create a new customer",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Fetch a specific Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customers/:customer_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "variable": [
+                {
+                  "key": "customer_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Customer"
+          }
+        },
+        {
+          "name": "Amend the Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customers/:customer_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "variable": [
+                {
+                  "key": "customer_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Amend the Customer",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Destroy the customer",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customers/:customer_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "variable": [
+                {
+                  "key": "customer_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Destroy the customer"
+          }
+        },
+        {
+          "name": "Search and bulk export customers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/customer_search",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "customer_search"
+              ]
+            },
+            "description": "Search and bulk export customers",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "List all Shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/shops",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "shops"
+              ]
+            },
+            "description": "List all Shops"
+          }
+        },
+        {
+          "name": "Fetch a specific Shop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/shops/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Shop"
+          }
+        },
+        {
+          "name": "List all Franchises",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/franchises",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "franchises"
+              ]
+            },
+            "description": "List all Franchises"
+          }
+        },
+        {
+          "name": "Fetch a specific Franchise",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/crm/v1/franchises/:franchise_id",
+              "host": [
+                "https://api.tablecheck.com/api/crm/v1"
+              ],
+              "path": [
+                "franchises",
+                ":franchise_id"
+              ],
+              "variable": [
+                {
+                  "key": "franchise_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific Franchise"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POS",
+      "item": [
+        {
+          "name": "List of all available shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops"
+              ]
+            },
+            "description": "List of all available shops"
+          }
+        },
+        {
+          "name": "Get Shop information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Get Shop information"
+          }
+        },
+        {
+          "name": "List all PosJournals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "List all PosJournals"
+          }
+        },
+        {
+          "name": "Create PosJournal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Create PosJournal",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Get PosJournal information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                },
+                {
+                  "key": "pos_journal_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Get PosJournal information"
+          }
+        },
+        {
+          "name": "Update PosJournal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                },
+                {
+                  "key": "pos_journal_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update PosJournal",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Delete PosJournal",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                },
+                {
+                  "key": "pos_journal_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Delete PosJournal"
+          }
+        },
+        {
+          "name": "Void PosJournal (Check Void)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/pos_journals/void",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                "void"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Void PosJournal (Check Void)",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "List all Reservations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/reservations",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "reservations"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "List all Reservations"
+          }
+        },
+        {
+          "name": "Get Reservation information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/reservations/:reservation_id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "reservations",
+                ":reservation_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                },
+                {
+                  "key": "reservation_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Get Reservation information"
+          }
+        },
+        {
+          "name": "Update Reservation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/reservations/:reservation_id",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "reservations",
+                ":reservation_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                },
+                {
+                  "key": "reservation_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Reservation",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "List all Tables",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/tables",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "tables"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "List all Tables"
+          }
+        },
+        {
+          "name": "Get Table Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/table_status/show",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "table_status",
+                "show"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Get Table Status",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Update Table Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/pos/v1/shops/:shop_id/table_status/update",
+              "host": [
+                "https://api.tablecheck.com/api/pos/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id",
+                "table_status",
+                "update"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Update Table Status",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Site Controller",
+      "item": [
+        {
+          "name": "List all Shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/site/v1/shops",
+              "host": [
+                "https://api.tablecheck.com/api/site/v1"
+              ],
+              "path": [
+                "shops"
+              ]
+            },
+            "description": "List all Shops"
+          }
+        },
+        {
+          "name": "Fetch a specific shop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tablecheck.com/api/site/v1/shops/:shop_id",
+              "host": [
+                "https://api.tablecheck.com/api/site/v1"
+              ],
+              "path": [
+                "shops",
+                ":shop_id"
+              ],
+              "variable": [
+                {
+                  "key": "shop_id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Fetch a specific shop"
+          }
+        }
+      ]
+    }
+  ]
+}

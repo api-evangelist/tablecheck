@@ -1,0 +1,3907 @@
+# Test and edit this file at https://editor.swagger.io/
+
+openapi: 3.0.0
+
+info:
+  version: 1.0.2
+  title: TableCheck API - CRM V1
+  description: The CRM API is used by restaurant operators to obtain full customer, reservation, membership, and other related data from the TableSolution system.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+
+servers:
+
+
+
+  - url: https://api.tablecheck.com/api/crm/v1/
+    description: Production (uses live data)
+
+paths:
+  /reservations:
+    get:
+      summary: List all Reservations
+      operationId: listReservations
+      tags:
+        - reservations
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: start_at_min
+          in: query
+          description: Search lower bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: start_at_max
+          in: query
+          description: Search upper bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: sort
+          in: query
+          description: The field by which to sort the results.
+          required: false
+          schema:
+            type: string
+            default: start_at
+            enum:
+              - start_at
+              - created_at
+              - updated_at
+        - name: sort_order
+          in: query
+          description: The direction to sort the results (asc or desc.)
+          required: false
+          schema:
+            default: asc
+            enum:
+              - asc
+              - desc
+            type: string
+        - name: customer_ids
+          in: query
+          description: Array or comma-separated list of customer IDs to filter reservations.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: f2ab06ff5d03d98e316513e1
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of reservations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationsListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create Reservation
+      operationId: createReservation
+      tags:
+        - reservations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/ReservationCreateParams"
+      responses:
+        '200':
+          description: The Reservation which was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationShowResponse"
+        '400': &BadRequest
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403': &ForbiddenError
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '422': &UnprocessableEntityError
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/UnprocessableEntityError"
+
+  /reservations/{reservation_id}:
+    get:
+      summary: Fetch a specific Reservation
+      operationId: showReservationById
+      tags:
+        - reservations
+      parameters:
+        - name: reservation_id
+          in: path
+          required: true
+          description: The ID or slug of the Reservation to retrieve
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update Reservation
+      operationId: updateReservation
+      tags:
+        - reservations
+      parameters:
+        - name: reservation_id
+          in: path
+          required: true
+          description: The ID or ref of the Reservation to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/ReservationUpdateParams"
+      responses:
+        '200':
+          description: The Reservation which was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationShowResponse"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/UnprocessableEntityError"
+
+  /reservation_flags:
+    get:
+      summary: List all Reservation Flags
+      operationId: listReservationFlags
+      tags:
+        - reservation_flags
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific reservation flag IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        - name: shop_ids
+          in: query
+          description: Array or comma-separated list of shop IDs to filter reservation flags.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+
+      responses:
+        '200':
+          description: A paged array of reservation flags
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationFlagsListResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+  /reservation_flags/{reservation_flag_id}:
+    get:
+      summary: Fetch a specific Reservation Flag
+      operationId: showReservationFlagById
+      tags:
+        - reservation_flags
+      parameters:
+        - name: reservation_flag_id
+          in: path
+          required: true
+          description: The ID of the Reservation Flag to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The specified Reservation Flag
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationFlagShowResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': &NotFoundError
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+        '422': *UnprocessableEntityError
+
+  /memberships:
+    get:
+      summary: List all Memberships
+      operationId: listMemberships
+      tags:
+        - memberships
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: customer_ids
+          in: query
+          description: Array or comma-separated list of specific customer IDs.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: code
+          in: query
+          description: Search using specific code.
+          required: false
+          schema:
+            type: string
+        - name: membership_program_id
+          in: query
+          description: Search using specific membership program ids
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: The Memberships list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipShowResponse"
+    post:
+      summary: Create Membership
+      operationId: createMembership
+      tags:
+        - memberships
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/MembershipCreateParams"
+      responses:
+        '200':
+          description: The Membership which was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipShowResponse"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/UnprocessableEntityError"
+
+      responses:
+        '200':
+          description: A paged array of memberships
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipsListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /memberships/{membership_id}:
+    get:
+      summary: Fetch a specific Membership
+      operationId: showMembershipById
+      tags:
+        - memberships
+      parameters:
+        - name: membership_id
+          in: path
+          required: true
+          description: The ID of the Membership to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update Membership
+      operationId: updateMembership
+      tags:
+        - memberships
+      parameters:
+        - name: membership_id
+          in: path
+          required: true
+          description: The ID of the Membership to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/MembershipUpdateParams"
+      responses:
+        '200':
+          description: The Reservation which was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipShowResponse"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/UnprocessableEntityError"
+
+    delete:
+      summary: Destroy the membership
+      operationId: deleteMembershipById
+      tags:
+        - memberships
+      parameters:
+        - name: membership_id
+          in: path
+          required: true
+          description: The ID of the Membership to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "ok"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /membership_programs:
+    get:
+      summary: List all Membership Programs
+      operationId: listMembershipPrograms
+      tags:
+        - membership_programs
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: membership_ids
+          in: query
+          description: Array or comma-separated list of specific membership IDs.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of reservations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipProgramsListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /membership_programs/{membership_program_id}:
+    get:
+      summary: Fetch a specific Membership Program
+      operationId: showMembershipProgramById
+      tags:
+        - membership_programs
+      parameters:
+        - name: membership_program_id
+          in: path
+          required: true
+          description: The ID of the Membership Program to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipProgramShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customers:
+    get:
+      summary: List all Customers
+      operationId: listCustomers
+      tags:
+        - customers
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific customer IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: shop_ids
+          in: query
+          description: Array or comma-separated list of specific shop IDs.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of customers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomersListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      summary: Create a new customer
+      operationId: createCustomer
+      tags:
+        - customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/CustomerCreateParams"
+      responses:
+        '200':
+          description: Information about the customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customers/{customer_id}:
+    get:
+      summary: Fetch a specific Customer
+      operationId: showCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: The ID of the Customer to retrieve
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Amend the Customer
+      operationId: amendCustomer
+      tags:
+        - customers
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: The ID of the Customer to retrieve
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/CustomerUpdateParams"
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Destroy the customer
+      operationId: deleteCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: The ID of the Customer to delete
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "ok"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customer_search:
+    post:
+      summary: Search and bulk export customers
+      operationId: customerSearch
+      tags:
+        - customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/CustomerSearchParams"
+      responses:
+        '200':
+          description: List of exported customers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerSearchResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /shops:
+    get:
+      summary: List all Shops
+      operationId: listShops
+      tags:
+        - shops
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: slugs
+          in: query
+          description: Array or comma-separated list of specific slugs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: franchise_ids
+          in: query
+          description: Array or comma-separated list of specific Franchise IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of shops
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopsListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /shops/{shop_id}:
+    get:
+      summary: Fetch a specific Shop
+      operationId: showShopById
+      tags:
+        - shops
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID or slug of the Shop to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /franchises:
+    get:
+      summary: List all Franchises
+      operationId: listFranchises
+      tags:
+        - franchises
+      parameters:
+        - name: ids
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: names
+          in: query
+          description: Array or comma-separated list of specific IDs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: slugs
+          in: query
+          description: Array or comma-separated list of specific slugs to return.
+          required: false
+          schema:
+            type: string
+            format: bson-id
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of franchises
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchisesListResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /franchises/{franchise_id}:
+    get:
+      summary: Fetch a specific Franchise
+      operationId: showFranchiseById
+      tags:
+        - franchises
+      parameters:
+        - name: franchise_id
+          in: path
+          required: true
+          description: The ID or slug of the Franchise to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FranchiseShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /shops/{shop_id}:
+    get:
+      summary: Fetch a specific Shop
+      operationId: showShopById
+      tags:
+        - shops
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID or slug of the Shop to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopShowResponse"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+
+  schemas:
+    Reservation:
+      properties:
+        id:
+          description: Database ID of the Reservation.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        ref:
+          type: string
+          description: Your identifier for the Reservation.
+        franchise_id:
+          description: The ID of Franchise to which the Reservation belongs.
+          type: string
+          format: bson-id
+        shop_id:
+          description: The ID of Shop to which the Reservation belongs.
+          type: string
+          format: bson-id
+        customer_ids:
+          description: The IDs of the Customers to which the Reservation belongs.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        primary_customer_id:
+          description: The ID of primary Customer of Reservation. Refer to "customers" array.
+          type: string
+          format: bson-id
+          example: ede535ea33fd275ca15d6893
+        table_ids:
+          description: The IDs of the Tables where the Reservation will be seated.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        service_category_id:
+          description: The database ID of the ServiceCategory assigned to the Reservation.
+          type: string
+          format: bson-id
+        promo_id:
+          description: The database ID of the Promo assigned to the Reservation.
+          type: string
+          format: bson-id
+        created_at:
+          description: The timestamp of when the Reservation was created.
+          type: string
+          format: date-time
+        updated_at:
+          description: The timestamp of when the Reservation was last updated.
+          type: string
+          format: date-time
+        start_at:
+          description: The time at which the party is scheduled to arrive for the Reservation.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        duration:
+          description: The planned duration of the Reservation in seconds.
+          type: number
+          format: seconds
+          example: 7200
+        pax:
+          description: The total party size of the Reservation. This is the sum of the other pax fields.
+          type: number
+          format: integer
+          example: 6
+        pax_adult:
+          description: The number of adults attending the Reservation.
+          type: number
+          format: integer
+          example: 3
+        pax_senior:
+          description: The number of senior citizens attending the Reservation.
+          type: number
+          format: integer
+          example: 2
+        pax_child:
+          description: The number of children attending the Reservation.
+          type: number
+          format: integer
+          example: 0
+        pax_baby:
+          description: The number of babies attending the Reservation.
+          type: number
+          format: integer
+          example: 1
+        status:
+          description: The status of the Reservation.
+          type: string
+          enum: ["tentative","pending","request","accepted","confirmed","delay","call_absent","call_message","call_wrong","cancelled","noshow","rejected","arrived","arrived_part","waiting","waitlist_called","seated","seated_part","service_drink","service_main","service_dessert","check_req","paid","turnover","turned_over"]
+        source:
+          description: The general method by which the Reservation was made (web, phone, etc.)
+          type: string
+          example: web
+        channel:
+          description: The web site or sales channel by which the Reservation was made.
+          type: string
+          example: instagram
+        provider:
+          description: The system used to process the Reservation (tablecheck, etc.)
+          type: string
+          example: tablecheck
+        provider_ref:
+          description: The Reservation ID according to the system which processed the Reservation.
+          type: string
+          example: ABC123DEF
+        points:
+          description: The number of reward points redeemed by the customer via the provider system.
+          type: number
+          format: integer
+          example: 200
+        seat_types:
+          description: The seating or table type(s) requested by the customer.
+          type: array
+          items:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        smoking:
+          description: Indicates whether the customer has requested smoking or non-smoking seats.
+          type: string
+          enum: ["none","true","false"]
+        special_request:
+          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
+          type: string
+        memo:
+          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details.
+          type: string
+        memo2:
+          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
+          type: string
+        visit_history:
+          description: An enumeration indicating roughly how many times the customer has visited the restaurant.
+          type: string
+          enum:
+            - new
+            - visit2
+            - visit3
+            - repeater
+            - walk_in
+            - no_customer
+        party_name:
+          description: The party or group name for the reservation.
+          type: string
+        room_name:
+          description: The hotel room number associated with the reservation.
+          type: string
+        cancel_reason_type:
+          description: The enumerated reason for cancellation, if the reservation was cancelled.
+          type: string
+          enum: ["mistake","shop","travel","deal","delay","personal","covid","other"]
+        cancel_reason:
+          description: The memo explaining the reason for cancellation, if the reservation was cancelled.
+          type: string
+        cancelled_by_customer:
+          description: If the reservation was cancelled, this flag if true indicates the cancellation action was performed by the customer (diner) via the web. A false value indicates the cancellation was performed either by the merchant or (in rare cases) automatically by the system.
+          type: boolean
+        send_emails:
+          description: Indicates whether to send the customer email notifications for this reservation.
+          type: boolean
+        send_texts:
+          description: Indicates whether to send the customer text message notifications for this reservation.
+          type: boolean
+        enable_sms:
+          description: Deprecated. Please use send_texts instead.
+          type: boolean
+        email:
+          description: "[PII] The email address designated by the customer to receive notifications for this reservation."
+          type: string
+          format: email
+        phone:
+          description: "[PII] The phone number designated by the customer to receive calls regarding this reservation."
+          type: string
+          format: phone-e164
+        sms_number:
+          description: "[PII] The mobile number designated by the customer to receive SMS notifications for this reservation. The sms_number cannot be set directly; it is using the phone parameter."
+          type: string
+          format: phone-e164
+        franchise:
+          $ref: "#/components/schemas/FranchiseEmbed"
+        shop:
+          $ref: "#/components/schemas/ShopEmbed"
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerEmbed"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageEmbed"
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderEmbed"
+        pos_journals:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosJournalEmbed"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentEmbed"
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestionEmbed"
+        tables:
+          type: array
+          items:
+            $ref: "#/components/schemas/TableEmbed"
+        service_category:
+          $ref: "#/components/schemas/ServiceCategoryEmbed"
+        promo:
+          $ref: "#/components/schemas/PromoEmbed"
+
+    ReservationFlag:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Reservation Flag.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        franchise_id:
+          description: The ID of Franchise to which the Reservation Flag belongs.
+          type: string
+          format: bson-id
+        shop_ids:
+          description: |
+            Constrains the Shops for which the Reservation Flag will be applied.
+            An empty array means "all Shops" (no restriction).
+          type: array
+          default: []
+          items:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        all_shops:
+          description: Apply the Reservation Flag to all shops.
+          type: boolean
+        name:
+          description: Reservation Flag name.
+          type: string
+        description:
+          description: Reservation Flag description.
+          type: string
+        icon:
+          description: Reservation Flag icon name.
+          type: string
+        color:
+          description: Reservation Flag icon color.
+          type: string
+        created_at:
+          description: The timestamp of when the Reservation was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the Reservation was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: "The Midtown Hotel"
+
+    ShopEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Shop to which the Reservation belongs.
+          type: string
+          format: bson-id
+          example: ede535ea33fd275ca15d6893
+        name_translations:
+          description: The name of the Shop where the reservation was booked.
+          type: object
+          format: translations
+          example:
+            en: "Paris Cafe"
+            fr: "Café de Paris"
+            ja: "カフェデパリ"
+        internal_name:
+          description: The shorthand name of the Shop where the reservation was booked.
+          type: object
+          format: string
+          example: "Paris Cafe"
+        slug:
+          description: The web ID of the Shop where the reservation was booked.
+          type: string
+          example: my-shop-slug
+        country:
+          description: The country where the Shop is located.
+          type: string
+          format: country
+          example: JP
+        currency:
+          description: The monetary currency used by the Shop.
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          description: The time zone used by the Shop.
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+
+    Customer:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        ref:
+          type: string
+          description: Your identifier for the customer.
+        franchise_id:
+          description: The ID of Franchise to which the Customer belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          description: "[PII] The full name of the customer."
+          type: string
+        first_name:
+          description: "[PII] The first name of the customer."
+          type: string
+        last_name:
+          description: "[PII] The last name of the customer."
+          type: string
+        alt_first_name:
+          description: "[PII] The alternate (e.g. kanji) first name of the customer."
+          type: string
+        alt_last_name:
+          description: "[PII] The alternate (e.g. kanji) last name of the customer."
+          type: string
+        alpha_first_name:
+          description: "[PII] The alphabetical first name of the customer."
+          type: string
+        alpha_last_name:
+          description: "[PII] The alphabetical last name of the customer."
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum: ["male","female"]
+        # TODO!!! - API locale
+        locale:
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum: ["manual","tablecheck_guest","tablecheck_user","ota","ivr","pms","import","api","edm_subscribe"]
+        memo:
+          description: Free-text memo
+          type: string
+        phones:
+          description: "[PII] Phone numbers as an array of strings."
+          $ref: "#/components/schemas/PhoneNumbersList"
+        phone_objects:
+          description: "[PII] Phone numbers as structured objects."
+          $ref: "#/components/schemas/Phones"
+        emails:
+          description: "[PII] Email addresses as an array of strings."
+          $ref: "#/components/schemas/EmailAddressesList"
+        email_objects:
+          description: "[PII] Email addresses as structured objects."
+          $ref: "#/components/schemas/Emails"
+        events:
+          description: "[PII] Calendar events such as birthday, anniversary, etc."
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        socials:
+          description: "[PII] Social media accounts"
+          type: array
+          items:
+            $ref: "#/components/schemas/Social"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageEmbed"
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        allow_surveys:
+          type: boolean
+        is_incognito:
+          description: If true, indicates that the customer should not be greeted by name (e.g. in phone calls, etc.)
+          type: boolean
+        addresses:
+          type: array
+          description: "[PII] Customer addresses"
+          items:
+            $ref: "#/components/schemas/Address"
+        memberships:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipEmbed"
+        parent_shop_id:
+          description: The ID of the venue which is the primary relationship holder for the Customer.
+          type: string
+          format: bson-id
+        merged_customer_ids:
+          description: The IDs of other Customers which were merged into this Customer. Used for reconciliation purposes. Note that since the other Customers are destroyed after merging, it will no longer be possible to query for their ID.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        visits_count:
+          description: The number of past visits by the Customer.
+          type: integer
+          readOnly: true
+        cancels_count:
+          description: The number of cancelled Reservations for the Customer.
+          type: integer
+          readOnly: true
+        noshows_count:
+          description: The number of no-show Reservations for the Customer.
+          type: integer
+          readOnly: true
+        visits_count_by_shop_id:
+          description: The number of past visits by the Customer, broken down by Shop.
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        previous_visit_at:
+          description: The timestamp of the Customer's most recent past visit.
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        next_visit_at:
+          description: The timestamp of the Customer's next upcoming visit.
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+
+    CustomerUpdateParams:
+      type: object
+      required:
+        - last_name
+      properties: &CustomerUpdateParams
+        parent_shop_id:
+          description: One of your shop ID
+          type: string
+          format: bson-id
+        name_prefix:
+          description: Salutation, e.g. "Mr.", "Mrs." etc.
+          type: string
+        first_name:
+          description: First name
+          type: string
+        last_name:
+          description: Last name
+          type: string
+        company_name:
+          description: Company name
+          type: string
+        phones:
+          description: Phones
+          oneOf:
+            - $ref: "#/components/schemas/Phones"
+            - $ref: "#/components/schemas/PhoneNumbersList"
+        overwrite_phones:
+          description: If true, sending the "phones" attribute will overwrite all existing Phones on the Customer.
+          type: boolean
+        emails:
+          description: Emails
+          oneOf:
+            - $ref: "#/components/schemas/Emails"
+            - $ref: "#/components/schemas/EmailAddressesList"
+        overwrite_emails:
+          description: If true, sending the "emails" attribute will overwrite all existing Emails on the Customer.
+          type: boolean
+        socials:
+          description: Social media accounts
+          type: array
+          items:
+            $ref: "#/components/schemas/Social"
+        images:
+          description: Images
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/ImageEmbedCreate"
+              - $ref: "#/components/schemas/ImageEmbedDestroy"
+        overwrite_socials:
+          description: If true, sending the "socials" attribute will overwrite all existing Socials on the Customer.
+          type: boolean
+        events:
+          description: Events
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        overwrite_events:
+          description: If true, sending the "events" attribute will overwrite all existing Events on the Customer.
+          type: boolean
+        addresses:
+          description: Addresses
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+        overwrite_addresses:
+          description: If true, sending the "addresses" attribute will overwrite all existing Addresses on the Customer.
+          type: boolean
+        kanji_first_name:
+          description: Kanji first name
+          type: string
+        kanji_last_name:
+          description: Kanji last name
+          type: string
+        title:
+          description: Title
+          type: string
+        sex:
+          description: Sex (0 - Unknown; 1 - Male; 2 - Female)
+          type: number
+          format: integer
+          example: 1
+          enum:
+            - '0'
+            - '1'
+            - '2'
+        division:
+          description: Division
+          type: string
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum: ["manual","tablecheck_guest","tablecheck_user","ota","ivr","pms","import","api","edm_subscribe"]
+        age_range:
+          type: string
+          enum: ["none","20s","30s","40s","50s","60s"]
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+        likes:
+          description: Likes
+          type: array
+          items:
+            type: string
+        allerges:
+          description: Allerges
+          type: array
+          items:
+            type: string
+        dislikes:
+          description: Dislikes
+          type: array
+          items:
+            type: string
+        locale:
+          description: The language which the customer prefers for communication. If the specified locale is not supported by TableCheck, it will be set to null, and the update will proceed without failure.
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        country:
+          description: The nationality of the customer.
+          type: string
+          enum: ["AD","AE","AF","AG","AI","AL","AM","AO","AQ","AR","AS","AT","AU","AW","AX","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BL","BM","BN","BO","BQ","BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD","CF","CG","CH","CI","CK","CL","CM","CN","CO","CR","CU","CV","CW","CX","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","EH","ER","ES","ET","FI","FJ","FK","FM","FO","FR","GA","GB","GD","GE","GF","GG","GH","GI","GL","GM","GN","GP","GQ","GR","GS","GT","GU","GW","GY","HK","HM","HN","HR","HT","HU","ID","IE","IL","IM","IN","IO","IQ","IR","IS","IT","JE","JM","JO","JP","KE","KG","KH","KI","KM","KN","KP","KR","KW","KY","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MF","MG","MH","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA","NC","NE","NF","NG","NI","NL","NO","NP","NR","NU","NZ","OM","PA","PE","PF","PG","PH","PK","PL","PM","PN","PR","PS","PT","PW","PY","QA","RE","RO","RS","RU","RW","SA","SB","SC","SD","SE","SG","SH","SI","SJ","SK","SL","SM","SN","SO","SR","SS","ST","SV","SX","SY","SZ","TC","TD","TF","TG","TH","TJ","TK","TL","TM","TN","TO","TR","TT","TV","TW","TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE","VG","VI","VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"]
+        base_count_visits:
+          description: Base count visits
+          type: number
+          format: integer
+        base_count_cancels:
+          description: Base count cancels
+          type: number
+          format: integer
+        base_count_noshows:
+          description: Base count noshows
+          type: number
+          format: integer
+        email_marketing:
+          description: Email marketing
+          type: boolean
+        email_reminders:
+          description: Email reminders
+          type: boolean
+        direct_mail:
+          description: Direct mail
+          type: boolean
+        is_incognito:
+          description: Is incognito
+          type: boolean
+        is_temporary:
+          description: Is temporary
+          type: boolean
+        memo:
+          description: Memo
+          type: string
+        shop_memos:
+          description: Shop-specific customer memos.
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerShopMemo"
+        allow_surveys:
+          type: boolean
+        merge_customer_ids:
+          description: IDs of other Customers to merge into the current Customer. Note that the current Customer will remain, and the other Customers will be destroyed. Note that certain items such as Reservations are merged using an asynchronous job, so it may take some time for these to reflect on the current Customer.
+          type: array
+          items:
+            type: string
+            format: bson-id
+
+    CustomerCreateParams:
+      type: object
+      required:
+        - franchise_id
+      properties:
+        franchise_id:
+          description: One of your franchise ID
+          type: string
+          format: bson-id
+        <<: *CustomerUpdateParams
+        images:
+          description: Images
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageEmbedCreate"
+
+    CustomersListResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Customer"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    CustomerShowResponse:
+      type: object
+      properties:
+        customer:
+          $ref: "#/components/schemas/Customer"
+
+    ImageEmbedCreate:
+      type: object
+      properties:
+        image_upload_url:
+          description: The publicly accessible URL of the image to upload.
+          type: string
+          format: url
+          example: https://your.domain.com/image.png
+
+    ImageEmbedDestroy:
+      type: object
+      example:
+        id: 65dcd5f935288116d268b45b
+        _destroy: true
+      properties:
+        id:
+          description: The database ID of the Image object.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        _destroy:
+          description: Destroys the image
+          type: boolean
+          example: true
+
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        dimensions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageDimensions"
+          example: [200, 200]
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes.
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageVariants"
+        tags:
+          description: Not used.
+          type: array
+          example: []
+        created_at:
+          type: string
+          format: date-time
+
+    ImageVariants:
+      properties:
+        variant:
+          type: string
+          enum: ["original","large","medium","small"]
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageDimensions"
+          example: [2000, 1500]
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example: [1280, 704]
+        medium:
+          type: array
+          items:
+            type: number
+          example: [800, 440]
+        small:
+          type: array
+          items:
+            type: number
+          example: [256, 141]
+
+    MembershipProgram:
+      properties:
+        id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        point_multiplier:
+          description: Point multiplier
+          type: string
+        franchise:
+          $ref: "#/components/schemas/FranchiseEmbed"
+        membership_tiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipTierEmbed"
+
+    MembershipProgramsListResponse:
+      type: object
+      properties:
+        membership_programs:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipProgram"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: "#/components/schemas/MembershipProgram"
+
+    Membership:
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum: ["active","pre_enrollment","cancelled"]
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerEmbed"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    MembershipUpdateParams:
+      type: object
+      properties: &MembershipUpdateParams
+        code:
+          description: Membership code
+          type: string
+        customer_ids:
+          description: Ids of the customers using this membership
+          type: array
+          items:
+            type: string
+            format: bson-id
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+        status:
+          description: The status of the membership.
+          type: string
+          enum: ["active","pre_enrollment","cancelled"]
+        start_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          format: date
+
+    MembershipCreateParams:
+      type: object
+      required:
+        - membership_program_id
+        - code
+      properties:
+        <<: *MembershipUpdateParams
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        code:
+          description: Membership code
+          type: string
+
+    MembershipsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Membership"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    MembershipShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Membership"
+
+    MembershipEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        # customer_ids:
+        #   description: The database IDs of the Customer to which the membership belongs.
+        #   type: string
+        #   format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum: ["active","pre_enrollment","cancelled"]
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+
+    MembershipTierEmbed:
+      properties:
+        id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        code:
+          type: string
+        tier:
+          type: number
+
+    PosJournalBase:
+      type: object
+      properties: &PosJournalBase
+        original_receipt_num:
+          description: Receipt number of the original or linked receipt. This can be used if a "parent" check is split into multiple "child" checks, for example.
+          type: string
+        batch_date:
+          description: The local date on which the check was processed. Used for tracking nightly batch jobs.
+          type: string
+          format: date
+          example: '2020-01-01'
+        country:
+          description: The country of the venue.
+          type: string
+          format: country
+          example: 'JP'
+        currency:
+          description: The currency of the check transaction.
+          type: string
+          example: 'JPY'
+        customer_name:
+          description: The name of the customer appearing on the check, if any.
+          type: string
+        room_name:
+          description: The room number at which the customer is staying, as used by hotels. Note that this is not used to indicate the dining room name at the venue.
+          type: string
+        membership_code:
+          description: The membership number of the customer. Used for loyalty program integration.
+          type: string
+        pax:
+          description: The party size of the check, i.e. number of people dining.
+          type: number
+          format: integer
+        reservation_ref:
+          description: The identifier of the reservation, which should match the database ID or reservation code used by TableCheck.
+          type: string
+        site_name:
+          description: Optional. The identifier code (as used in the POS system) of the restaurant chain or hotel property. Used for tracking/audit purposes only.
+          type: string
+          example: MyHotel
+        revenue_center:
+          description: Optional. The revenue center or identifier code (as used in the POS system) of the venue. Used for tracking/audit purposes only.
+          type: string
+          example: MyRestaurant/1
+        staff_name:
+          description: The name of the staff who served the meal and/or handled the check.
+          type: string
+        staff_ref:
+          description: The identifier code (as used in the POS system) of the staff who served the meal and/or handled the check.
+          type: string
+        terminal_name:
+          description: The name, identifier, or serial number of the POS terminal used to process the check.
+          type: string
+        table_names:
+          description: The names of the table(s) at which the party is seated. This should exactly match the table name(s) as they appear in TableCheck.
+          type: array
+          items:
+            type: string
+        order_at:
+          description: The timestamp of when the first order of the check occured. If any PosOrder objects are present, this field will be auto-calculated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        payment_at:
+          description: The timestamp of when the payment of the check occured. If any PosPayment objects are present, this field will be auto-calculated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        subtotal_amt:
+          description: The check subtotal, i.e. including orders but not including "service_fee_amt", "coupon_amt", "discount_amt", "tax_amt".
+          type: string
+          format: decimal
+        service_fee_amt:
+          description: The applicable service fees and surcharges applied to the check.
+          type: string
+          format: decimal
+        service_fee_rate:
+          description: The service fee or surcharge applied to the check, as a decimal value (the value "1.0" means "100%".)
+          type: string
+          format: decimal
+          example: '0.15'
+        coupon_amt:
+          description: The amount of coupons applied to the check. The "coupon_amt" should be applied against the "total_amt", i.e. before settlement.
+          type: string
+          format: decimal
+        discount_amt:
+          description: The amount of discounts applied to the check. The "discount_amt" should be applied against the "total_amt", i.e. before settlement.
+          type: string
+          format: decimal
+        tax_rate:
+          description: The applicable tax rate to the check, as a decimal value (the value "1.0" means "100%".)
+          type: string
+          format: decimal
+          example: '0.08'
+        tax_amt:
+          description: The amount of tax applied to the check in addition to the "subtotal_amt".
+          type: string
+          format: decimal
+        tax_included_amt:
+          description: The amount of tax already included in the "subtotal_amt", in the case that order prices are shown including tax.
+          type: string
+          format: decimal
+        total_amt:
+          description: The total check payable amount, i.e. the "subtotal_amt" plus "service_fee_amt" and "tax_amt", less "coupon_amt" and "discount_amt".
+          type: string
+          format: decimal
+        settle_amt:
+          description: The amount of money used to pay (i.e. settle) the check. May be greater than "total_amt" when cash is used.
+          type: string
+          format: decimal
+        change_amt:
+          description: The amount of the settlement payment returned as change in a cash transaction. Calculate "change_amt" as "settle_amt" less "total_amt".
+          type: string
+          format: decimal
+        system_api_provider:
+          description: The name of the company who is the integrator of the POS API (i.e. your company, if you are connecting to this API.)
+          type: string
+          example: acme
+        system_maker:
+          description: The name of the company who makes the POS system.
+          type: string
+          example: oracle
+        system_model:
+          description: The model of the POS system.
+          type: string
+          example: micros9700
+        system_version:
+          description: The version number of the software used in the POS system.
+          type: string
+          example: '12.1.0'
+        pos_orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosOrder"
+        pos_payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosPayment"
+        pos_discounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosDiscount"
+
+    PosJournal:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosJournal object.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        created_at:
+          description: The timestamp of when the PosJournal was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the PosJournal was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        transaction_at:
+          description: Payment at
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        franchise_id:
+          description: TableCheck's database ID of the Franchise to which the PosJournal belongs.
+          type: string
+          format: bson-id
+          example: d337ed5d6ae5355ca1f893e2
+        shop_id:
+          description: TableCheck's database ID of the Shop to which the PosJournal belongs.
+          type: string
+          format: bson-id
+          example: 37ed555ca1fd3d6893e2ae53
+        reservation_id:
+          description: TableCheck's database ID of the Reservation with which the PosJournal is linked.
+          type: string
+          format: bson-id
+          example: 55ca1fd33ae537ede25d6893
+        <<: *PosJournalBase
+
+    PosOrder:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosOrder object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the order.
+          type: string
+        order_at:
+          description: The timestamp of when the order was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        menu_category_ref:
+          description: The identifier (as used by the POS system database) of the category of the order's menu item.
+          type: string
+          example: ABC123DEF
+        menu_category_name:
+          description: The human-readable name of the category of the order's menu item.
+          type: string
+          example: "Appetizer"
+        menu_department_ref:
+          description: The identifier (as used by the POS system database) of the department of the order's menu item.
+          type: string
+          example: DEF456GHI
+        menu_department_name:
+          description: The human-readable name of the department of the order's menu item.
+          type: string
+          example: "Kitchen"
+        menu_item_ref:
+          description: The identifier (as used by the POS system database) of the order's menu item.
+          type: string
+          example: ABC123DEF
+        menu_item_name:
+          description: The human-readable name of the order's menu item. This should match the line item displayed on the receipt.
+          type: string
+          example: "Chicken Soup"
+        sku:
+          description: The Stock Keeping Unit identifier for the order's menu item. This may differ from menu_item_ref (the POS system database ID).
+          type: string
+        qty:
+          description: The order quantity, i.e. how many units are ordered.
+          type: number
+          format: integer
+        unit_price:
+          description: The price of a single unit within the order. (The unit_price is multiplied by qty to obtain the total price.)
+          type: string
+          format: decimal
+
+    PosDiscount:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosDiscount object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the discount.
+          type: string
+        order_at:
+          description: The timestamp of when the discount was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        name:
+          description: The human-readable name of the discount. This should match the line item displayed on the receipt, if applicable.
+          type: string
+          example: 'Summer Sale 20%'
+        amt:
+          description: The monetary amount of the discount.
+          type: string
+          format: decimal
+
+    PosPayment:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosPayment object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the payment.
+          type: string
+        payment_at:
+          description: The transaction time of the payment used to settle the check.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        amt:
+          description: The monetary amount of the payment used to settle the check.
+          type: string
+          format: decimal
+        tender:
+          description: The payment method used in the transaction. Please transmit the raw value from the POS system as-is. Example values include "cash", "credit_card", "cashless", "voucher", etc.
+          type: string
+          example: 'credit_card'
+        brand:
+          description: Brand of credit card or cashless wallet used to make payment. Please transmit the raw value from the POS system as-is. Examples values include "visa", "mastercard", "amex", "paypal", "apple_pay", etc.
+          type: string
+          example: 'visa'
+        issuer:
+          description: The credit card issuer. Please transmit the raw value from the POS system as-is. Examples values include "citibank", "chase_bank", etc.
+          type: string
+          example: 'citibank'
+
+    CustomerEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        ref:
+          type: string
+          description: Your identifier for the customer.
+        franchise_id:
+          description: The ID of Franchise to which the Customer belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          description: "[PII] The full name of the customer."
+          type: string
+        first_name:
+          description: "[PII] The first name of the customer."
+          type: string
+        last_name:
+          description: "[PII] The last name of the customer."
+          type: string
+        alt_first_name:
+          description: "[PII] The alternate (e.g. kanji) first name of the customer."
+          type: string
+        alt_last_name:
+          description: "[PII] The alternate (e.g. kanji) last name of the customer."
+          type: string
+        alpha_first_name:
+          description: "[PII] The alphabetical first name of the customer."
+          type: string
+        alpha_last_name:
+          description: "[PII] The alphabetical last name of the customer."
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum: ["male","female"]
+        locale:
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum: ["manual","tablecheck_guest","tablecheck_user","ota","ivr","pms","import","api","edm_subscribe"]
+        memo:
+          description: Free-text memo
+          type: string
+        phones:
+          description: "[PII] Phone numbers as an array of strings."
+          $ref: "#/components/schemas/PhoneNumbersList"
+        phone_objects:
+          description: "[PII] Phone numbers as structured objects."
+          $ref: "#/components/schemas/Phones"
+        emails:
+          description: "[PII] Email addresses as an array of strings."
+          $ref: "#/components/schemas/EmailAddressesList"
+        email_objects:
+          description: "[PII] Email addresses as structured objects."
+          $ref: "#/components/schemas/Emails"
+        events:
+          description: "[PII] Calendar events such as birthday, anniversary, etc."
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        socials:
+          description: "[PII] Social media accounts"
+          type: array
+          items:
+            $ref: "#/components/schemas/Social"
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        allow_surveys:
+          type: boolean
+        is_incognito:
+          description: If true, indicates that the customer should not be greeted by name (e.g. in phone calls, etc.)
+          type: boolean
+        addresses:
+          type: array
+          description: "[PII] Customer addresses"
+          items:
+            $ref: "#/components/schemas/Address"
+        memberships:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipEmbed"
+        parent_shop_id:
+          description: The ID of the venue which is the primary relationship holder for the Customer.
+          type: string
+          format: bson-id
+        merged_customer_ids:
+          description: The IDs of other Customers which were merged into this Customer. Used for reconciliation purposes. Note that since the other Customers are destroyed after merging, it will no longer be possible to query for their ID.
+          type: array
+          items:
+            type: string
+            format: bson-id
+
+    OrderEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Order.
+          type: string
+          format: bson-id
+        menu_item_id:
+          description: The database ID of the MenuItem being ordered.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        unit_price:
+          type: string
+          format: decimal
+        qty:
+          type: number
+          format: integer
+        is_group_order:
+          type: boolean
+        menu_item:
+          $ref: "#/components/schemas/MenuItemEmbed"
+
+    MenuItemEmbed:
+      type: object
+      properties:
+        id:
+          type: string
+          format: bson-id
+        name_translations:
+          type: string
+        internal_name:
+          type: string
+
+    PosJournalEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the PosJournal.
+          type: string
+          format: bson-id
+        reservation_id:
+          description: The ID of the Reservation to which the PosJournal belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        batch_date:
+          type: string
+          format: date
+        order_at:
+          type: string
+          format: date-time
+        payment_at:
+          type: string
+          format: date-time
+        transaction_at:
+          type: string
+          format: date-time
+        currency:
+          type: string
+          format: currency
+        country:
+          type: string
+          format: country
+        receipt_num:
+          type: string
+        terminal_name:
+          type: string
+        staff_name:
+          type: string
+        subtotal_amt:
+          type: string
+          format: decimal
+        discount_amt:
+          type: string
+          format: decimal
+        coupon_amt:
+          type: string
+          format: decimal
+        service_fee_amt:
+          type: string
+          format: decimal
+        tax_amt:
+          type: string
+          format: decimal
+        tax_included_amt:
+          type: string
+          format: decimal
+        total_amt:
+          type: string
+          format: decimal
+        pos_orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosOrder"
+        pos_payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosPayment"
+        pos_discounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosDiscount"
+
+    PaymentEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Payment.
+          type: string
+          format: bson-id
+        reservation_id:
+          description: The ID of the Reservation to which the Payment belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        payment_type:
+          type: string
+        payment_status:
+          type: string
+        total_amt:
+          type: string
+          format: decimal
+        authorized_amt:
+          type: string
+          format: decimal
+        captured_amt:
+          type: string
+          format: decimal
+        currency:
+          type: string
+          format: currency
+        brand:
+          type: string
+        card_digits:
+          type: string
+
+    QuestionEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Question object.
+          type: string
+          format: bson-id
+        question:
+          description: The question asked by the merchant during the reservation booking.
+          type: string
+        answer:
+          description: The response from the customer.
+          type: string
+
+    EmailAddressesList:
+      description: "[PII] Email addresses as an array of strings."
+      type: array
+      items:
+        type: string
+        format: email
+
+    Emails:
+      description: "[PII] A list of Email objects."
+      type: array
+      items:
+        $ref: '#/components/schemas/Email'
+
+    Email:
+      type: object
+      required:
+        - email
+      properties:
+        id:
+          description: The database ID of the Email object.
+          type: string
+          format: bson-id
+        email:
+          description: "[PII] The email address."
+          type: string
+        tag:
+          type: string
+          enum: ["none","home","work","mobile","other"]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    PhoneNumbersList:
+      description: "[PII] A list of phone numbers as strings."
+      type: array
+      items:
+        type: string
+        format: phone-e164
+
+    Phones:
+      description: "[PII] A list of Phone objects."
+      type: array
+      items:
+        $ref: '#/components/schemas/Phone'
+
+    Phone:
+      type: object
+      required:
+        - number
+      properties:
+        id:
+          description: The database ID of the Phone object.
+          type: string
+          format: bson-id
+        number:
+          description: "[PII] The phone number in E.164 format."
+          type: string
+          format: phone-e164
+        tag:
+          type: string
+          enum: ["none","home","work","mobile","assistant","fax","other"]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Social:
+      type: object
+      required:
+        - username
+      properties:
+        id:
+          description: The database ID of the Social object.
+          type: string
+          format: bson-id
+        service:
+          type: string
+          enum: ["facebook","google","twitter","line","kakao","naver","yahoo","mixi","ameblo","linkedin","skype","wechat","weibo","qq"]
+        username:
+          description: "[PII] The social media username."
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Event:
+      type: object
+      example:
+        date: '01-01-2020'
+        tag: anniversary
+      properties:
+        id:
+          description: The database ID of the Event.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          enum: ["anniversary","birthday","single","1_month","2_month","3_month","6_month","1_year"]
+        date:
+          description: "[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified."
+          type: string
+          format: date
+        months:
+          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
+          type: array
+          items:
+            type: number
+            format: integer
+        day:
+          description: The day on which the event occurs.
+          type: number
+          format: integer
+        memo:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Address:
+      type: object
+      example:
+        tag: home
+        street: 123 Main St
+        city: Seattle
+        state: WA
+        country: US
+      properties:
+        id:
+          description: The database ID of the Address object.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          description: A tag which indicates the type of address.
+          enum: ["none","home","work","other"]
+        street:
+          type: string
+          description: "[PII] The first line of the street address."
+        street2:
+          type: string
+          description: "[PII] The second line of the street address."
+        city:
+          type: string
+          description: "[PII] The city of the address."
+        region:
+          type: string
+          description: "[PII] The region, state, province, or prefecture of the address."
+        postal_code:
+          type: string
+          description: "[PII] The postal code of the address."
+        country:
+          description: The ISO 3166 Alpha-2 code of the country.
+          type: string
+          format: iso-country
+          example: "JP"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CustomerShopMemo:
+      description: A shop-specific customer memo.
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: bson-id
+          shop_id:
+            type: string
+          memo:
+            type: string
+
+    TableEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Table assigned to the Reservation.
+          type: string
+          format: bson-id
+        name_translations:
+          description: The name of the Table assigned to the Reservation.
+          type: string
+
+    ServiceCategoryEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the ServiceCategory selected by the customer for the Reservation.
+          type: string
+          format: bson-id
+        name_translations:
+          description: The name of the ServiceCategory selected by the customer for the Reservation.
+          type: object
+          format: translations
+          example:
+            en: "Terrace"
+            ja: "テラス"
+
+    PromoEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Promo to utilize on the Reservation.
+          type: string
+          format: bson-id
+        code:
+          description: The alphanumeric code of the Promo to utilize on the Reservation.
+          type: string
+
+    ReservationsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reservation"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    ReservationShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Reservation"
+        reservation_flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservationFlag"
+
+    ReservationFlagsListResponse:
+      type: object
+      properties:
+        reservation_flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservationFlag"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    ReservationFlagShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/ReservationFlag"
+
+    ReservationUpdateParams:
+      type: object
+      properties: &ReservationUpdateParams
+        customer_ref:
+          description: The identifier you supplied for an existing customer.
+          type: string
+        customer_id:
+          description: The identifier of an existing customer.
+          type: string
+        ref:
+          description: Your identifier for the reservation.
+          type: string
+        pax:
+          description: The total party size of the Reservation. May be specified as an alternative to pax_adult.
+          type: number
+          format: integer
+          example: 6
+        pax_adult:
+          description: The number of adults attending the Reservation.
+          type: number
+          format: integer
+          example: 3
+        pax_senior:
+          description: The number of senior citizens attending the Reservation.
+          type: number
+          format: integer
+          example: 2
+        pax_child:
+          description: The number of children attending the Reservation.
+          type: number
+          format: integer
+          example: 0
+        pax_baby:
+          description: The number of babies attending the Reservation.
+          type: number
+          format: integer
+          example: 1
+        start_at:
+          description: The time at which the party is scheduled to arrive for the Reservation.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        duration:
+          description: The planned duration of the Reservation in seconds. It is recommended not to set this parameter, as the system will determine duration automatically. If you have previously set duration, transmitting duration as null will revert to the auto-set state.
+          type: number
+          format: seconds
+          example: 7200
+        source:
+          description: The general method by which the Reservation was made ("web", "phone", etc.) If not set, when creating a Reservation it will be defaulted to source "web" to indicate an online booking.
+          type: string
+          enum: ["phone","ivrs","sms","web","email","in_person","walk_in","app","other"]
+        channel:
+          description: The web site or sales channel by which the Reservation was made.
+          type: string
+          example: instagram
+        special_request:
+          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
+          type: string
+        memo:
+          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details.
+          type: string
+        memo2:
+          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
+          type: string
+        seat_types:
+          description: The seating or table type(s) requested by the customer.
+          type: array
+          items:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        smoking:
+          description: Indicates whether the customer has requested smoking or non-smoking seats.
+          type: string
+          enum: ["none","true","false"]
+        status:
+          description: The status of the Reservation. It is recommended not to set this parameter, as the system will assign status automatically.
+          type: string
+          enum: ["tentative","pending","request","accepted","confirmed","delay","call_absent","call_message","call_wrong","cancelled","noshow","rejected","arrived","arrived_part","waiting","waitlist_called","seated","seated_part","service_drink","service_main","service_dessert","check_req","paid","turnover","turned_over"]
+        points:
+          description: The number of reward points redeemed by the customer via the provider system.
+          type: number
+          format: integer
+          example: 200
+        party_name:
+          description: The party or group name for the reservation.
+          type: string
+        room_name:
+          description: The hotel room number associated with the reservation.
+          type: string
+        cancel_reason_type:
+          description: The enumerated reason for cancellation, if the reservation was cancelled.
+          type: string
+          enum: ["mistake","shop","travel","deal","delay","personal","covid","other"]
+        cancel_reason:
+          description: The memo explaining the reason for cancellation, if the reservation was cancelled.
+          type: string
+        cancelled_by_customer:
+          description: If the reservation was cancelled, this flag if true indicates the cancellation action was performed by the customer (diner) via the web. A false value indicates the cancellation was performed either by the merchant or (in rare cases) automatically by the system.
+          type: boolean
+        send_emails:
+          description: Indicates whether to send email notifications to the Customer for this Reservation. Default false.
+          type: boolean
+        send_texts:
+          description: Indicates whether to send text message notifications to the Customer for this Reservation. Requires phone parameter to be a mobile number. Default false.
+          type: boolean
+        email:
+          description: The email address designated by the customer to receive notifications for this reservation.
+          type: string
+          format: email
+        phone:
+          description: The phone number designated by the customer to receive text messages and calls regarding this reservation.
+          type: string
+          format: phone-e164
+        reservation_flag_ids:
+          description: The reservation flags ids.
+          type: array
+          items:
+            type: string
+            example: '64ddfe5b6ff2a916b29dc902'
+        images:
+          description: Images
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/ImageEmbedCreate"
+              - $ref: "#/components/schemas/ImageEmbedDestroy"
+
+    ReservationCreateParams:
+      type: object
+      required:
+        - shop_id
+        - pax
+        - start_at
+      properties:
+        shop_id:
+          description: The ID of Shop to which the Reservation belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<: *ReservationUpdateParams
+        images:
+          description: Images
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageEmbedCreate"
+
+    Franchise:
+      properties:
+        id:
+          description: ID of the Franchise
+          type: string
+          format: bson-id
+          example: bdf535el45ft283vs13f8841
+        name:
+          description: Name of the Franchise.
+          type: string
+          example: "Rival Dining Co."
+        name_translations:
+          description: Localized name of the Franchise.
+          type: object
+          example:
+            en: "Rival Dining Co."
+            fr: "Rival Dining Co."
+            ja: "ライバルダイニング株式会社"
+        slug:
+          description: The web ID of the Shop.
+          type: string
+          example: rival-slug
+
+    FranchisesListResponse:
+      type: object
+      properties:
+        franchises:
+          type: array
+          items:
+            $ref: "#/components/schemas/Franchise"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    FranchiseShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Franchise"
+
+    Shop:
+      properties:
+        id:
+          description: ID of the Shop.
+          type: string
+          format: bson-id
+          example: ede535ea33fd275ca15d6893
+        name_translations:
+          description: The name of the Shop.
+          type: object
+          format: translations
+          example:
+            en: "Paris Cafe"
+            fr: "Café de Paris"
+            ja: "カフェデパリ"
+        internal_name:
+          description: The shorthand name of the Shop.
+          type: object
+          format: string
+          example: "Paris Cafe"
+        slug:
+          description: The web ID of the Shop.
+          type: string
+          example: my-shop-slug
+        country:
+          description: The country where the Shop is located.
+          type: string
+          format: country
+          example: JP
+        currency:
+          description: The monetary currency used by the Shop.
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          description: The time zone used by the Shop.
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            '$ref': "#/components/schemas/ServiceCategory"
+        franchise:
+          $ref: "#/components/schemas/FranchiseEmbed"
+
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: "#/components/schemas/Shop"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    ShopShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Shop"
+
+    ServiceCategory:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: '5e281bfa7df93f63e0000003'
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: 'This is the sushi bar at our restaurant.'
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: "#/components/schemas/ImageEmbed"
+
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        # page_count:
+        #   type: number
+        #   format: integer
+        #   example: 8
+        # item_count:
+        #   type: number
+        #   format: integer
+        #   example: 742
+
+    Error:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    BadRequestError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+
+    ForbiddenError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+
+    NotFoundError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+
+    UnprocessableEntityError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+
+    CustomerSearchParams:
+      type: object
+      properties:
+        scroll_id:
+          type: string
+          description: Cursor identifier used for query continuation.
+        franchise_id:
+          type: string
+          format: bson-id
+          description: Optional identifier for Franchise. The customer search API endpoint is currently limited to exporting one franchise at a time.
+        first_name:
+          type: string
+          description: Search by Customer first name. Can be a partial match.
+        last_name:
+          type: string
+          description: Search by Customer last name. Can be a partial match.
+        alt_first_name:
+          type: string
+          description: Search by Customer alternate first name (e.g. kanji, etc.) Can be a partial match.
+        alt_last_name:
+          type: string
+          description: Search by Customer alternate last name (e.g. kanji, etc.) Can be a partial match.
+        company_name:
+          type: string
+          description: Search by Customer company name. Can be a partial match.
+        company_division:
+          type: string
+          description: Search by Customer corporate division. Can be a partial match.
+        company_title:
+          type: string
+          description: Search by Customer corporate title. Can be a partial match.
+        has_phone:
+          type: boolean
+          description: Filter based on whether Customer has at least one phone number set.
+        phone:
+          type: string
+          format: phone-e164
+          description: Search by Customer phone number in E.164 format. Can be a partial match.
+        has_email:
+          type: boolean
+          description: Filter based on whether Customer has at least one email address set.
+        email:
+          type: string
+          description: Search by Customer email address. Can be a partial match.
+        memo:
+          type: string
+          description: Text search within Customer memo. Can be a partial match.
+        shop_memos_memo:
+          type: string
+          description: Text search within Customer shop-specific memos. Can be a partial match.
+        shop_memos_shop_ids:
+          type: array
+          description: Constrains shop memo search match to specific shop IDs. Can be a partial match.
+          items:
+            type: string
+            format: bson-id
+        gender:
+          type: string
+          description: Match Customer based on gender.
+          enum: ["male","female"]
+        allow_marketing:
+          type: boolean
+          description: Filter based on whether Customer allows email direct marketing.
+        direct_mail:
+          type: boolean
+          description: Filter based on whether Customer allows physical mail marketing.
+        is_temporary:
+          type: boolean
+          description: Filter based on whether Customer has "temporary" flag set.
+        tags:
+          type: array
+          description: Filter based on array of Customer tags.
+          items:
+            type: string
+        likes:
+          type: array
+          description: Filter based on array of Customer like preferences.
+          items:
+            type: string
+        dislikes:
+          type: array
+          description: Filter based on array of Customer dislikes.
+          items:
+            type: string
+        allergies:
+          type: array
+          description: Filter based on array of Customer allergies.
+          items:
+            type: string
+        age_ranges:
+          type: array
+          description: Filter based on array of Customer age range values.
+          items:
+            type: string
+            enum: ["none","20s","30s","40s","50s","60s"]
+        sales_rep_ids:
+          type: array
+          description: Filter based on array of Sales Rep IDs.
+          items:
+            type: string
+        assigned_staff_ids:
+          type: array
+          description: Filter based on array of Assigned Staffs IDs.
+          items:
+            type: string
+        parent_shop_ids:
+          type: array
+          description: Filter based on array of Parent Shop IDs.
+          items:
+            type: string
+            format: bson-id
+        locales:
+          type: array
+          description: Filter based on array of ISO language identifiers.
+          items:
+            type: string
+            enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        social_username:
+          type: string
+        event_date_min:
+          type: string
+          format: date
+        event_date_max:
+          type: string
+          format: date
+        event_tags:
+          type: array
+          items:
+            type: string
+        event_months:
+          type: array
+          items:
+            type: string
+        created_at_min:
+          type: string
+          format: date-time
+          description: Minimum value for time range search of Customer creation timestamp.
+        created_at_max:
+          type: string
+          format: date-time
+          description: Maximum value for time range search of Customer creation timestamp.
+        updated_at_min:
+          type: string
+          format: date-time
+          description: Minimum value for time range search of Customer updated timestamp.
+        updated_at_max:
+          type: string
+          format: date-time
+          description: Maximum value for time range search of Customer updated timestamp.
+        address_postal_code:
+          type: string
+          description: Search by Customer address postal code.
+        address_country:
+          type: string
+          format: country
+          description: Search by Customer address country.
+        address_region:
+          type: string
+          description: Search by Customer region/state/province.
+        address_city:
+          type: string
+          description: Search by Customer city.
+        reservation_stages:
+          description: For Reservation search parameters, sets a basic scope to query past, future, and/or cancelled reservations.
+          type: array
+          items:
+            type: string
+            enum: ["past","future","cancelled","rejected"]
+        reservation_start_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation start time.
+        reservation_start_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation start time.
+        reservation_created_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation creation timestamp.
+        reservation_created_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation creation timestamp.
+        reservation_updated_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation updated timestamp.
+        reservation_updated_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation updated timestamp.
+        reservation_pax_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of Reservation party size.
+        reservation_pax_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of Reservation party size.
+        reservation_count_visits_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of total visit count across all venues.
+        reservation_count_visits_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of total visit count across all venues.
+        reservation_shop_visits_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of visit count at an individual venue.
+        reservation_shop_visits_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of visit count at an individual venue.
+        reservation_shop_cancels_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of cancellation count.
+        reservation_shop_cancels_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of cancellation count.
+        reservation_shop_noshows_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of no-show count.
+        reservation_shop_noshows_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of no-show count.
+        reservation_memo:
+          type: string
+          description: Text search of Reservation memos.
+        reservation_ref:
+          type: string
+          description: Search by Reservation code or identifier.
+        reservation_party_name:
+          type: string
+          description: Search by Reservation party name.
+        reservation_room_name:
+          type: string
+          description: Search by room number present on Reservation.
+        reservation_flag_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_statuses:
+          type: array
+          items:
+            type: string
+        reservation_status_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_objectives:
+          type: array
+          items:
+            type: string
+        reservation_shop_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_sources:
+          type: array
+          items:
+            type: string
+        reservation_channels:
+          type: array
+          items:
+            type: string
+        reservation_providers:
+          type: array
+          items:
+            type: string
+        membership_program_id:
+          type: string
+        membership_tier_id:
+          type: string
+        membership_code:
+          type: string
+        membership_points_min:
+          type: string
+        membership_points_max:
+          type: string
+        membership_start_date_min:
+          type: string
+          format: date
+        membership_start_date_max:
+          type: string
+          format: date
+        membership_expiry_date_min:
+          type: string
+          format: date
+        membership_expiry_date_max:
+          type: string
+          format: date
+        payment_currency:
+          type: string
+          enum: ["local","USD"]
+          description: Currency applicable for Payment search parameters. Either local currency (default) or USD.
+        payment_average_amt_min:
+          type: string
+          format: float
+        payment_average_amt_max:
+          type: string
+          format: float
+        payment_lifetime_amt_min:
+          type: string
+          format: float
+        payment_lifetime_amt_max:
+          type: string
+          format: float
+        payment_last_amt_min:
+          type: string
+          format: float
+        payment_last_amt_max:
+          type: string
+          format: float
+        payment_avg_spend_per_pax_min:
+          type: string
+          format: float
+        payment_avg_spend_per_pax_max:
+          type: string
+          format: float
+        pos_menu_condition:
+          type: string
+        pos_currency:
+          type: string
+          description: Currency applicable for POS search parameters. Either local currency (default) or USD.
+        pos_average_amt_min:
+          type: string
+          format: float
+        pos_average_amt_max:
+          type: string
+          format: float
+        pos_lifetime_amt_min:
+          type: string
+          format: float
+        pos_lifetime_amt_max:
+          type: string
+          format: float
+        pos_last_amt_min:
+          type: string
+          format: float
+        pos_last_amt_max:
+          type: string
+          format: float
+        pos_avg_spend_per_pax_min:
+          type: string
+          format: float
+        pos_avg_spend_per_pax_max:
+          type: string
+          format: float
+        pos_menu_category_name:
+          type: string
+        pos_menu_item_name:
+          type: string
+        pos_price_min:
+          type: string
+          format: float
+        pos_price_max:
+          type: string
+          format: float
+        pos_qty_min:
+          type: number
+          format: integer
+        pos_qty_max:
+          type: number
+          format: integer
+        pos_total_min:
+          type: string
+          format: float
+        pos_total_max:
+          type: string
+          format: float
+        pos_shop_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        order_currency:
+          type: string
+          description: Currency applicable for Order search parameters. Either local currency (default) or USD.
+        order_menu_category_name:
+          type: string
+        order_menu_item_name:
+          type: string
+        order_menu_category_id:
+          type: string
+          format: bson-id
+        order_menu_item_id:
+          type: string
+          format: bson-id
+        order_price_min:
+          type: string
+          format: float
+        order_price_max:
+          type: string
+          format: float
+        order_qty_min:
+          type: number
+          format: integer
+        order_qty_max:
+          type: number
+          format: integer
+        order_total_min:
+          type: string
+          format: float
+        order_total_max:
+          type: string
+          format: float
+
+    CustomerSearchResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ElasticCustomer"
+        pagination:
+          $ref: "#/components/schemas/ElasticPaginationData"
+
+    ElasticPaginationData:
+      type: object
+      properties:
+        scroll_id:
+          type: string
+        total_results:
+          type: number
+          format: integer
+          example: 100
+
+    ElasticCustomer:
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        alt_first_name:
+          type: string
+        alt_last_name:
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum: ["male","female"]
+        # TODO!!! - API locale
+        locale:
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        phones:
+          type: array
+          items:
+            type: string
+            format: phone-e164
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        memo:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+        memberships:
+          type: array
+          items:
+            $ref: "#/components/schemas/ElasticMembership"
+
+    ElasticMembership:
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+
+security:
+  - ApiKeyAuth: []
