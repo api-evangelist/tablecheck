@@ -171,6 +171,10 @@ apis:
     List shops (filtered by IDs, slugs, or franchise IDs) and fetch a specific shop,
     for channel-manager and site-integration use cases.
 common:
+- type: DomainSecurity
+  url: security/tablecheck-domain-security.yml
+- type: Authentication
+  url: authentication/tablecheck-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/tablecheck
 - type: LinkedIn

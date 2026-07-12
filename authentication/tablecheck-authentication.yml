@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/tablecheck-availability.yml, openapi/tablecheck-booking.yml, openapi/tablecheck-crm.yml,
+  openapi/tablecheck-pos.yml, openapi/tablecheck-site-controller.yml, openapi/tablecheck-web-booking.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: AUTHORIZATION
+  sources:
+  - openapi/tablecheck-availability.yml
+  - openapi/tablecheck-booking.yml
+  - openapi/tablecheck-pos.yml
+  - openapi/tablecheck-site-controller.yml
+  - openapi/tablecheck-web-booking.yml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/tablecheck-crm.yml
