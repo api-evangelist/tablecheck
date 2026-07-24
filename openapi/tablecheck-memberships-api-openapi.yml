@@ -1,0 +1,851 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability memberships API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: memberships
+paths:
+  /memberships:
+    get:
+      summary: List all Memberships
+      operationId: listMemberships
+      tags:
+      - memberships
+      parameters:
+      - name: ids
+        in: query
+        description: Array or comma-separated list of specific IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: customer_ids
+        in: query
+        description: Array or comma-separated list of specific customer IDs.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: code
+        in: query
+        description: Search using specific code.
+        required: false
+        schema:
+          type: string
+      - name: membership_program_id
+        in: query
+        description: Search using specific membership program ids
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: created_at_min
+        in: query
+        description: Search lower bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: created_at_max
+        in: query
+        description: Search upper bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_min
+        in: query
+        description: Search lower bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_max
+        in: query
+        description: Search upper bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: page
+        in: query
+        description: The zero-based page number. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          minimum: 0
+      - name: per_page
+        in: query
+        description: Number of items to return at once. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: The Memberships list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipShowResponse'
+    post:
+      summary: Create Membership
+      operationId: createMembership
+      tags:
+      - memberships
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipCreateParams'
+      responses:
+        '200':
+          description: A paged array of memberships
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipsListResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /memberships/{membership_id}:
+    get:
+      summary: Fetch a specific Membership
+      operationId: showMembershipById
+      tags:
+      - memberships
+      parameters:
+      - name: membership_id
+        in: path
+        required: true
+        description: The ID of the Membership to retrieve
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update Membership
+      operationId: updateMembership
+      tags:
+      - memberships
+      parameters:
+      - name: membership_id
+        in: path
+        required: true
+        description: The ID of the Membership to update
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipUpdateParams'
+      responses:
+        '200':
+          description: The Reservation which was updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipShowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+    delete:
+      summary: Destroy the membership
+      operationId: deleteMembershipById
+      tags:
+      - memberships
+      parameters:
+      - name: membership_id
+        in: path
+        required: true
+        description: The ID of the Membership to delete
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: ok
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    MembershipsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    MembershipEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+    Emails:
+      description: '[PII] A list of Email objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Email'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    MembershipUpdateParams:
+      type: object
+      properties:
+        code:
+          description: Membership code
+          type: string
+        customer_ids:
+          description: Ids of the customers using this membership
+          type: array
+          items:
+            type: string
+            format: bson-id
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        start_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          format: date
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    Social:
+      type: object
+      required:
+      - username
+      properties:
+        id:
+          description: The database ID of the Social object.
+          type: string
+          format: bson-id
+        service:
+          type: string
+          enum:
+          - facebook
+          - google
+          - twitter
+          - line
+          - kakao
+          - naver
+          - yahoo
+          - mixi
+          - ameblo
+          - linkedin
+          - skype
+          - wechat
+          - weibo
+          - qq
+        username:
+          description: '[PII] The social media username.'
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Email:
+      type: object
+      required:
+      - email
+      properties:
+        id:
+          description: The database ID of the Email object.
+          type: string
+          format: bson-id
+        email:
+          description: '[PII] The email address.'
+          type: string
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PhoneNumbersList:
+      description: '[PII] A list of phone numbers as strings.'
+      type: array
+      items:
+        type: string
+        format: phone-e164
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    EmailAddressesList:
+      description: '[PII] Email addresses as an array of strings.'
+      type: array
+      items:
+        type: string
+        format: email
+    Event:
+      type: object
+      example:
+        date: 01-01-2020
+        tag: anniversary
+      properties:
+        id:
+          description: The database ID of the Event.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          enum:
+          - anniversary
+          - birthday
+          - single
+          - 1_month
+          - 2_month
+          - 3_month
+          - 6_month
+          - 1_year
+        date:
+          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
+          type: string
+          format: date
+        months:
+          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
+          type: array
+          items:
+            type: number
+            format: integer
+        day:
+          description: The day on which the event occurs.
+          type: number
+          format: integer
+        memo:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Address:
+      type: object
+      example:
+        tag: home
+        street: 123 Main St
+        city: Seattle
+        state: WA
+        country: US
+      properties:
+        id:
+          description: The database ID of the Address object.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          description: A tag which indicates the type of address.
+          enum:
+          - none
+          - home
+          - work
+          - other
+        street:
+          type: string
+          description: '[PII] The first line of the street address.'
+        street2:
+          type: string
+          description: '[PII] The second line of the street address.'
+        city:
+          type: string
+          description: '[PII] The city of the address.'
+        region:
+          type: string
+          description: '[PII] The region, state, province, or prefecture of the address.'
+        postal_code:
+          type: string
+          description: '[PII] The postal code of the address.'
+        country:
+          description: The ISO 3166 Alpha-2 code of the country.
+          type: string
+          format: iso-country
+          example: JP
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MembershipCreateParams:
+      type: object
+      required:
+      - membership_program_id
+      - code
+      properties:
+        code:
+          description: Membership code
+          type: string
+        customer_ids:
+          description: Ids of the customers using this membership
+          type: array
+          items:
+            type: string
+            format: bson-id
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        start_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          format: date
+    Phones:
+      description: '[PII] A list of Phone objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Phone'
+    Membership:
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerEmbed'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MembershipShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Membership'
+    Phone:
+      type: object
+      required:
+      - number
+      properties:
+        id:
+          description: The database ID of the Phone object.
+          type: string
+          format: bson-id
+        number:
+          description: '[PII] The phone number in E.164 format.'
+          type: string
+          format: phone-e164
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - assistant
+          - fax
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CustomerEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        ref:
+          type: string
+          description: Your identifier for the customer.
+        franchise_id:
+          description: The ID of Franchise to which the Customer belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          description: '[PII] The full name of the customer.'
+          type: string
+        first_name:
+          description: '[PII] The first name of the customer.'
+          type: string
+        last_name:
+          description: '[PII] The last name of the customer.'
+          type: string
+        alt_first_name:
+          description: '[PII] The alternate (e.g. kanji) first name of the customer.'
+          type: string
+        alt_last_name:
+          description: '[PII] The alternate (e.g. kanji) last name of the customer.'
+          type: string
+        alpha_first_name:
+          description: '[PII] The alphabetical first name of the customer.'
+          type: string
+        alpha_last_name:
+          description: '[PII] The alphabetical last name of the customer.'
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+        locale:
+          type: string
+          enum:
+          - en
+          - ja
+          - ko
+          - zh-CN
+          - zh-TW
+          - de
+          - es
+          - fr
+          - nl
+          - it
+          - pt
+          - tr
+          - ru
+          - id
+          - ms
+          - tl
+          - th
+          - lo
+          - km
+          - vi
+          - ar
+          - he
+          - hi
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum:
+          - manual
+          - tablecheck_guest
+          - tablecheck_user
+          - ota
+          - ivr
+          - pms
+          - import
+          - api
+          - edm_subscribe
+        memo:
+          description: Free-text memo
+          type: string
+        phones:
+          description: '[PII] Phone numbers as an array of strings.'
+          $ref: '#/components/schemas/PhoneNumbersList'
+        phone_objects:
+          description: '[PII] Phone numbers as structured objects.'
+          $ref: '#/components/schemas/Phones'
+        emails:
+          description: '[PII] Email addresses as an array of strings.'
+          $ref: '#/components/schemas/EmailAddressesList'
+        email_objects:
+          description: '[PII] Email addresses as structured objects.'
+          $ref: '#/components/schemas/Emails'
+        events:
+          description: '[PII] Calendar events such as birthday, anniversary, etc.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        socials:
+          description: '[PII] Social media accounts'
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        allow_surveys:
+          type: boolean
+        is_incognito:
+          description: If true, indicates that the customer should not be greeted by name (e.g. in phone calls, etc.)
+          type: boolean
+        addresses:
+          type: array
+          description: '[PII] Customer addresses'
+          items:
+            $ref: '#/components/schemas/Address'
+        memberships:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipEmbed'
+        parent_shop_id:
+          description: The ID of the venue which is the primary relationship holder for the Customer.
+          type: string
+          format: bson-id
+        merged_customer_ids:
+          description: The IDs of other Customers which were merged into this Customer. Used for reconciliation purposes. Note that since the other Customers are destroyed after merging, it will no longer be possible to query for their ID.
+          type: array
+          items:
+            type: string
+            format: bson-id
+  parameters:
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

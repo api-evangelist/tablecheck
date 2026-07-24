@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: availability
+paths:
+  /availability_tables/{shop_id}:
+    get:
+      summary: Fetch availability tables of a specific shop.
+      tags:
+      - availability
+      parameters:
+      - name: shop_id
+        in: path
+        required: true
+        description: The id or slug of the shop to retrieve
+        schema:
+          type: string
+      - name: pax
+        in: query
+        required: true
+        description: Desired number of guests for which to search for availability.
+        example: 2
+        schema:
+          type: number
+          format: integer
+      - name: datetime
+        in: query
+        required: true
+        description: Desired datetime around which to search for availability.
+        example: '2026-07-06T17:00:00.000Z'
+        schema:
+          type: string
+          format: date-time
+      - name: seat_types
+        in: query
+        description: Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)
+        required: false
+        schema:
+          type: string
+          enum:
+          - open
+          - counter
+          - outside
+          - curtain
+          - private
+          - tatami
+      - name: service_category_id
+        in: query
+        required: false
+        description: The id of the service category
+        schema:
+          type: string
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityTableShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+  schemas:
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    AvailabilityTableShowResponse:
+      type: object
+      properties:
+        timetable:
+          type: object
+          properties:
+            id:
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            slug:
+              type: string
+              example: my-shop-slug
+            tables:
+              type: array
+              items:
+                type: string
+                format: bson-id
+              example:
+              - 65e963e36ff2a92b0fb1fcfd
+              - 65e963756ff2a92b0fb1fcf6
+            table_combos:
+              type: array
+              items:
+                type: string
+                format: bson-id
+              example:
+              - 65e963e36ff2a92b0fb1fcfd
+              - 65e963756ff2a92b0fb1fcf6
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

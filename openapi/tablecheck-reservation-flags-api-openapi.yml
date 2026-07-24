@@ -1,0 +1,300 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability reservation_flags API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: reservation_flags
+paths:
+  /reservation_flags:
+    get:
+      summary: List all Reservation Flags
+      operationId: listReservationFlags
+      tags:
+      - reservation_flags
+      parameters:
+      - name: ids
+        in: query
+        description: Array or comma-separated list of specific reservation flag IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+      - name: shop_ids
+        in: query
+        description: Array or comma-separated list of shop IDs to filter reservation flags.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+      - name: created_at_min
+        in: query
+        description: Search lower bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+      - name: created_at_max
+        in: query
+        description: Search upper bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+      - name: updated_at_min
+        in: query
+        description: Search lower bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+      - name: updated_at_max
+        in: query
+        description: Search upper bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+      - name: page
+        in: query
+        description: The zero-based page number. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          minimum: 0
+      - name: per_page
+        in: query
+        description: Number of items to return at once. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      responses:
+        '200':
+          description: A paged array of reservation flags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationFlagsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+  /reservation_flags/{reservation_flag_id}:
+    get:
+      summary: Fetch a specific Reservation Flag
+      operationId: showReservationFlagById
+      tags:
+      - reservation_flags
+      parameters:
+      - name: reservation_flag_id
+        in: path
+        required: true
+        description: The ID of the Reservation Flag to retrieve
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The specified Reservation Flag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationFlagShowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+components:
+  schemas:
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    ReservationFlag:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Reservation Flag.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        franchise_id:
+          description: The ID of Franchise to which the Reservation Flag belongs.
+          type: string
+          format: bson-id
+        shop_ids:
+          description: 'Constrains the Shops for which the Reservation Flag will be applied.
+
+            An empty array means "all Shops" (no restriction).
+
+            '
+          type: array
+          default: []
+          items:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+        all_shops:
+          description: Apply the Reservation Flag to all shops.
+          type: boolean
+        name:
+          description: Reservation Flag name.
+          type: string
+        description:
+          description: Reservation Flag description.
+          type: string
+        icon:
+          description: Reservation Flag icon name.
+          type: string
+        color:
+          description: Reservation Flag icon color.
+          type: string
+        created_at:
+          description: The timestamp of when the Reservation was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the Reservation was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+    ReservationFlagsListResponse:
+      type: object
+      properties:
+        reservation_flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationFlag'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ReservationFlagShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/ReservationFlag'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

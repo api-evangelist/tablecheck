@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability tables API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: tables
+paths:
+  /shops/{shop_id}/tables:
+    get:
+      summary: List all Tables
+      operationId: listTables
+      tags:
+      - tables
+      parameters:
+      - name: shop_id
+        in: path
+        required: true
+        description: The ID, slug or ref of the Shop
+        schema:
+          type: string
+      - name: time
+        in: query
+        description: Specific time to search for tables (ISO timestamp). If "now" is passed, the current time will be used.
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+      responses:
+        '200':
+          description: A list of Table Names
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TablesListResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UnprocessableEntityError'
+                - $ref: '#/components/schemas/ShopNotFoundError'
+components:
+  schemas:
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    TablesListResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    Table:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the table.
+          type: string
+          format: bson-id
+          example: ea1fd65d5357ed3ac5893e43
+        floor_plan_id:
+          description: TableCheck's database ID of the floor plan to which the table belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        section_id:
+          description: TableCheck's database ID of the section to which the table belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        shop_id:
+          description: The ID of Shop to which the Table belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        floor_plan_name:
+          description: The name of the floor plan to which the table belongs.
+          type: string
+          format: bson-id
+          example: Holiday Layout
+        is_smoking:
+          description: Indicates where the table is in a smoking-allowed area.
+          type: boolean
+        max_pax:
+          description: Maximum number of guests which may be seated at the table. (Not strictly enforced by system.)
+          type: number
+          format: integer
+          example: 4
+        min_pax:
+          description: Minimum number of guests which may be seated at the table. (Not strictly enforced by system.)
+          type: number
+          format: integer
+          example: 4
+        name:
+          description: The name of the table. Max 4 characters.
+          type: string
+        position:
+          description: The position of the table, for use in list ordering.
+          type: number
+          format: integer
+        seat_type:
+          description: Seating type of the table.
+          type: string
+          enum:
+          - open
+          - counter
+          - outside
+          - curtain
+          - private
+          - tatami
+        section_name:
+          description: The name of the section to which the table belongs.
+          type: string
+          format: bson-id
+          example: F1 Inside
+        section_position:
+          description: The position of the section for use in list ordering.
+          type: number
+          format: integer
+        created_at:
+          description: The timestamp of when the table was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the table was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

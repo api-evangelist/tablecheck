@@ -1,0 +1,527 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability blockages API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: blockages
+paths:
+  /blockages:
+    post:
+      summary: Create Blockage
+      operationId: createBlockage
+      tags:
+      - blockages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockageCreateParams'
+      responses:
+        '200':
+          description: The Blockage which was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockageShowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+  /blockages/{blockage_id}:
+    get:
+      summary: Fetch a specific Blockage
+      operationId: showBlockageById
+      tags:
+      - blockages
+      parameters:
+      - name: blockage_id
+        in: path
+        required: true
+        description: The ID or ref of the Blockage to retrieve
+        schema:
+          type: string
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: The specified Blockage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockageShowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '410':
+          description: Expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpiredError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+    put:
+      summary: Update Blockage
+      operationId: updateBlockage
+      tags:
+      - blockages
+      parameters:
+      - name: blockage_id
+        in: path
+        required: true
+        description: The ID of the Blockage to update
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockageUpdateParams'
+      responses:
+        '200':
+          description: The Blockage which was updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockageShowResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '410':
+          description: Expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpiredError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+    delete:
+      summary: Delete Blockage
+      operationId: deleteBlockage
+      tags:
+      - blockages
+      parameters:
+      - name: blockage_id
+        in: path
+        required: true
+        description: The ID or ref of the Blockage to delete
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Blockage was deleted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '410':
+          description: Expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpiredError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+components:
+  schemas:
+    Blockage:
+      type: object
+      properties:
+        shop_id:
+          description: The ID of Shop where the Blockage should be created.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        reservation_id:
+          description: The Reservation ID in TableCheck or reservation ref in your system. Use only when updating a Reservation.
+          type: string
+          format: bson-id
+          example: Use only if amending reservation
+        start_at:
+          description: The time at which the party wishes to arrive.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        expires_at:
+          description: The timestamp at which the Blockage will expire.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        pax:
+          description: The party size.
+          type: number
+          format: integer
+          example: 3
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        table_ids:
+          description: The IDs of the Tables assigned to the Blockage.
+          type: array
+          items:
+            type: string
+            format: bson-id
+            example: 641d4902bc54f4a840119a49
+        user_agent:
+          description: The browser user agent string of the end user.
+          type: string
+          example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+        user_ip:
+          description: The IP address of the end user.
+          type: string
+          format: ip-address
+          example: 145.0.34.255
+        utm_id:
+          description: Aggregate identifier for all UTM parameters.
+          type: string
+          example: my-id-124723
+        utm_source:
+          description: Identifies which site sent the traffic.
+          type: string
+          example: google
+        utm_medium:
+          description: Identifies what type of link was used, such as cost per click or email.
+          type: string
+          example: cpc
+        utm_campaign:
+          description: Identifies a specific product promotion or strategic campaign.
+          type: string
+          example: spring_sale
+        utm_term:
+          description: Identifies search terms.
+          type: string
+          example: ginza+italian
+        utm_content:
+          description: Identifies what specifically was clicked to bring the user to the site, such as a banner ad or a text link. It is often used for A/B testing and content-targeted ads.
+          type: string
+          example: logolink
+        id:
+          description: TableCheck's database ID of the Blockage. Needed for Reservation creation and updating.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        created_at:
+          description: The timestamp of when the Blockage was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the Blockage was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+    BlockageUpdateParams:
+      type: object
+      properties:
+        start_at:
+          description: The time at which the party wishes to arrive. If blank, will be unchanged.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        expires_at:
+          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:20:00Z'
+        expiry_ttl:
+          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
+          type: number
+          format: integer
+          example: 300
+        pax:
+          description: The party size. If blank, will be unchanged.
+          type: number
+          format: integer
+          example: 3
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        service_category_id:
+          description: The Service Category ID of the table.
+          type: string
+          format: bson-id
+          example: 63ac197654cef38651ccd896
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    BlockageCreateParams:
+      type: object
+      required:
+      - description
+      - start_at
+      - pax
+      properties:
+        shop_id:
+          description: The ID of Shop where the Blockage should be created.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        reservation_id:
+          description: The Reservation ID in TableCheck or reservation ref in your system. Use only when updating a Reservation.
+          type: string
+          format: bson-id
+          example: Use only if amending reservation
+        start_at:
+          description: The time at which the party wishes to arrive.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        expires_at:
+          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:20:00Z'
+        pax:
+          description: The party size.
+          type: number
+          format: integer
+          example: 3
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        table_ids:
+          description: The IDs of the Tables assigned to the Blockage.
+          type: array
+          items:
+            type: string
+            format: bson-id
+            example: 641d4902bc54f4a840119a49
+        expiry_ttl:
+          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
+          type: number
+          format: integer
+          example: 300
+        service_category_id:
+          description: The Service Category ID of the table.
+          type: string
+          format: bson-id
+          example: 63ac197654cef38651ccd896
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    ExpiredError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_expired
+              message:
+                type: string
+                example: Resource has expired.
+    BlockageShowResponse:
+      type: object
+      properties:
+        blockage:
+          $ref: '#/components/schemas/Blockage'
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability membership_programs API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: membership_programs
+paths:
+  /membership_programs:
+    get:
+      summary: List all Membership Programs
+      operationId: listMembershipPrograms
+      tags:
+      - membership_programs
+      parameters:
+      - name: ids
+        in: query
+        description: Array or comma-separated list of specific IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: membership_ids
+        in: query
+        description: Array or comma-separated list of specific membership IDs.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: created_at_min
+        in: query
+        description: Search lower bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: created_at_max
+        in: query
+        description: Search upper bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_min
+        in: query
+        description: Search lower bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_max
+        in: query
+        description: Search upper bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: page
+        in: query
+        description: The zero-based page number. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          minimum: 0
+      - name: per_page
+        in: query
+        description: Number of items to return at once. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of reservations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipProgramsListResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /membership_programs/{membership_program_id}:
+    get:
+      summary: Fetch a specific Membership Program
+      operationId: showMembershipProgramById
+      tags:
+      - membership_programs
+      parameters:
+      - name: membership_program_id
+        in: path
+        required: true
+        description: The ID of the Membership Program to retrieve
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipProgramShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    MembershipProgramsListResponse:
+      type: object
+      properties:
+        membership_programs:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipProgram'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    MembershipTierEmbed:
+      properties:
+        id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        code:
+          type: string
+        tier:
+          type: number
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    MembershipProgram:
+      properties:
+        id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        point_multiplier:
+          description: Point multiplier
+          type: string
+        franchise:
+          $ref: '#/components/schemas/FranchiseEmbed'
+        membership_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipTierEmbed'
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: '#/components/schemas/MembershipProgram'
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

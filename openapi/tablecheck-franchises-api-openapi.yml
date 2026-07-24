@@ -1,0 +1,190 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability franchises API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: franchises
+paths:
+  /franchises:
+    get:
+      summary: List all Franchises
+      operationId: listFranchises
+      tags:
+      - franchises
+      parameters:
+      - name: ids
+        in: query
+        description: Array or comma-separated list of specific IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: names
+        in: query
+        description: Array or comma-separated list of specific IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: slugs
+        in: query
+        description: Array or comma-separated list of specific slugs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: page
+        in: query
+        description: The zero-based page number. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          minimum: 0
+      - name: per_page
+        in: query
+        description: Number of items to return at once. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of franchises
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FranchisesListResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /franchises/{franchise_id}:
+    get:
+      summary: Fetch a specific Franchise
+      operationId: showFranchiseById
+      tags:
+      - franchises
+      parameters:
+      - name: franchise_id
+        in: path
+        required: true
+        description: The ID or slug of the Franchise to retrieve
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FranchiseShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    FranchisesListResponse:
+      type: object
+      properties:
+        franchises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Franchise'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    FranchiseShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Franchise'
+    Franchise:
+      properties:
+        id:
+          description: ID of the Franchise
+          type: string
+          format: bson-id
+          example: bdf535el45ft283vs13f8841
+        name:
+          description: Name of the Franchise.
+          type: string
+          example: Rival Dining Co.
+        name_translations:
+          description: Localized name of the Franchise.
+          type: object
+          example:
+            en: Rival Dining Co.
+            fr: Rival Dining Co.
+            ja: ライバルダイニング株式会社
+        slug:
+          description: The web ID of the Shop.
+          type: string
+          example: rival-slug
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

@@ -1,0 +1,601 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability table_status API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: table_status
+paths:
+  /shops/{shop_id}/table_status/show:
+    post:
+      summary: Get Table Status
+      operationId: showTableStatus
+      tags:
+      - table_status
+      parameters:
+      - name: shop_id
+        in: path
+        required: true
+        description: The ID, slug or ref of the Shop
+        schema:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/TableStatusIdTimeParams'
+              - $ref: '#/components/schemas/TableStatusIdTimeRangeParams'
+              - $ref: '#/components/schemas/TableStatusNameTimeParams'
+              - $ref: '#/components/schemas/TableStatusNameTimeRangeParams'
+              - $ref: '#/components/schemas/TableStatusReservationIdParams'
+            example:
+              table_id: ae5355ca1fd337ed5d6893e2
+              time: '2020-01-29T19:00:00Z'
+      responses:
+        '200':
+          description: The Table Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableStatusResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UnprocessableEntityError'
+                - $ref: '#/components/schemas/ShopNotFoundError'
+  /shops/{shop_id}/table_status/update:
+    put:
+      summary: Update Table Status
+      operationId: updateTableStatus
+      tags:
+      - table_status
+      parameters:
+      - name: shop_id
+        in: path
+        required: true
+        description: The ID, slug or ref of the Shop
+        schema:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/TableStatusUpdateIdTimeParams'
+              - $ref: '#/components/schemas/TableStatusUpdateIdTimeRangeParams'
+              - $ref: '#/components/schemas/TableStatusUpdateNameTimeParams'
+              - $ref: '#/components/schemas/TableStatusUpdateNameTimeRangeParams'
+              - $ref: '#/components/schemas/TableStatusUpdateReservationIdParams'
+            example:
+              table_id: ae5355ca1fd337ed5d6893e2
+              time: '2020-01-29T19:00:00Z'
+              status: vacant
+      responses:
+        '200':
+          description: The Table Status which was updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableStatusResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UnprocessableEntityError'
+                - $ref: '#/components/schemas/ShopNotFoundError'
+components:
+  schemas:
+    TableStatusUpdateNameTimeRangeParams:
+      type: object
+      required:
+      - table_name
+      properties:
+        match_before_seconds:
+          description: Number of seconds before the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched before the current time.
+          type: number
+          format: integer
+          example: 300
+        match_after_seconds:
+          description: Number of seconds after the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched after the current time.
+          type: number
+          format: integer
+          example: 300
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+          - vacant
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+    TableStatusUpdateReservationIdParams:
+      type: object
+      required:
+      - reservation_id
+      properties:
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+          - vacant
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+        reservation_id:
+          description: The ID of the Reservation to select status. Mutually exclusive with table_id and table_name.
+          type: string
+          format: bson-id
+          example: 1fd337ed5d6893e2ae5355ca
+    TableStatusReservationIdParams:
+      type: object
+      required:
+      - reservation_id
+      properties:
+        reservation_id:
+          description: The ID of the Reservation to select status. Mutually exclusive with table_id and table_name.
+          type: string
+          format: bson-id
+          example: 1fd337ed5d6893e2ae5355ca
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    TableStatusIdTimeParams:
+      type: object
+      required:
+      - table_id
+      properties:
+        time:
+          description: The time at which to lookup table status. If not specified, the current time is used. We recommend to leave this field blank.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    TableStatusUpdateIdTimeParams:
+      type: object
+      required:
+      - table_id
+      properties:
+        time:
+          description: The time at which to lookup table status. If not specified, the current time is used. We recommend to leave this field blank.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+          - vacant
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    TableStatusNameTimeParams:
+      type: object
+      required:
+      - table_name
+      properties:
+        time:
+          description: The time at which to lookup table status. If not specified, the current time is used. We recommend to leave this field blank.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    TableStatusIdTimeRangeParams:
+      type: object
+      required:
+      - table_id
+      properties:
+        match_before_seconds:
+          description: Number of seconds before the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched before the current time.
+          type: number
+          format: integer
+          example: 300
+        match_after_seconds:
+          description: Number of seconds after the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched after the current time.
+          type: number
+          format: integer
+          example: 300
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+    TableStatusNameTimeRangeParams:
+      type: object
+      required:
+      - table_name
+      properties:
+        match_before_seconds:
+          description: Number of seconds before the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched before the current time.
+          type: number
+          format: integer
+          example: 300
+        match_after_seconds:
+          description: Number of seconds after the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched after the current time.
+          type: number
+          format: integer
+          example: 300
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+    TableStatusUpdateIdTimeRangeParams:
+      type: object
+      required:
+      - table_id
+      properties:
+        match_before_seconds:
+          description: Number of seconds before the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched before the current time.
+          type: number
+          format: integer
+          example: 300
+        match_after_seconds:
+          description: Number of seconds after the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched after the current time.
+          type: number
+          format: integer
+          example: 300
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+          - vacant
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+    TableStatusResponse:
+      type: object
+      properties:
+        table_status:
+          type: object
+          properties:
+            reservation_id:
+              description: The ID of the Reservation
+              type: string
+              format: bson-id
+              example: 1fd337ed5d6893e2ae5355ca
+            reservation_start_at:
+              description: The start time of the Reservation
+              type: string
+              format: date-time
+              example: '2020-01-29T19:00:00Z'
+            reservation_end_at:
+              description: The end time of the Reservation
+              type: string
+              format: date-time
+              example: '2020-01-29T19:00:00Z'
+            status:
+              description: The status of the Table
+              type: string
+              enum:
+              - vacant
+              - tentative
+              - pending
+              - request
+              - accepted
+              - confirmed
+              - delay
+              - call_absent
+              - call_message
+              - call_wrong
+              - cancelled
+              - noshow
+              - rejected
+              - arrived
+              - arrived_part
+              - waiting
+              - waitlist_called
+              - seated
+              - seated_part
+              - service_drink
+              - service_main
+              - service_dessert
+              - check_req
+              - paid
+              - turnover
+              - turned_over
+            table_id:
+              description: The ID of the Table
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            table_name:
+              description: The name of the Table
+              type: string
+              example: A1
+    TableStatusUpdateNameTimeParams:
+      type: object
+      required:
+      - table_name
+      properties:
+        time:
+          description: The time at which to lookup table status. If not specified, the current time is used. We recommend to leave this field blank.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+          - vacant
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1

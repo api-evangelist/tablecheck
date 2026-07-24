@@ -1,0 +1,2346 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TableCheck API - V1 availability customers API
+  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+servers:
+- url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+security:
+- ApiKeyAuth: []
+tags:
+- name: customers
+paths:
+  /customers:
+    get:
+      summary: List all Customers
+      operationId: listCustomers
+      tags:
+      - customers
+      parameters:
+      - name: ids
+        in: query
+        description: Array or comma-separated list of specific customer IDs to return.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: shop_ids
+        in: query
+        description: Array or comma-separated list of specific shop IDs.
+        required: false
+        schema:
+          type: string
+          format: bson-id
+      - name: created_at_min
+        in: query
+        description: Search lower bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: created_at_max
+        in: query
+        description: Search upper bound of created_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_min
+        in: query
+        description: Search lower bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_max
+        in: query
+        description: Search upper bound of updated_at field (ISO timestamp).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: page
+        in: query
+        description: The zero-based page number. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          minimum: 0
+      - name: per_page
+        in: query
+        description: Number of items to return at once. Used for pagination.
+        required: false
+        schema:
+          type: number
+          format: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: A paged array of customers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomersListResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new customer
+      operationId: createCustomer
+      tags:
+      - customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateParams'
+      responses:
+        '200':
+          description: Information about the customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /customers/{customer_id}:
+    get:
+      summary: Fetch a specific Customer
+      operationId: showCustomerById
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        description: The ID of the Customer to retrieve
+        schema:
+          type: string
+      - $ref: '#/components/parameters/IncludeFields'
+      - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Amend the Customer
+      operationId: amendCustomer
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        description: The ID of the Customer to retrieve
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateParams'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerShowResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Destroy the customer
+      operationId: deleteCustomerById
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        description: The ID of the Customer to delete
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: ok
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /customer_search:
+    post:
+      summary: Search and bulk export customers
+      operationId: customerSearch
+      tags:
+      - customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerSearchParams'
+      responses:
+        '200':
+          description: List of exported customers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerSearchResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+  schemas:
+    MembershipEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 200
+          - 200
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariants'
+        tags:
+          description: Not used.
+          type: array
+          example: []
+        created_at:
+          type: string
+          format: date-time
+    Emails:
+      description: '[PII] A list of Email objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Email'
+    ElasticCustomer:
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        alt_first_name:
+          type: string
+        alt_last_name:
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+        locale:
+          type: string
+          enum:
+          - en
+          - ja
+          - ko
+          - zh-CN
+          - zh-TW
+          - de
+          - es
+          - fr
+          - nl
+          - it
+          - pt
+          - tr
+          - ru
+          - id
+          - ms
+          - tl
+          - th
+          - lo
+          - km
+          - vi
+          - ar
+          - he
+          - hi
+        phones:
+          type: array
+          items:
+            type: string
+            format: phone-e164
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        memo:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        memberships:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElasticMembership'
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    ElasticMembership:
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+    ImageEmbedDestroy:
+      type: object
+      example:
+        id: 65dcd5f935288116d268b45b
+        _destroy: true
+      properties:
+        id:
+          description: The database ID of the Image object.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        _destroy:
+          description: Destroys the image
+          type: boolean
+          example: true
+    CustomersListResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    Social:
+      type: object
+      required:
+      - username
+      properties:
+        id:
+          description: The database ID of the Social object.
+          type: string
+          format: bson-id
+        service:
+          type: string
+          enum:
+          - facebook
+          - google
+          - twitter
+          - line
+          - kakao
+          - naver
+          - yahoo
+          - mixi
+          - ameblo
+          - linkedin
+          - skype
+          - wechat
+          - weibo
+          - qq
+        username:
+          description: '[PII] The social media username.'
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
+    ImageVariants:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+    Email:
+      type: object
+      required:
+      - email
+      properties:
+        id:
+          description: The database ID of the Email object.
+          type: string
+          format: bson-id
+        email:
+          description: '[PII] The email address.'
+          type: string
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PhoneNumbersList:
+      description: '[PII] A list of phone numbers as strings.'
+      type: array
+      items:
+        type: string
+        format: phone-e164
+    CustomerSearchParams:
+      type: object
+      properties:
+        scroll_id:
+          type: string
+          description: Cursor identifier used for query continuation.
+        franchise_id:
+          type: string
+          format: bson-id
+          description: Optional identifier for Franchise. The customer search API endpoint is currently limited to exporting one franchise at a time.
+        first_name:
+          type: string
+          description: Search by Customer first name. Can be a partial match.
+        last_name:
+          type: string
+          description: Search by Customer last name. Can be a partial match.
+        alt_first_name:
+          type: string
+          description: Search by Customer alternate first name (e.g. kanji, etc.) Can be a partial match.
+        alt_last_name:
+          type: string
+          description: Search by Customer alternate last name (e.g. kanji, etc.) Can be a partial match.
+        company_name:
+          type: string
+          description: Search by Customer company name. Can be a partial match.
+        company_division:
+          type: string
+          description: Search by Customer corporate division. Can be a partial match.
+        company_title:
+          type: string
+          description: Search by Customer corporate title. Can be a partial match.
+        has_phone:
+          type: boolean
+          description: Filter based on whether Customer has at least one phone number set.
+        phone:
+          type: string
+          format: phone-e164
+          description: Search by Customer phone number in E.164 format. Can be a partial match.
+        has_email:
+          type: boolean
+          description: Filter based on whether Customer has at least one email address set.
+        email:
+          type: string
+          description: Search by Customer email address. Can be a partial match.
+        memo:
+          type: string
+          description: Text search within Customer memo. Can be a partial match.
+        shop_memos_memo:
+          type: string
+          description: Text search within Customer shop-specific memos. Can be a partial match.
+        shop_memos_shop_ids:
+          type: array
+          description: Constrains shop memo search match to specific shop IDs. Can be a partial match.
+          items:
+            type: string
+            format: bson-id
+        gender:
+          type: string
+          description: Match Customer based on gender.
+          enum:
+          - male
+          - female
+        allow_marketing:
+          type: boolean
+          description: Filter based on whether Customer allows email direct marketing.
+        direct_mail:
+          type: boolean
+          description: Filter based on whether Customer allows physical mail marketing.
+        is_temporary:
+          type: boolean
+          description: Filter based on whether Customer has "temporary" flag set.
+        tags:
+          type: array
+          description: Filter based on array of Customer tags.
+          items:
+            type: string
+        likes:
+          type: array
+          description: Filter based on array of Customer like preferences.
+          items:
+            type: string
+        dislikes:
+          type: array
+          description: Filter based on array of Customer dislikes.
+          items:
+            type: string
+        allergies:
+          type: array
+          description: Filter based on array of Customer allergies.
+          items:
+            type: string
+        age_ranges:
+          type: array
+          description: Filter based on array of Customer age range values.
+          items:
+            type: string
+            enum:
+            - none
+            - 20s
+            - 30s
+            - 40s
+            - 50s
+            - 60s
+        sales_rep_ids:
+          type: array
+          description: Filter based on array of Sales Rep IDs.
+          items:
+            type: string
+        assigned_staff_ids:
+          type: array
+          description: Filter based on array of Assigned Staffs IDs.
+          items:
+            type: string
+        parent_shop_ids:
+          type: array
+          description: Filter based on array of Parent Shop IDs.
+          items:
+            type: string
+            format: bson-id
+        locales:
+          type: array
+          description: Filter based on array of ISO language identifiers.
+          items:
+            type: string
+            enum:
+            - en
+            - ja
+            - ko
+            - zh-CN
+            - zh-TW
+            - de
+            - es
+            - fr
+            - nl
+            - it
+            - pt
+            - tr
+            - ru
+            - id
+            - ms
+            - tl
+            - th
+            - lo
+            - km
+            - vi
+            - ar
+            - he
+            - hi
+        social_username:
+          type: string
+        event_date_min:
+          type: string
+          format: date
+        event_date_max:
+          type: string
+          format: date
+        event_tags:
+          type: array
+          items:
+            type: string
+        event_months:
+          type: array
+          items:
+            type: string
+        created_at_min:
+          type: string
+          format: date-time
+          description: Minimum value for time range search of Customer creation timestamp.
+        created_at_max:
+          type: string
+          format: date-time
+          description: Maximum value for time range search of Customer creation timestamp.
+        updated_at_min:
+          type: string
+          format: date-time
+          description: Minimum value for time range search of Customer updated timestamp.
+        updated_at_max:
+          type: string
+          format: date-time
+          description: Maximum value for time range search of Customer updated timestamp.
+        address_postal_code:
+          type: string
+          description: Search by Customer address postal code.
+        address_country:
+          type: string
+          format: country
+          description: Search by Customer address country.
+        address_region:
+          type: string
+          description: Search by Customer region/state/province.
+        address_city:
+          type: string
+          description: Search by Customer city.
+        reservation_stages:
+          description: For Reservation search parameters, sets a basic scope to query past, future, and/or cancelled reservations.
+          type: array
+          items:
+            type: string
+            enum:
+            - past
+            - future
+            - cancelled
+            - rejected
+        reservation_start_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation start time.
+        reservation_start_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation start time.
+        reservation_created_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation creation timestamp.
+        reservation_created_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation creation timestamp.
+        reservation_updated_date_min:
+          type: string
+          format: date
+          description: Minimum value for date range search of Reservation updated timestamp.
+        reservation_updated_date_max:
+          type: string
+          format: date
+          description: Maximum value for date range search of Reservation updated timestamp.
+        reservation_pax_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of Reservation party size.
+        reservation_pax_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of Reservation party size.
+        reservation_count_visits_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of total visit count across all venues.
+        reservation_count_visits_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of total visit count across all venues.
+        reservation_shop_visits_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of visit count at an individual venue.
+        reservation_shop_visits_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of visit count at an individual venue.
+        reservation_shop_cancels_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of cancellation count.
+        reservation_shop_cancels_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of cancellation count.
+        reservation_shop_noshows_min:
+          type: number
+          format: integer
+          description: Minimum value for range search of no-show count.
+        reservation_shop_noshows_max:
+          type: number
+          format: integer
+          description: Maximum value for range search of no-show count.
+        reservation_memo:
+          type: string
+          description: Text search of Reservation memos.
+        reservation_ref:
+          type: string
+          description: Search by Reservation code or identifier.
+        reservation_party_name:
+          type: string
+          description: Search by Reservation party name.
+        reservation_room_name:
+          type: string
+          description: Search by room number present on Reservation.
+        reservation_flag_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_statuses:
+          type: array
+          items:
+            type: string
+        reservation_status_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_objectives:
+          type: array
+          items:
+            type: string
+        reservation_shop_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        reservation_sources:
+          type: array
+          items:
+            type: string
+        reservation_channels:
+          type: array
+          items:
+            type: string
+        reservation_providers:
+          type: array
+          items:
+            type: string
+        membership_program_id:
+          type: string
+        membership_tier_id:
+          type: string
+        membership_code:
+          type: string
+        membership_points_min:
+          type: string
+        membership_points_max:
+          type: string
+        membership_start_date_min:
+          type: string
+          format: date
+        membership_start_date_max:
+          type: string
+          format: date
+        membership_expiry_date_min:
+          type: string
+          format: date
+        membership_expiry_date_max:
+          type: string
+          format: date
+        payment_currency:
+          type: string
+          enum:
+          - local
+          - USD
+          description: Currency applicable for Payment search parameters. Either local currency (default) or USD.
+        payment_average_amt_min:
+          type: string
+          format: float
+        payment_average_amt_max:
+          type: string
+          format: float
+        payment_lifetime_amt_min:
+          type: string
+          format: float
+        payment_lifetime_amt_max:
+          type: string
+          format: float
+        payment_last_amt_min:
+          type: string
+          format: float
+        payment_last_amt_max:
+          type: string
+          format: float
+        payment_avg_spend_per_pax_min:
+          type: string
+          format: float
+        payment_avg_spend_per_pax_max:
+          type: string
+          format: float
+        pos_menu_condition:
+          type: string
+        pos_currency:
+          type: string
+          description: Currency applicable for POS search parameters. Either local currency (default) or USD.
+        pos_average_amt_min:
+          type: string
+          format: float
+        pos_average_amt_max:
+          type: string
+          format: float
+        pos_lifetime_amt_min:
+          type: string
+          format: float
+        pos_lifetime_amt_max:
+          type: string
+          format: float
+        pos_last_amt_min:
+          type: string
+          format: float
+        pos_last_amt_max:
+          type: string
+          format: float
+        pos_avg_spend_per_pax_min:
+          type: string
+          format: float
+        pos_avg_spend_per_pax_max:
+          type: string
+          format: float
+        pos_menu_category_name:
+          type: string
+        pos_menu_item_name:
+          type: string
+        pos_price_min:
+          type: string
+          format: float
+        pos_price_max:
+          type: string
+          format: float
+        pos_qty_min:
+          type: number
+          format: integer
+        pos_qty_max:
+          type: number
+          format: integer
+        pos_total_min:
+          type: string
+          format: float
+        pos_total_max:
+          type: string
+          format: float
+        pos_shop_ids:
+          type: array
+          items:
+            type: string
+            format: bson-id
+        order_currency:
+          type: string
+          description: Currency applicable for Order search parameters. Either local currency (default) or USD.
+        order_menu_category_name:
+          type: string
+        order_menu_item_name:
+          type: string
+        order_menu_category_id:
+          type: string
+          format: bson-id
+        order_menu_item_id:
+          type: string
+          format: bson-id
+        order_price_min:
+          type: string
+          format: float
+        order_price_max:
+          type: string
+          format: float
+        order_qty_min:
+          type: number
+          format: integer
+        order_qty_max:
+          type: number
+          format: integer
+        order_total_min:
+          type: string
+          format: float
+        order_total_max:
+          type: string
+          format: float
+    CustomerCreateParams:
+      type: object
+      required:
+      - franchise_id
+      properties:
+        parent_shop_id:
+          description: One of your shop ID
+          type: string
+          format: bson-id
+        name_prefix:
+          description: Salutation, e.g. "Mr.", "Mrs." etc.
+          type: string
+        first_name:
+          description: First name
+          type: string
+        last_name:
+          description: Last name
+          type: string
+        company_name:
+          description: Company name
+          type: string
+        phones:
+          description: Phones
+          oneOf:
+          - $ref: '#/components/schemas/Phones'
+          - $ref: '#/components/schemas/PhoneNumbersList'
+        overwrite_phones:
+          description: If true, sending the "phones" attribute will overwrite all existing Phones on the Customer.
+          type: boolean
+        emails:
+          description: Emails
+          oneOf:
+          - $ref: '#/components/schemas/Emails'
+          - $ref: '#/components/schemas/EmailAddressesList'
+        overwrite_emails:
+          description: If true, sending the "emails" attribute will overwrite all existing Emails on the Customer.
+          type: boolean
+        socials:
+          description: Social media accounts
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
+        images:
+          description: Images
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageEmbedCreate'
+        overwrite_socials:
+          description: If true, sending the "socials" attribute will overwrite all existing Socials on the Customer.
+          type: boolean
+        events:
+          description: Events
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        overwrite_events:
+          description: If true, sending the "events" attribute will overwrite all existing Events on the Customer.
+          type: boolean
+        addresses:
+          description: Addresses
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        overwrite_addresses:
+          description: If true, sending the "addresses" attribute will overwrite all existing Addresses on the Customer.
+          type: boolean
+        kanji_first_name:
+          description: Kanji first name
+          type: string
+        kanji_last_name:
+          description: Kanji last name
+          type: string
+        title:
+          description: Title
+          type: string
+        sex:
+          description: Sex (0 - Unknown; 1 - Male; 2 - Female)
+          type: number
+          format: integer
+          example: 1
+          enum:
+          - '0'
+          - '1'
+          - '2'
+        division:
+          description: Division
+          type: string
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum:
+          - manual
+          - tablecheck_guest
+          - tablecheck_user
+          - ota
+          - ivr
+          - pms
+          - import
+          - api
+          - edm_subscribe
+        age_range:
+          type: string
+          enum:
+          - none
+          - 20s
+          - 30s
+          - 40s
+          - 50s
+          - 60s
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+        likes:
+          description: Likes
+          type: array
+          items:
+            type: string
+        allerges:
+          description: Allerges
+          type: array
+          items:
+            type: string
+        dislikes:
+          description: Dislikes
+          type: array
+          items:
+            type: string
+        locale:
+          description: The language which the customer prefers for communication. If the specified locale is not supported by TableCheck, it will be set to null, and the update will proceed without failure.
+          type: string
+          enum:
+          - en
+          - ja
+          - ko
+          - zh-CN
+          - zh-TW
+          - de
+          - es
+          - fr
+          - nl
+          - it
+          - pt
+          - tr
+          - ru
+          - id
+          - ms
+          - tl
+          - th
+          - lo
+          - km
+          - vi
+          - ar
+          - he
+          - hi
+        country:
+          description: The nationality of the customer.
+          type: string
+          enum:
+          - AD
+          - AE
+          - AF
+          - AG
+          - AI
+          - AL
+          - AM
+          - AO
+          - AQ
+          - AR
+          - AS
+          - AT
+          - AU
+          - AW
+          - AX
+          - AZ
+          - BA
+          - BB
+          - BD
+          - BE
+          - BF
+          - BG
+          - BH
+          - BI
+          - BJ
+          - BL
+          - BM
+          - BN
+          - BO
+          - BQ
+          - BR
+          - BS
+          - BT
+          - BV
+          - BW
+          - BY
+          - BZ
+          - CA
+          - CC
+          - CD
+          - CF
+          - CG
+          - CH
+          - CI
+          - CK
+          - CL
+          - CM
+          - CN
+          - CO
+          - CR
+          - CU
+          - CV
+          - CW
+          - CX
+          - CY
+          - CZ
+          - DE
+          - DJ
+          - DK
+          - DM
+          - DO
+          - DZ
+          - EC
+          - EE
+          - EG
+          - EH
+          - ER
+          - ES
+          - ET
+          - FI
+          - FJ
+          - FK
+          - FM
+          - FO
+          - FR
+          - GA
+          - GB
+          - GD
+          - GE
+          - GF
+          - GG
+          - GH
+          - GI
+          - GL
+          - GM
+          - GN
+          - GP
+          - GQ
+          - GR
+          - GS
+          - GT
+          - GU
+          - GW
+          - GY
+          - HK
+          - HM
+          - HN
+          - HR
+          - HT
+          - HU
+          - ID
+          - IE
+          - IL
+          - IM
+          - IN
+          - IO
+          - IQ
+          - IR
+          - IS
+          - IT
+          - JE
+          - JM
+          - JO
+          - JP
+          - KE
+          - KG
+          - KH
+          - KI
+          - KM
+          - KN
+          - KP
+          - KR
+          - KW
+          - KY
+          - KZ
+          - LA
+          - LB
+          - LC
+          - LI
+          - LK
+          - LR
+          - LS
+          - LT
+          - LU
+          - LV
+          - LY
+          - MA
+          - MC
+          - MD
+          - ME
+          - MF
+          - MG
+          - MH
+          - MK
+          - ML
+          - MM
+          - MN
+          - MO
+          - MP
+          - MQ
+          - MR
+          - MS
+          - MT
+          - MU
+          - MV
+          - MW
+          - MX
+          - MY
+          - MZ
+          - NA
+          - NC
+          - NE
+          - NF
+          - NG
+          - NI
+          - NL
+          - 'NO'
+          - NP
+          - NR
+          - NU
+          - NZ
+          - OM
+          - PA
+          - PE
+          - PF
+          - PG
+          - PH
+          - PK
+          - PL
+          - PM
+          - PN
+          - PR
+          - PS
+          - PT
+          - PW
+          - PY
+          - QA
+          - RE
+          - RO
+          - RS
+          - RU
+          - RW
+          - SA
+          - SB
+          - SC
+          - SD
+          - SE
+          - SG
+          - SH
+          - SI
+          - SJ
+          - SK
+          - SL
+          - SM
+          - SN
+          - SO
+          - SR
+          - SS
+          - ST
+          - SV
+          - SX
+          - SY
+          - SZ
+          - TC
+          - TD
+          - TF
+          - TG
+          - TH
+          - TJ
+          - TK
+          - TL
+          - TM
+          - TN
+          - TO
+          - TR
+          - TT
+          - TV
+          - TW
+          - TZ
+          - UA
+          - UG
+          - UM
+          - US
+          - UY
+          - UZ
+          - VA
+          - VC
+          - VE
+          - VG
+          - VI
+          - VN
+          - VU
+          - WF
+          - WS
+          - YE
+          - YT
+          - ZA
+          - ZM
+          - ZW
+        base_count_visits:
+          description: Base count visits
+          type: number
+          format: integer
+        base_count_cancels:
+          description: Base count cancels
+          type: number
+          format: integer
+        base_count_noshows:
+          description: Base count noshows
+          type: number
+          format: integer
+        email_marketing:
+          description: Email marketing
+          type: boolean
+        email_reminders:
+          description: Email reminders
+          type: boolean
+        direct_mail:
+          description: Direct mail
+          type: boolean
+        is_incognito:
+          description: Is incognito
+          type: boolean
+        is_temporary:
+          description: Is temporary
+          type: boolean
+        memo:
+          description: Memo
+          type: string
+        shop_memos:
+          description: Shop-specific customer memos.
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerShopMemo'
+        allow_surveys:
+          type: boolean
+        merge_customer_ids:
+          description: IDs of other Customers to merge into the current Customer. Note that the current Customer will remain, and the other Customers will be destroyed. Note that certain items such as Reservations are merged using an asynchronous job, so it may take some time for these to reflect on the current Customer.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        franchise_id:
+          description: One of your franchise ID
+          type: string
+          format: bson-id
+    EmailAddressesList:
+      description: '[PII] Email addresses as an array of strings.'
+      type: array
+      items:
+        type: string
+        format: email
+    Address:
+      type: object
+      example:
+        tag: home
+        street: 123 Main St
+        city: Seattle
+        state: WA
+        country: US
+      properties:
+        id:
+          description: The database ID of the Address object.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          description: A tag which indicates the type of address.
+          enum:
+          - none
+          - home
+          - work
+          - other
+        street:
+          type: string
+          description: '[PII] The first line of the street address.'
+        street2:
+          type: string
+          description: '[PII] The second line of the street address.'
+        city:
+          type: string
+          description: '[PII] The city of the address.'
+        region:
+          type: string
+          description: '[PII] The region, state, province, or prefecture of the address.'
+        postal_code:
+          type: string
+          description: '[PII] The postal code of the address.'
+        country:
+          description: The ISO 3166 Alpha-2 code of the country.
+          type: string
+          format: iso-country
+          example: JP
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Event:
+      type: object
+      example:
+        date: 01-01-2020
+        tag: anniversary
+      properties:
+        id:
+          description: The database ID of the Event.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          enum:
+          - anniversary
+          - birthday
+          - single
+          - 1_month
+          - 2_month
+          - 3_month
+          - 6_month
+          - 1_year
+        date:
+          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
+          type: string
+          format: date
+        months:
+          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
+          type: array
+          items:
+            type: number
+            format: integer
+        day:
+          description: The day on which the event occurs.
+          type: number
+          format: integer
+        memo:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ElasticPaginationData:
+      type: object
+      properties:
+        scroll_id:
+          type: string
+        total_results:
+          type: number
+          format: integer
+          example: 100
+    CustomerUpdateParams:
+      type: object
+      required:
+      - last_name
+      properties:
+        parent_shop_id:
+          description: One of your shop ID
+          type: string
+          format: bson-id
+        name_prefix:
+          description: Salutation, e.g. "Mr.", "Mrs." etc.
+          type: string
+        first_name:
+          description: First name
+          type: string
+        last_name:
+          description: Last name
+          type: string
+        company_name:
+          description: Company name
+          type: string
+        phones:
+          description: Phones
+          oneOf:
+          - $ref: '#/components/schemas/Phones'
+          - $ref: '#/components/schemas/PhoneNumbersList'
+        overwrite_phones:
+          description: If true, sending the "phones" attribute will overwrite all existing Phones on the Customer.
+          type: boolean
+        emails:
+          description: Emails
+          oneOf:
+          - $ref: '#/components/schemas/Emails'
+          - $ref: '#/components/schemas/EmailAddressesList'
+        overwrite_emails:
+          description: If true, sending the "emails" attribute will overwrite all existing Emails on the Customer.
+          type: boolean
+        socials:
+          description: Social media accounts
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
+        images:
+          description: Images
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ImageEmbedCreate'
+            - $ref: '#/components/schemas/ImageEmbedDestroy'
+        overwrite_socials:
+          description: If true, sending the "socials" attribute will overwrite all existing Socials on the Customer.
+          type: boolean
+        events:
+          description: Events
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        overwrite_events:
+          description: If true, sending the "events" attribute will overwrite all existing Events on the Customer.
+          type: boolean
+        addresses:
+          description: Addresses
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        overwrite_addresses:
+          description: If true, sending the "addresses" attribute will overwrite all existing Addresses on the Customer.
+          type: boolean
+        kanji_first_name:
+          description: Kanji first name
+          type: string
+        kanji_last_name:
+          description: Kanji last name
+          type: string
+        title:
+          description: Title
+          type: string
+        sex:
+          description: Sex (0 - Unknown; 1 - Male; 2 - Female)
+          type: number
+          format: integer
+          example: 1
+          enum:
+          - '0'
+          - '1'
+          - '2'
+        division:
+          description: Division
+          type: string
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum:
+          - manual
+          - tablecheck_guest
+          - tablecheck_user
+          - ota
+          - ivr
+          - pms
+          - import
+          - api
+          - edm_subscribe
+        age_range:
+          type: string
+          enum:
+          - none
+          - 20s
+          - 30s
+          - 40s
+          - 50s
+          - 60s
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+        likes:
+          description: Likes
+          type: array
+          items:
+            type: string
+        allerges:
+          description: Allerges
+          type: array
+          items:
+            type: string
+        dislikes:
+          description: Dislikes
+          type: array
+          items:
+            type: string
+        locale:
+          description: The language which the customer prefers for communication. If the specified locale is not supported by TableCheck, it will be set to null, and the update will proceed without failure.
+          type: string
+          enum:
+          - en
+          - ja
+          - ko
+          - zh-CN
+          - zh-TW
+          - de
+          - es
+          - fr
+          - nl
+          - it
+          - pt
+          - tr
+          - ru
+          - id
+          - ms
+          - tl
+          - th
+          - lo
+          - km
+          - vi
+          - ar
+          - he
+          - hi
+        country:
+          description: The nationality of the customer.
+          type: string
+          enum:
+          - AD
+          - AE
+          - AF
+          - AG
+          - AI
+          - AL
+          - AM
+          - AO
+          - AQ
+          - AR
+          - AS
+          - AT
+          - AU
+          - AW
+          - AX
+          - AZ
+          - BA
+          - BB
+          - BD
+          - BE
+          - BF
+          - BG
+          - BH
+          - BI
+          - BJ
+          - BL
+          - BM
+          - BN
+          - BO
+          - BQ
+          - BR
+          - BS
+          - BT
+          - BV
+          - BW
+          - BY
+          - BZ
+          - CA
+          - CC
+          - CD
+          - CF
+          - CG
+          - CH
+          - CI
+          - CK
+          - CL
+          - CM
+          - CN
+          - CO
+          - CR
+          - CU
+          - CV
+          - CW
+          - CX
+          - CY
+          - CZ
+          - DE
+          - DJ
+          - DK
+          - DM
+          - DO
+          - DZ
+          - EC
+          - EE
+          - EG
+          - EH
+          - ER
+          - ES
+          - ET
+          - FI
+          - FJ
+          - FK
+          - FM
+          - FO
+          - FR
+          - GA
+          - GB
+          - GD
+          - GE
+          - GF
+          - GG
+          - GH
+          - GI
+          - GL
+          - GM
+          - GN
+          - GP
+          - GQ
+          - GR
+          - GS
+          - GT
+          - GU
+          - GW
+          - GY
+          - HK
+          - HM
+          - HN
+          - HR
+          - HT
+          - HU
+          - ID
+          - IE
+          - IL
+          - IM
+          - IN
+          - IO
+          - IQ
+          - IR
+          - IS
+          - IT
+          - JE
+          - JM
+          - JO
+          - JP
+          - KE
+          - KG
+          - KH
+          - KI
+          - KM
+          - KN
+          - KP
+          - KR
+          - KW
+          - KY
+          - KZ
+          - LA
+          - LB
+          - LC
+          - LI
+          - LK
+          - LR
+          - LS
+          - LT
+          - LU
+          - LV
+          - LY
+          - MA
+          - MC
+          - MD
+          - ME
+          - MF
+          - MG
+          - MH
+          - MK
+          - ML
+          - MM
+          - MN
+          - MO
+          - MP
+          - MQ
+          - MR
+          - MS
+          - MT
+          - MU
+          - MV
+          - MW
+          - MX
+          - MY
+          - MZ
+          - NA
+          - NC
+          - NE
+          - NF
+          - NG
+          - NI
+          - NL
+          - 'NO'
+          - NP
+          - NR
+          - NU
+          - NZ
+          - OM
+          - PA
+          - PE
+          - PF
+          - PG
+          - PH
+          - PK
+          - PL
+          - PM
+          - PN
+          - PR
+          - PS
+          - PT
+          - PW
+          - PY
+          - QA
+          - RE
+          - RO
+          - RS
+          - RU
+          - RW
+          - SA
+          - SB
+          - SC
+          - SD
+          - SE
+          - SG
+          - SH
+          - SI
+          - SJ
+          - SK
+          - SL
+          - SM
+          - SN
+          - SO
+          - SR
+          - SS
+          - ST
+          - SV
+          - SX
+          - SY
+          - SZ
+          - TC
+          - TD
+          - TF
+          - TG
+          - TH
+          - TJ
+          - TK
+          - TL
+          - TM
+          - TN
+          - TO
+          - TR
+          - TT
+          - TV
+          - TW
+          - TZ
+          - UA
+          - UG
+          - UM
+          - US
+          - UY
+          - UZ
+          - VA
+          - VC
+          - VE
+          - VG
+          - VI
+          - VN
+          - VU
+          - WF
+          - WS
+          - YE
+          - YT
+          - ZA
+          - ZM
+          - ZW
+        base_count_visits:
+          description: Base count visits
+          type: number
+          format: integer
+        base_count_cancels:
+          description: Base count cancels
+          type: number
+          format: integer
+        base_count_noshows:
+          description: Base count noshows
+          type: number
+          format: integer
+        email_marketing:
+          description: Email marketing
+          type: boolean
+        email_reminders:
+          description: Email reminders
+          type: boolean
+        direct_mail:
+          description: Direct mail
+          type: boolean
+        is_incognito:
+          description: Is incognito
+          type: boolean
+        is_temporary:
+          description: Is temporary
+          type: boolean
+        memo:
+          description: Memo
+          type: string
+        shop_memos:
+          description: Shop-specific customer memos.
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerShopMemo'
+        allow_surveys:
+          type: boolean
+        merge_customer_ids:
+          description: IDs of other Customers to merge into the current Customer. Note that the current Customer will remain, and the other Customers will be destroyed. Note that certain items such as Reservations are merged using an asynchronous job, so it may take some time for these to reflect on the current Customer.
+          type: array
+          items:
+            type: string
+            format: bson-id
+    CustomerSearchResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElasticCustomer'
+        pagination:
+          $ref: '#/components/schemas/ElasticPaginationData'
+    Phones:
+      description: '[PII] A list of Phone objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Phone'
+    CustomerShopMemo:
+      description: A shop-specific customer memo.
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: bson-id
+          shop_id:
+            type: string
+          memo:
+            type: string
+    CustomerShowResponse:
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+    Customer:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Customer.
+          type: string
+          format: bson-id
+        ref:
+          type: string
+          description: Your identifier for the customer.
+        franchise_id:
+          description: The ID of Franchise to which the Customer belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        name:
+          description: '[PII] The full name of the customer.'
+          type: string
+        first_name:
+          description: '[PII] The first name of the customer.'
+          type: string
+        last_name:
+          description: '[PII] The last name of the customer.'
+          type: string
+        alt_first_name:
+          description: '[PII] The alternate (e.g. kanji) first name of the customer.'
+          type: string
+        alt_last_name:
+          description: '[PII] The alternate (e.g. kanji) last name of the customer.'
+          type: string
+        alpha_first_name:
+          description: '[PII] The alphabetical first name of the customer.'
+          type: string
+        alpha_last_name:
+          description: '[PII] The alphabetical last name of the customer.'
+          type: string
+        company_name:
+          type: string
+        company_title:
+          type: string
+        company_division:
+          type: string
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+        locale:
+          type: string
+          enum:
+          - en
+          - ja
+          - ko
+          - zh-CN
+          - zh-TW
+          - de
+          - es
+          - fr
+          - nl
+          - it
+          - pt
+          - tr
+          - ru
+          - id
+          - ms
+          - tl
+          - th
+          - lo
+          - km
+          - vi
+          - ar
+          - he
+          - hi
+        source:
+          description: The channel by which the Customer data was obtained.
+          type: string
+          enum:
+          - manual
+          - tablecheck_guest
+          - tablecheck_user
+          - ota
+          - ivr
+          - pms
+          - import
+          - api
+          - edm_subscribe
+        memo:
+          description: Free-text memo
+          type: string
+        phones:
+          description: '[PII] Phone numbers as an array of strings.'
+          $ref: '#/components/schemas/PhoneNumbersList'
+        phone_objects:
+          description: '[PII] Phone numbers as structured objects.'
+          $ref: '#/components/schemas/Phones'
+        emails:
+          description: '[PII] Email addresses as an array of strings.'
+          $ref: '#/components/schemas/EmailAddressesList'
+        email_objects:
+          description: '[PII] Email addresses as structured objects.'
+          $ref: '#/components/schemas/Emails'
+        events:
+          description: '[PII] Calendar events such as birthday, anniversary, etc.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        socials:
+          description: '[PII] Social media accounts'
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageEmbed'
+        tags:
+          type: array
+          items:
+            type: string
+        likes:
+          type: array
+          items:
+            type: string
+        dislikes:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        is_temporary:
+          type: boolean
+        allow_marketing:
+          type: boolean
+        allow_direct_mail:
+          type: boolean
+        allow_surveys:
+          type: boolean
+        is_incognito:
+          description: If true, indicates that the customer should not be greeted by name (e.g. in phone calls, etc.)
+          type: boolean
+        addresses:
+          type: array
+          description: '[PII] Customer addresses'
+          items:
+            $ref: '#/components/schemas/Address'
+        memberships:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipEmbed'
+        parent_shop_id:
+          description: The ID of the venue which is the primary relationship holder for the Customer.
+          type: string
+          format: bson-id
+        merged_customer_ids:
+          description: The IDs of other Customers which were merged into this Customer. Used for reconciliation purposes. Note that since the other Customers are destroyed after merging, it will no longer be possible to query for their ID.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        visits_count:
+          description: The number of past visits by the Customer.
+          type: integer
+          readOnly: true
+        cancels_count:
+          description: The number of cancelled Reservations for the Customer.
+          type: integer
+          readOnly: true
+        noshows_count:
+          description: The number of no-show Reservations for the Customer.
+          type: integer
+          readOnly: true
+        visits_count_by_shop_id:
+          description: The number of past visits by the Customer, broken down by Shop.
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        previous_visit_at:
+          description: The timestamp of the Customer's most recent past visit.
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        next_visit_at:
+          description: The timestamp of the Customer's next upcoming visit.
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+    Phone:
+      type: object
+      required:
+      - number
+      properties:
+        id:
+          description: The database ID of the Phone object.
+          type: string
+          format: bson-id
+        number:
+          description: '[PII] The phone number in E.164 format.'
+          type: string
+          format: phone-e164
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - assistant
+          - fax
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ImageEmbedCreate:
+      type: object
+      properties:
+        image_upload_url:
+          description: The publicly accessible URL of the image to upload.
+          type: string
+          format: url
+          example: https://your.domain.com/image.png
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
