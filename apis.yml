@@ -11,7 +11,20 @@ description: TableCheck is a restaurant booking and guest-experience platform (f
   and a per-environment secret_key is issued by the TableCheck API team on approval, while
   some components (notably the direct Booking API) are available only by special
   arrangement. Each component publishes an OpenAPI 3.0 description.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tablecheck.png
 tags:
 - Restaurant
 - Reservations
@@ -26,150 +39,537 @@ modified: '2026-07-05'
 specificationVersion: '0.19'
 apis:
 - aid: tablecheck:tablecheck-availability-api
-  name: TableCheck Availability API
-  tags:
-  - Availability
-  - Shops
-  - Timetable
-  - Reservations
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  name: TableCheck availability API
+  description: The availability API from TableCheck — 1 operation(s) for availability.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
-  properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/availability/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-availability.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Obtain near real-time table availability for online reservation booking.
-    Search availability across all shops for a party size and datetime, fetch a shop's
-    availability timetable and calendar, and list bookable tables for a specific shop.
-- aid: tablecheck:tablecheck-web-booking-api
-  name: TableCheck Web Booking API
   tags:
-  - Web Booking
-  - Reservations
-  - Read Only
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
-  baseURL: https://api.tablecheck.com/api/web_booking/v1
+  - availability
   properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/web_booking/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-web-booking.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Read-only API to query reservations that diner users booked via the
-    TableCheck website. List reservations with created_at, updated_at, and start_at
-    range filters, and fetch a specific reservation by ID or ref. Bookings themselves
-    are made by linking users into TableCheck's hosted web flow.
-- aid: tablecheck:tablecheck-booking-api
-  name: TableCheck Booking API
+  - type: OpenAPI
+    url: openapi/tablecheck-availability-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-blockages-api
+  name: TableCheck blockages API
+  description: The blockages API from TableCheck — 2 operation(s) for blockages.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - Booking
-  - Reservations
-  - Blockages
-  - Shops
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
-  baseURL: https://api.tablecheck.com/api/booking/v1
+  - blockages
   properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/booking/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-booking.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Book reservations directly into TableCheck's inventory backend. Create,
-    read, update, and cancel reservations; manage blockages and reservation flags;
-    and list shops. Available by special arrangement with TableCheck - in most cases
-    the Web Booking API is used instead.
-- aid: tablecheck:tablecheck-crm-api
-  name: TableCheck CRM API
+  - type: OpenAPI
+    url: openapi/tablecheck-blockages-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-calendar-api
+  name: TableCheck calendar API
+  description: The calendar API from TableCheck — 1 operation(s) for calendar.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - CRM
-  - Customers
-  - Memberships
-  - Guests
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
-  baseURL: https://api.tablecheck.com/api/crm/v1
+  - calendar
   properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/crm/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-crm.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Obtain full customer, reservation, membership, and related guest data
-    for restaurant operators. Manage customers (list, create, amend, delete, bulk
-    search/export), memberships and membership programs, reservations and reservation
-    flags, plus shops and franchises.
-- aid: tablecheck:tablecheck-pos-api
-  name: TableCheck POS API
+  - type: OpenAPI
+    url: openapi/tablecheck-calendar-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-customers-api
+  name: TableCheck customers API
+  description: The customers API from TableCheck — 3 operation(s) for customers.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - Point of Sale
-  - POS Journals
-  - Tables
-  - Reservations
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
-  baseURL: https://api.tablecheck.com/api/pos/v1
+  - customers
   properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/pos/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-pos.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Connect Point-of-Sale systems to restaurants on the TableCheck platform.
-    List shops, manage POS journals per shop (create, read, update, delete, void),
-    read and update reservations, list tables, and read and update table status.
-- aid: tablecheck:tablecheck-site-controller-api
-  name: TableCheck Site Controller API
+  - type: OpenAPI
+    url: openapi/tablecheck-customers-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-franchises-api
+  name: TableCheck franchises API
+  description: The franchises API from TableCheck — 2 operation(s) for franchises.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - Site Controller
-  - Shops
-  - Channel Manager
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
-  baseURL: https://api.tablecheck.com/api/site/v1
+  - franchises
   properties:
-  - url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
-    type: Documentation
-  - url: https://api.tablecheck.com/api/site/v1/docs
-    type: APIReference
-  - url: openapi/tablecheck-site-controller.yml
-    type: OpenAPI
-  - url: collections/tablecheck.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tablecheck.opencollection.json
-    type: OpenCollection
-  description: Site-controller component for reading shop inventory across the platform.
-    List shops (filtered by IDs, slugs, or franchise IDs) and fetch a specific shop,
-    for channel-manager and site-integration use cases.
+  - type: OpenAPI
+    url: openapi/tablecheck-franchises-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-membership-programs-api
+  name: TableCheck membership_programs API
+  description: The membership_programs API from TableCheck — 2 operation(s) for membership_programs.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - membership_programs
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-membership-programs-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-memberships-api
+  name: TableCheck memberships API
+  description: The memberships API from TableCheck — 2 operation(s) for memberships.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-memberships-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-pos-journals-api
+  name: TableCheck pos_journals API
+  description: The pos_journals API from TableCheck — 3 operation(s) for pos_journals.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - pos_journals
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-pos-journals-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-reservation-flags-api
+  name: TableCheck reservation_flags API
+  description: The reservation_flags API from TableCheck — 2 operation(s) for reservation_flags.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - reservation_flags
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-reservation-flags-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-reservations-api
+  name: TableCheck reservations API
+  description: The reservations API from TableCheck — 6 operation(s) for reservations.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - reservations
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-reservations-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-shops-api
+  name: TableCheck shops API
+  description: The shops API from TableCheck — 3 operation(s) for shops.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - shops
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-shops-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-table-status-api
+  name: TableCheck table_status API
+  description: The table_status API from TableCheck — 2 operation(s) for table_status.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - table_status
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-table-status-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-tables-api
+  name: TableCheck tables API
+  description: The tables API from TableCheck — 1 operation(s) for tables.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - tables
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-tables-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
+- aid: tablecheck:tablecheck-timetable-api
+  name: TableCheck timetable API
+  description: The timetable API from TableCheck — 1 operation(s) for timetable.
+  humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  baseURL: https://api.tablecheck.com/api/availability/v1
+  tags:
+  - timetable
+  properties:
+  - type: OpenAPI
+    url: openapi/tablecheck-timetable-api-openapi.yml
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/availability/v1/docs
+  - type: PostmanCollection
+    url: collections/tablecheck.postman_collection.json
+  - type: OpenCollection
+    url: collections/tablecheck.opencollection.json
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/48595292/Web+Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/web_booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/booking/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/crm/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/pos/v1/docs
+  - type: Documentation
+    url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/1739194852/Site+Controller+v1
+  - type: APIReference
+    url: https://api.tablecheck.com/api/site/v1/docs
 common:
 - type: AgenticAccess
   url: agentic-access/tablecheck-agentic-access.yml
