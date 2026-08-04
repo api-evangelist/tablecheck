@@ -1,0 +1,1609 @@
+# Test and edit this file at https://editor.swagger.io/
+
+openapi: 3.0.0
+
+info:
+  version: 1.1.0
+  title: TableCheck API - Pos V1
+  description: The POS API is used to connect Point-of-Sale systems to the restaurants on the TableCheck platform.
+  termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+
+externalDocs:
+  description: Implementation Guide
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1
+
+servers:
+
+
+
+  - url: https://api.tablecheck.com/api/pos/v1/
+    description: Production (uses live data)
+
+paths:
+  /shops:
+    get:
+      summary: List of all available shops
+      operationId: listShops
+      tags:
+        - shops
+      responses:
+        '200':
+          description: A list of shops
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopsListResponse"
+        '403': &ForbiddenError
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+
+  /shops/{id}:
+    get:
+      summary: Get Shop information
+      operationId: showShop
+      tags:
+        - shops
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A shop's information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Shop"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+        '422': &UnprocessableEntityError
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: "#/components/schemas/UnprocessableEntityError"
+                  - $ref: "#/components/schemas/ShopNotFoundError"
+
+  /shops/{shop_id}/pos_journals:
+    get:
+      summary: List all PosJournals
+      operationId: listPosJournals
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of PosJournals
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PosJournalsListResponse"
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+    post:
+      summary: Create PosJournal
+      operationId: createPosJournal
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/PosJournalCreateParams"
+      responses:
+        '200':
+          description: The PosJournal which was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PosJournalSingleResponse"
+        '400': &BadRequest
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/pos_journals/{pos_journal_id}:
+    get:
+      summary: Get PosJournal information
+      operationId: showPosJournal
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: pos_journal_id
+          in: path
+          required: true
+          description: The ID of the PosJournal
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The PosJournal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PosJournalSingleResponse"
+        '404': &NotFoundError
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+    put:
+      summary: Update PosJournal
+      operationId: updatePosJournal
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: pos_journal_id
+          in: path
+          required: true
+          description: The ID of the PosJournal
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/PosJournalUpdateParams"
+      responses:
+        '200':
+          description: The PosJournal which was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PosJournalSingleResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': *NotFoundError
+        '422': *UnprocessableEntityError
+
+    delete:
+      summary: Delete PosJournal
+      operationId: deletePosJournal
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: pos_journal_id
+          in: path
+          required: true
+          description: The ID of the PosJournal
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The PosJournal was successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': *NotFoundError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/pos_journals/void:
+    post:
+      summary: Void PosJournal (Check Void)
+      operationId: voidPosJournal
+      description: Voids a check by adding a '--VOID--' marker, setting total_price to 0, and preserving original line items for audit purposes. Used by POS integrations to handle check cancellations.
+      tags:
+        - pos_journals
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - receipt_num
+              properties:
+                receipt_num:
+                  description: The receipt number of the check to void
+                  type: string
+                  example: "12345"
+                void_reason:
+                  description: Optional reason for voiding the check
+                  type: string
+                  example: "customer_cancellation"
+                voided_at:
+                  description: Optional timestamp of when the void occurred. Defaults to current time if not provided.
+                  type: string
+                  format: date-time
+                  example: '2026-01-29T19:30:00Z'
+      responses:
+        '200':
+          description: The PosJournal was successfully voided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  pos_journal:
+                    $ref: "#/components/schemas/PosJournal"
+                  voided_at:
+                    type: string
+                    format: date-time
+                    example: '2026-01-29T19:30:00Z'
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': *NotFoundError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/reservations:
+    get:
+      summary: List all Reservations
+      operationId: listReservations
+      tags:
+        - reservations
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        
+        - name: created_at_min
+          in: query
+          description: Search lower bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: created_at_max
+          in: query
+          description: Search upper bound of created_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: updated_at_min
+          in: query
+          description: Search lower bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: updated_at_max
+          in: query
+          description: Search upper bound of updated_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: start_at_min
+          in: query
+          description: Search lower bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        - name: start_at_max
+          in: query
+          description: Search upper bound of start_at field (ISO timestamp).
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+        
+        - name: customer_name
+          in: query
+          description: The name of the customer to search for reservations. Can be full name, first name, or last name.
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: The zero-based page number. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            minimum: 0
+        - name: per_page
+          in: query
+          description: Number of items to return at once. Used for pagination.
+          required: false
+          schema:
+            type: number
+            format: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+
+      responses:
+        '200':
+          description: A paged array of reservations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationsListResponse"
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/reservations/{reservation_id}:
+    get:
+      summary: Get Reservation information
+      operationId: showReservation
+      tags:
+        - reservations
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: reservation_id
+          in: path
+          required: true
+          description: The ID or code of the Reservation
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IncludeFields'
+        - $ref: '#/components/parameters/ExcludeFields'
+      responses:
+        '200':
+          description: The Reservation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationSingleResponse"
+        '403': *ForbiddenError
+        '404': *NotFoundError
+
+    put:
+      summary: Update Reservation
+      operationId: updateReservation
+      tags:
+        - reservations
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: reservation_id
+          in: path
+          required: true
+          description: The ID or code of the Reservation
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              '$ref': "#/components/schemas/ReservationUpdateParams"
+      responses:
+        '200':
+          description: The Reservation which was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReservationSingleResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': *NotFoundError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/tables:
+    get:
+      summary: List all Tables
+      operationId: listTables
+      tags:
+        - tables
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+        - name: time
+          in: query
+          description: Specific time to search for tables (ISO timestamp). If "now" is passed, the current time will be used.
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '2020-01-29T19:00:00Z'
+      responses:
+        '200':
+          description: A list of Table Names
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TablesListResponse"
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/table_status/show:
+    post:
+      summary: Get Table Status
+      operationId: showTableStatus
+      tags:
+        - table_status
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - '$ref': "#/components/schemas/TableStatusIdTimeParams"
+                - '$ref': "#/components/schemas/TableStatusIdTimeRangeParams"
+                - '$ref': "#/components/schemas/TableStatusNameTimeParams"
+                - '$ref': "#/components/schemas/TableStatusNameTimeRangeParams"
+                - '$ref': "#/components/schemas/TableStatusReservationIdParams"
+            example:
+              table_id: ae5355ca1fd337ed5d6893e2
+              time: '2020-01-29T19:00:00Z'
+      responses:
+        '200':
+          description: The Table Status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableStatusResponse"
+        '404': *NotFoundError
+        '403': *ForbiddenError
+        '422': *UnprocessableEntityError
+
+  /shops/{shop_id}/table_status/update:
+    put:
+      summary: Update Table Status
+      operationId: updateTableStatus
+      tags:
+        - table_status
+      parameters:
+        - name: shop_id
+          in: path
+          required: true
+          description: The ID, slug or ref of the Shop
+          schema:
+            type: string
+            format: bson-id
+            example: ae5355ca1fd337ed5d6893e2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - '$ref': "#/components/schemas/TableStatusUpdateIdTimeParams"
+                - '$ref': "#/components/schemas/TableStatusUpdateIdTimeRangeParams"
+                - '$ref': "#/components/schemas/TableStatusUpdateNameTimeParams"
+                - '$ref': "#/components/schemas/TableStatusUpdateNameTimeRangeParams"
+                - '$ref': "#/components/schemas/TableStatusUpdateReservationIdParams"
+            example:
+              table_id: ae5355ca1fd337ed5d6893e2
+              time: '2020-01-29T19:00:00Z'
+              status: 'vacant'
+      responses:
+        '200':
+          description: The Table Status which was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableStatusResponse"
+        '400': *BadRequest
+        '403': *ForbiddenError
+        '404': *NotFoundError
+        '422': *UnprocessableEntityError
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: AUTHORIZATION
+
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
+
+  schemas:
+    Reservation:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Reservation.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        franchise_id:
+          description: The ID of the Franchise to which the Reservation belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        shop_id:
+          description: The ID of Shop to which the Reservation belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        cancel_reason:
+          description: Free-text reason for cancellation.
+          type: string
+          example: 'Cancelled due to weather'
+        cancel_reason_type:
+          description: The enumerated reason for cancellation.
+          type: string
+          enum: ["mistake","shop","travel","deal","delay","personal","covid","other"]
+        channel:
+          description: The website or sales channel by which the Reservation was made.
+          type: string
+          example: instagram
+        code:
+          description: TableCheck's short code for the Reservation. May be displayed to user.
+          type: string
+          example: ABC123
+        customer_name:
+          description: "[PII] The customer's name."
+          type: string
+        duration:
+          description: The anticipated seating duration of the reservation, in seconds.
+          type: number
+          format: seconds
+          example: 7200
+        locale:
+          description: The customer's preferred language.
+          type: string
+          enum: ["en","ja","ko","zh-CN","zh-TW","de","es","fr","nl","it","pt","tr","ru","id","ms","tl","th","lo","km","vi","ar","he","hi"]
+        memo:
+          description: Free-text memo which may include payment info, special requests, allergies, etc.
+          type: string
+        party_name:
+          description: The party or group name for the reservation.
+          type: string
+        pax:
+          description: The party size, i.e. number of people dining.
+          type: number
+          format: integer
+          example: 3
+        points:
+          description: The number of reward points redeemed by the customer via the provider system.
+          type: number
+          format: integer
+          example: 200
+        provider:
+          description: The system used to process the reservation (tablecheck, etc.)
+          type: string
+          example: tablecheck
+        provider_ref:
+          description: The Reservation ID according to the system which processed the Reservation.
+          type: string
+          example: ABC123DEF
+        purpose:
+          description: The reason or occasion for booking, e.g. "birthday".
+          type: string
+          enum: ["birthday","birthday_self","birthday_friends","birthday_couple","birthday_spouse","birthday_family","group","group_women","group_farewell","group_holiday","group_reunion","group_wedding","group_travel","business","business_internal","business_farewell","business_holiday","family","family_celebration","family_baby","family_kids","family_intro","family_engagement","family_memorial","date","date_group","date_proposal","date_anniversary","date_celebration","event","event_seminar","event_recital","event_expo","event_film","other"]
+        room_name:
+          description: The hotel room number associated with the reservation.
+          type: string
+        seat_types:
+          description: Indicates the seating preference(s) of the customer, e.g. private room.
+          type: array
+          items:
+            type: string
+            enum: ["open","counter","outside","curtain","private","tatami"]
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum: ["none","true","false"]
+        source:
+          description: The general method by which the reservation was made ("web", "phone", etc.)
+          type: string
+          enum: ["phone","ivrs","sms","web","email","in_person","walk_in","app","other"]
+        start_at:
+          description: The time at which the party wishes to arrive for the Reservation. Must match the Blockage start_at value.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        status:
+          description: The status of the Reservation.
+          type: string
+          # TODO: this needs to be corrected!!!
+          enum: ["tentative","pending","request","accepted","confirmed","attended","cancelled","noshow","rejected","iou_prepay","iou_auth"]
+        table_names:
+          description: The names of the table(s) at which the party is seated. This is derived from the table objects in TableCheck.
+          type: array
+          items:
+            type: string
+        created_at:
+          description: The timestamp of when the Reservation was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the Reservation was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+
+    ReservationUpdateParams:
+      type: object
+      properties:
+        pos_journal_ref:
+          description: The POS system's identifier of the check object.
+          type: string
+        status:
+          description: The status of the reservation, e.g. table occupied, etc.
+          type: string
+          enum: ['occupied', 'bill_printed', 'paid', 'cleaning', 'vacant']
+          # TODO: this needs an enum value!!!
+        pax:
+          description: The party size, i.e. number of people dining.
+          type: number
+          format: integer
+        table_names:
+          description: The names of the table(s) at which the party is seated. This should exactly match the table name(s) as they appear in TableCheck.
+          type: array
+          items:
+            type: string
+
+    PosJournalBase:
+      type: object
+      properties: &PosJournalBase
+        batch_date:
+          description: The local date on which the check was processed. Used for tracking nightly batch jobs.
+          type: string
+          format: date
+          example: '2020-01-01'
+        change_amt:
+          description: The amount of the settlement payment returned as change in a cash transaction. Calculate "change_amt" as "settle_amt" less "total_amt".
+          type: string
+          format: decimal
+        country:
+          description: The country of the venue (ISO 3166-1 alpha-2).
+          type: string
+          format: country
+          enum: ["AD","AE","AF","AG","AI","AL","AM","AO","AQ","AR","AS","AT","AU","AW","AX","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BL","BM","BN","BO","BQ","BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD","CF","CG","CH","CI","CK","CL","CM","CN","CO","CR","CU","CV","CW","CX","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","EH","ER","ES","ET","FI","FJ","FK","FM","FO","FR","GA","GB","GD","GE","GF","GG","GH","GI","GL","GM","GN","GP","GQ","GR","GS","GT","GU","GW","GY","HK","HM","HN","HR","HT","HU","ID","IE","IL","IM","IN","IO","IQ","IR","IS","IT","JE","JM","JO","JP","KE","KG","KH","KI","KM","KN","KP","KR","KW","KY","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MF","MG","MH","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA","NC","NE","NF","NG","NI","NL","NO","NP","NR","NU","NZ","OM","PA","PE","PF","PG","PH","PK","PL","PM","PN","PR","PS","PT","PW","PY","QA","RE","RO","RS","RU","RW","SA","SB","SC","SD","SE","SG","SH","SI","SJ","SK","SL","SM","SN","SO","SR","SS","ST","SV","SX","SY","SZ","TC","TD","TF","TG","TH","TJ","TK","TL","TM","TN","TO","TR","TT","TV","TW","TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE","VG","VI","VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"]
+          example: 'JP'
+        coupon_amt:
+          description: The amount of coupons applied to the check. The "coupon_amt" should be applied against the "total_amt", i.e. before settlement.
+          type: string
+          format: decimal
+        currency:
+          description: The currency of the check transaction.
+          type: string
+          enum: ["AED","AFN","ALL","AMD","ANG","AOA","ARS","AUD","AWG","AZN","BAM","BBD","BDT","BGN","BHD","BIF","BMD","BND","BOB","BRL","BSD","BTN","BWP","BYN","BYR","BZD","CAD","CDF","CHF","CLF","CLP","CNY","COP","CRC","CUC","CUP","CVE","CZK","DJF","DKK","DOP","DZD","EGP","ERN","ETB","EUR","FJD","FKP","GBP","GEL","GHS","GIP","GMD","GNF","GTQ","GYD","HKD","HNL","HTG","HUF","IDR","ILS","INR","IQD","IRR","ISK","JMD","JOD","JPY","KES","KGS","KHR","KMF","KPW","KRW","KWD","KYD","KZT","LAK","LBP","LKR","LRD","LSL","LYD","MAD","MDL","MGA","MKD","MMK","MNT","MOP","MRU","MUR","MVR","MWK","MXN","MYR","MZN","NAD","NGN","NIO","NOK","NPR","NZD","OMR","PAB","PEN","PGK","PHP","PKR","PLN","PYG","QAR","RON","RSD","RUB","RWF","SAR","SBD","SCR","SDG","SEK","SGD","SHP","SKK","SLE","SOS","SRD","SSP","STN","SVC","SYP","SZL","THB","TJS","TMT","TND","TOP","TRY","TTD","TWD","TZS","UAH","UGX","USD","UYU","UZS","VES","VND","VUV","WST","XAF","XCD","XCG","XOF","XPF","YER","ZAR","ZMW"]
+          example: 'JPY'
+        customer_name:
+          description: "[PII] The name of the customer appearing on the check, if any."
+          type: string
+        discount_amt:
+          description: The amount of discounts applied to the check. The "discount_amt" should be applied against the "total_amt", i.e. before settlement.
+          type: string
+          format: decimal
+        membership_code:
+          description: The membership number of the customer. Used for loyalty program integration.
+          type: string
+        order_at:
+          description: The timestamp of when the first order of the check occurred. If any PosOrder objects are present, this field will be auto-calculated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        original_receipt_num:
+          description: Receipt number of the original or linked receipt. This can be used if a "parent" check is split into multiple "child" checks, for example.
+          type: string
+        pax:
+          description: The party size of the check, i.e. number of people dining.
+          type: number
+          format: integer
+        payment_at:
+          description: The timestamp of when the payment of the check occurred. If any PosPayment objects are present, this field will be auto-calculated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        pos_discounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosDiscount"
+        pos_orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosOrder"
+        pos_payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosPayment"
+        receipt_num:
+          description: Receipt Number
+          type: string
+        revenue_center:
+          description: Optional. The revenue center or identifier code (as used in the POS system) of the venue. Used for tracking/audit purposes only.
+          type: string
+          example: MyRestaurant/1
+        room_name:
+          description: The room number at which the customer is staying, as used by hotels. Note that this is not used to indicate the dining room name at the venue.
+          type: string
+        service_fee_amt:
+          description: The applicable service fees and surcharges applied to the check.
+          type: string
+          format: decimal
+        service_fee_rate:
+          description: The service fee or surcharge applied to the check, as a decimal value (the value "1.0" means "100%".)
+          type: string
+          format: decimal
+          example: '0.15'
+        settle_amt:
+          description: The amount of money used to pay (i.e. settle) the check. May be greater than "total_amt" when cash is used.
+          type: string
+          format: decimal
+        site_name:
+          description: Optional. The identifier code (as used in the POS system) of the restaurant chain or hotel property. Used for tracking/audit purposes only.
+          type: string
+          example: MyHotel
+        staff_name:
+          description: The name of the staff who served the meal and/or handled the check.
+          type: string
+        staff_ref:
+          description: The identifier code (as used in the POS system) of the staff who served the meal and/or handled the check.
+          type: string
+        subtotal_amt:
+          description: The check subtotal, i.e. including orders but not including "service_fee_amt", "coupon_amt", "discount_amt", "tax_amt".
+          type: string
+          format: decimal
+        system_api_provider:
+          description: The name of the company who is the integrator of the POS API (i.e. your company, if you are connecting to this API.)
+          type: string
+          example: acme
+        system_maker:
+          description: The name of the company who makes the POS system.
+          type: string
+          example: oracle
+        system_model:
+          description: The model of the POS system.
+          type: string
+          example: micros9700
+        system_version:
+          description: The version number of the software used in the POS system.
+          type: string
+          example: '12.1.0'
+        table_names:
+          description: The names of the table(s) at which the party is seated. This should exactly match the table name(s) as they appear in TableCheck.
+          type: array
+          items:
+            type: string
+        tax_amt:
+          description: The amount of tax applied to the check in addition to the "subtotal_amt".
+          type: string
+          format: decimal
+        tax_included_amt:
+          description: The amount of tax already included in the "subtotal_amt", in the case that order prices are shown including tax.
+          type: string
+          format: decimal
+        tax_rate:
+          description: The applicable tax rate to the check, as a decimal value (the value "1.0" means "100%".)
+          type: string
+          format: decimal
+          example: '0.08'
+        terminal_name:
+          description: The name, identifier, or serial number of the POS terminal used to process the check.
+          type: string
+        total_amt:
+          description: The total check payable amount, i.e. the "subtotal_amt" plus "service_fee_amt" and "tax_amt", less "coupon_amt" and "discount_amt".
+          type: string
+          format: decimal
+
+    PosJournalUpdateParams:
+      type: object
+      properties: &PosJournalUpdateParams
+        <<: *PosJournalBase
+        reservation_ref:
+          description: The identifier of the reservation, which should match the database ID or reservation code used by TableCheck.
+          type: string
+        reservation_status:
+          description: POS Reservation Status
+          type: string
+          enum: ['occupied', 'bill_printed', 'paid', 'cleaning', 'vacant']
+
+    PosJournalCreateParams:
+      type: object
+      required:
+        - receipt_num
+      properties:
+        <<: *PosJournalUpdateParams
+        receipt_num:
+          description: Receipt Number
+          type: string
+
+    PosJournal:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosJournal object.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<: *PosJournalBase
+        franchise_id:
+          description: TableCheck's database ID of the Franchise to which the PosJournal belongs.
+          type: string
+          format: bson-id
+          example: d337ed5d6ae5355ca1f893e2
+        ref:
+          description: The POS system's identifier of the check object.
+          type: string
+        receipt_num:
+          description: Receipt Number
+          type: string
+        reservation_id:
+          description: TableCheck's database ID of the Reservation with which the PosJournal is linked.
+          type: string
+          format: bson-id
+          example: 55ca1fd33ae537ede25d6893
+        shop_id:
+          description: TableCheck's database ID of the Shop to which the PosJournal belongs.
+          type: string
+          format: bson-id
+          example: 37ed555ca1fd3d6893e2ae53
+        created_at:
+          description: The timestamp of when the PosJournal was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the PosJournal was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+
+    PosOrder:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosOrder object.
+          type: string
+          format: bson-id
+        menu_category_name:
+          description: The human-readable name of the category of the order's menu item.
+          type: string
+          example: "Appetizer"
+        menu_category_ref:
+          description: The identifier (as used by the POS system database) of the category of the order's menu item.
+          type: string
+          example: ABC123DEF
+        menu_item_name:
+          description: The human-readable name of the order's menu item. This should match the line item displayed on the receipt.
+          type: string
+          example: "Chicken Soup"
+        menu_item_ref:
+          description: The identifier (as used by the POS system database) of the order's menu item.
+          type: string
+          example: ABC123DEF
+        order_at:
+          description: The timestamp of when the order was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        qty:
+          description: The order quantity, i.e. how many units are ordered.
+          type: number
+          format: integer
+        ref:
+          description: The identifier (as used by the POS system database) of the order.
+          type: string
+        sku:
+          description: The Stock Keeping Unit identifier for the order's menu item. This may differ from menu_item_ref (the POS system database ID).
+          type: string
+        unit_price:
+          description: The price of a single unit within the order. (The unit_price is multiplied by qty to obtain the total price.)
+          type: string
+          format: decimal
+
+    PosDiscount:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosDiscount object.
+          type: string
+          format: bson-id
+        amt:
+          description: The monetary amount of the discount.
+          type: string
+          format: decimal
+        name:
+          description: The human-readable name of the discount. This should match the line item displayed on the receipt, if applicable.
+          type: string
+          example: 'Summer Sale 20%'
+        order_at:
+          description: The timestamp of when the discount was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        ref:
+          description: The identifier (as used by the POS system database) of the discount.
+          type: string
+
+    PosPayment:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosPayment object.
+          type: string
+          format: bson-id
+        amt:
+          description: The monetary amount of the payment used to settle the check.
+          type: string
+          format: decimal
+        brand:
+          description: Brand of credit card or cashless wallet used to make payment. Please transmit the raw value from the POS system as-is. Examples values include "visa", "mastercard", "amex", "paypal", "apple_pay", etc.
+          type: string
+          example: 'visa'
+        issuer:
+          description: The credit card issuer. Please transmit the raw value from the POS system as-is. Examples values include "citibank", "chase_bank", etc.
+          type: string
+          example: 'citibank'
+        payment_at:
+          description: The transaction time of the payment used to settle the check.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        ref:
+          description: The identifier (as used by the POS system database) of the payment.
+          type: string
+        tender:
+          description: The payment method used in the transaction. Please transmit the raw value from the POS system as-is. Example values include "cash", "credit_card", "cashless", "voucher", etc.
+          type: string
+          example: 'credit_card'
+
+    Shop:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Shop object.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        franchise_id:
+          description: The database ID of the Franchise object to which the Shop belongs.
+          type: string
+          format: bson-id
+          example: ae53d5d6893e255ca1fd337e
+        address:
+          $ref: "#/components/schemas/Address"
+        alt_address:
+          $ref: "#/components/schemas/Address"
+        country:
+          description: The country code of the shop (ISO 3166-1 alpha-2).
+          type: string
+          format: country
+          enum: ["AD","AE","AF","AG","AI","AL","AM","AO","AQ","AR","AS","AT","AU","AW","AX","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BL","BM","BN","BO","BQ","BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD","CF","CG","CH","CI","CK","CL","CM","CN","CO","CR","CU","CV","CW","CX","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","EH","ER","ES","ET","FI","FJ","FK","FM","FO","FR","GA","GB","GD","GE","GF","GG","GH","GI","GL","GM","GN","GP","GQ","GR","GS","GT","GU","GW","GY","HK","HM","HN","HR","HT","HU","ID","IE","IL","IM","IN","IO","IQ","IR","IS","IT","JE","JM","JO","JP","KE","KG","KH","KI","KM","KN","KP","KR","KW","KY","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MF","MG","MH","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA","NC","NE","NF","NG","NI","NL","NO","NP","NR","NU","NZ","OM","PA","PE","PF","PG","PH","PK","PL","PM","PN","PR","PS","PT","PW","PY","QA","RE","RO","RS","RU","RW","SA","SB","SC","SD","SE","SG","SH","SI","SJ","SK","SL","SM","SN","SO","SR","SS","ST","SV","SX","SY","SZ","TC","TD","TF","TG","TH","TJ","TK","TL","TM","TN","TO","TR","TT","TV","TW","TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE","VG","VI","VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"]
+          example: JP
+        currency:
+          description: The currency code of the shop.
+          type: string
+          format: currency
+          example: JPY
+        franchise_name_translations:
+          description: The translations of the name of the franchise (company) to which the shop belongs.
+          type: object
+          format: translations
+          example:
+            en: "Hotel Kyoto"
+            fr: "Hôtel Kyoto"
+            ja: "ホテル京都"
+        latitude:
+          description: The latitude of the shop's physical location.
+          type: number
+          format: float
+          example: 35.0116
+        location_name_translations:
+          description: The translations of the hotel, mall, building, etc. in whicj the shop is located.
+          type: object
+          format: translations
+          example:
+            en: "Hotel Kyoto"
+            fr: "Hôtel Kyoto"
+            ja: "ホテル京都"
+        longitude:
+          description: The longitude of the shop's physical location.
+          type: number
+          format: float
+          example: 135.7680
+        name_translations:
+          description: The translations of the shop's name.
+          type: object
+          format: translations
+          example:
+            en: "Paris Cafe"
+            fr: "Café de Paris"
+            ja: "カフェデパリ"
+        phone:
+          description: The phone number of the shop.
+          type: string
+          format: phone-e164
+          example: "+81355650112"
+        slug:
+          description: The web URL slug identifier of the shop, as used by TableCheck.
+          type: string
+          example: my-shop-slug
+        time_zone:
+          description: The time zone of the shop.
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        created_at:
+          description: The timestamp of when the shop was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the shop was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+
+    Address:
+      type: object
+      required:
+        - street
+        - city
+        - postal_code
+        - country
+        - tag
+      properties:
+        street:
+          description: The first street line of the address.
+          type: string
+          example: "2-14-5 Ginza"
+        street2:
+          description: The second street line of the address. Often this is a building name.
+          type: string
+          example: "Dai-27 Chuo Bldg 4F"
+        city:
+          description: The city or town of the address.
+          type: string
+          example: "Chuo-ku"
+        region:
+          description: The administrative region of the address, which could be a state, province, or prefecture.
+          type: string
+          example: "Tokyo"
+        postal_code:
+          description: The postal code or ZIP code of the address.
+          type: string
+          example: "104-0061"
+        country:
+          description: The country code of the address (ISO 3166-1 alpha-2).
+          type: string
+          enum: ["AD","AE","AF","AG","AI","AL","AM","AO","AQ","AR","AS","AT","AU","AW","AX","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BL","BM","BN","BO","BQ","BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD","CF","CG","CH","CI","CK","CL","CM","CN","CO","CR","CU","CV","CW","CX","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","EH","ER","ES","ET","FI","FJ","FK","FM","FO","FR","GA","GB","GD","GE","GF","GG","GH","GI","GL","GM","GN","GP","GQ","GR","GS","GT","GU","GW","GY","HK","HM","HN","HR","HT","HU","ID","IE","IL","IM","IN","IO","IQ","IR","IS","IT","JE","JM","JO","JP","KE","KG","KH","KI","KM","KN","KP","KR","KW","KY","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MF","MG","MH","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA","NC","NE","NF","NG","NI","NL","NO","NP","NR","NU","NZ","OM","PA","PE","PF","PG","PH","PK","PL","PM","PN","PR","PS","PT","PW","PY","QA","RE","RO","RS","RU","RW","SA","SB","SC","SD","SE","SG","SH","SI","SJ","SK","SL","SM","SN","SO","SR","SS","ST","SV","SX","SY","SZ","TC","TD","TF","TG","TH","TJ","TK","TL","TM","TN","TO","TR","TT","TV","TW","TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE","VG","VI","VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"]
+          example: "JP"
+        tag:
+          description: A tag or label for the address.
+          type: string
+          enum: ["none","home","work","other"]
+          example: "home"
+
+    Table:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the table.
+          type: string
+          format: bson-id
+          example: ea1fd65d5357ed3ac5893e43
+        floor_plan_id:
+          description: TableCheck's database ID of the floor plan to which the table belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        section_id:
+          description: TableCheck's database ID of the section to which the table belongs.
+          type: string
+          format: bson-id
+          example: 5357ed5dc5893e433aea1fd6
+        shop_id:
+          description: The ID of Shop to which the Table belongs.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        floor_plan_name:
+          description: The name of the floor plan to which the table belongs.
+          type: string
+          format: bson-id
+          example: 'Holiday Layout'
+        is_smoking:
+          description: Indicates where the table is in a smoking-allowed area.
+          type: boolean
+        max_pax:
+          description: Maximum number of guests which may be seated at the table. (Not strictly enforced by system.)
+          type: number
+          format: integer
+          example: 4
+        min_pax:
+          description: Minimum number of guests which may be seated at the table. (Not strictly enforced by system.)
+          type: number
+          format: integer
+          example: 4
+        name:
+          description: The name of the table. Max 4 characters.
+          type: string
+        position:
+          description: The position of the table, for use in list ordering.
+          type: number
+          format: integer
+        seat_type:
+          description: Seating type of the table.
+          type: string
+          enum: ["open","counter","outside","curtain","private","tatami"]
+        section_name:
+          description: The name of the section to which the table belongs.
+          type: string
+          format: bson-id
+          example: 'F1 Inside'
+        section_position:
+          description: The position of the section for use in list ordering.
+          type: number
+          format: integer
+        created_at:
+          description: The timestamp of when the table was created.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        updated_at:
+          description: The timestamp of when the table was last updated.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+
+    PosJournalSingleResponse:
+      type: object
+      properties:
+        pos_journal:
+          $ref: "#/components/schemas/PosJournal"
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reservation"
+
+    PosJournalsListResponse:
+      type: object
+      properties:
+        pos_journals:
+          type: array
+          items:
+            $ref: "#/components/schemas/PosJournal"
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reservation"
+
+    ReservationSingleResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: "#/components/schemas/Reservation"
+
+    ReservationsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reservation"
+        pagination:
+          $ref: "#/components/schemas/PaginationData"
+
+    TablesListResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: "#/components/schemas/Table"
+
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: "#/components/schemas/Shop"
+
+    TableStatusTimeParams:
+      type: object
+      required:
+        - time
+      properties: &TableStatusTimeParams
+        time:
+          description: The time at which to lookup table status. If not specified, the current time is used. We recommend to leave this field blank.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:00:00Z'
+
+    TableStatusTimeRangeParams:
+      type: object
+      required:
+        - match_before_seconds
+        - match_after_seconds
+      properties: &TableStatusTimeRangeParams
+        match_before_seconds:
+          description: Number of seconds before the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched before the current time.
+          type: number
+          format: integer
+          example: 300
+        match_after_seconds:
+          description: Number of seconds after the current time (or specified time) to lookup an existing reservation at the table. If not specified, no reservations will be matched after the current time.
+          type: number
+          format: integer
+          example: 300
+
+    TableStatusIdTimeParams:
+      type: object
+      required:
+        - table_id
+      properties: &TableStatusIdTimeParams
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<: *TableStatusTimeParams
+
+    TableStatusIdTimeRangeParams:
+      type: object
+      required:
+        - table_id
+      properties: &TableStatusIdTimeRangeParams
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<: *TableStatusTimeRangeParams
+
+    TableStatusNameTimeParams:
+      type: object
+      required:
+        - table_name
+      properties: &TableStatusNameTimeParams
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+        <<: *TableStatusTimeParams
+
+    TableStatusNameTimeRangeParams:
+      type: object
+      required:
+        - table_name
+      properties: &TableStatusNameTimeRangeParams
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+        <<: *TableStatusTimeRangeParams
+
+    TableStatusReservationIdParams:
+      type: object
+      required:
+        - reservation_id
+      properties: &TableStatusReservationIdParams
+        reservation_id:
+          description: The ID of the Reservation to select status. Mutually exclusive with table_id and table_name.
+          type: string
+          format: bson-id
+          example: 1fd337ed5d6893e2ae5355ca
+
+    TableStatusUpdateParams:
+      type: object
+      properties: &TableStatusUpdateParams
+        status:
+          description: The status to set on the reservation at the given table. The value "vacant" (equivalent to "turned_over") is a special value which will attempt to adjust the reservation end time to be before the current time.
+          type: string
+          enum: ["tentative","pending","request","accepted","confirmed","delay","call_absent","call_message","call_wrong","cancelled","noshow","rejected","arrived","arrived_part","waiting","waitlist_called","seated","seated_part","service_drink","service_main","service_dessert","check_req","paid","turnover","turned_over","vacant"]
+        allow_create_reservation:
+          description: Allow creating a reservation at the table with the given status, if one does not exist.
+          type: boolean
+          example: true
+
+    TableStatusUpdateIdTimeParams:
+      type: object
+      required:
+        - table_id
+      properties:
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<:
+          - *TableStatusUpdateParams
+          - *TableStatusTimeParams
+
+    TableStatusUpdateIdTimeRangeParams:
+      type: object
+      required:
+        - table_id
+      properties:
+        table_id:
+          description: The ID of the Table to select status. Mutually exclusive with table_id and reservation_id.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        <<:
+          - *TableStatusUpdateParams
+          - *TableStatusIdTimeRangeParams
+
+    TableStatusUpdateNameTimeParams:
+      type: object
+      required:
+        - table_name
+      properties:
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+        <<:
+          - *TableStatusUpdateParams
+          - *TableStatusTimeParams
+
+    TableStatusUpdateNameTimeRangeParams:
+      type: object
+      required:
+        - table_name
+      properties:
+        table_name:
+          description: The name of the Table to select status. Mutually exclusive with table_name and reservation_id.
+          type: string
+          example: A1
+        <<:
+          - *TableStatusUpdateParams
+          - *TableStatusTimeRangeParams
+
+    TableStatusUpdateReservationIdParams:
+      type: object
+      required:
+        - reservation_id
+      properties:
+        reservation_id:
+          description: The ID of the Reservation to select status. Mutually exclusive with table_id and table_name.
+          type: string
+          format: bson-id
+          example: 1fd337ed5d6893e2ae5355ca
+        <<: *TableStatusUpdateParams
+
+    TableStatusResponse:
+      type: object
+      properties:
+        table_status:
+          type: object
+          properties:
+            reservation_id:
+              description: The ID of the Reservation
+              type: string
+              format: bson-id
+              example: 1fd337ed5d6893e2ae5355ca
+            reservation_start_at:
+              description: The start time of the Reservation
+              type: string
+              format: date-time
+              example: '2020-01-29T19:00:00Z'
+            reservation_end_at:
+              description: The end time of the Reservation
+              type: string
+              format: date-time
+              example: '2020-01-29T19:00:00Z'
+            status:
+              description: The status of the Table
+              type: string
+              enum: ["vacant","tentative","pending","request","accepted","confirmed","delay","call_absent","call_message","call_wrong","cancelled","noshow","rejected","arrived","arrived_part","waiting","waitlist_called","seated","seated_part","service_drink","service_main","service_dessert","check_req","paid","turnover","turned_over"]
+            table_id:
+              description: The ID of the Table
+              type: string
+              format: bson-id
+              example: ae5355ca1fd337ed5d6893e2
+            table_name:
+              description: The name of the Table
+              type: string
+              example: A1
+
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        # page_count:
+        #   type: number
+        #   format: integer
+        #   example: 8
+        # item_count:
+        #   type: number
+        #   format: integer
+        #   example: 742
+
+    ForbiddenError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+
+    UnprocessableEntityError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+
+    UnprocessableContentError:
+      required:
+        - errors
+      properties:
+        error:
+          type: string
+          example: Failed to find reservation by ref <reservation_id>.
+          description: Reservation must be 1 day before up to 1 day after the API call time.
+
+    BadRequestError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+
+    ShopNotFoundError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+
+    NotFoundError:
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+
+security:
+  - ApiKeyAuth: []

@@ -1,0 +1,40 @@
+{
+  "provider": "tablecheck",
+  "sources": [
+    "tablecheck-availability-api-openapi.yml",
+    "tablecheck-blockages-api-openapi.yml",
+    "tablecheck-calendar-api-openapi.yml",
+    "tablecheck-customers-api-openapi.yml",
+    "tablecheck-franchises-api-openapi.yml",
+    "tablecheck-membership-programs-api-openapi.yml",
+    "tablecheck-memberships-api-openapi.yml",
+    "tablecheck-pos-journals-api-openapi.yml",
+    "tablecheck-reservation-flags-api-openapi.yml",
+    "tablecheck-reservations-api-openapi.yml",
+    "tablecheck-shops-api-openapi.yml",
+    "tablecheck-table-status-api-openapi.yml",
+    "tablecheck-tables-api-openapi.yml",
+    "tablecheck-timetable-api-openapi.yml"
+  ],
+  "outputs": [
+    "tablecheck-availability-api-openapi.yml",
+    "tablecheck-blockages-api-openapi.yml",
+    "tablecheck-calendar-api-openapi.yml",
+    "tablecheck-customers-api-openapi.yml",
+    "tablecheck-franchises-api-openapi.yml",
+    "tablecheck-membership-programs-api-openapi.yml",
+    "tablecheck-memberships-api-openapi.yml",
+    "tablecheck-pos-journals-api-openapi.yml",
+    "tablecheck-reservation-flags-api-openapi.yml",
+    "tablecheck-reservations-api-openapi.yml",
+    "tablecheck-shops-api-openapi.yml",
+    "tablecheck-table-status-api-openapi.yml",
+    "tablecheck-tables-api-openapi.yml",
+    "tablecheck-timetable-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
