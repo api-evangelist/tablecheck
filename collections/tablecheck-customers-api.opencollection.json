@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability customers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/customers",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific customer IDs to return."
+              },
+              {
+                "name": "shop_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific shop IDs."
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "List all Customers"
+        },
+        {
+          "info": {
+            "name": "Create a new customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new customer"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Customer to retrieve"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch a specific Customer"
+        },
+        {
+          "info": {
+            "name": "Amend the Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Customer to retrieve"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Amend the Customer"
+        },
+        {
+          "info": {
+            "name": "Destroy the customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tablecheck.com/api/availability/v1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Customer to delete"
+              }
+            ]
+          },
+          "docs": "Destroy the customer"
+        },
+        {
+          "info": {
+            "name": "Search and bulk export customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/customer_search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search and bulk export customers"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

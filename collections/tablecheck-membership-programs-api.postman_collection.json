@@ -1,0 +1,455 @@
+{
+  "item": [
+    {
+      "id": "8deaa175-618a-4c49-9504-202238b577b3",
+      "name": "membership_programs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35616dcf-d85a-449d-9305-5328d699d768",
+          "name": "List all Membership Programs",
+          "request": {
+            "name": "List all Membership Programs",
+            "description": {},
+            "url": {
+              "path": [
+                "membership_programs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "membership_ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific membership IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "100",
+                  "description": "Number of items to return at once. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "046b3f74-02c5-4508-b000-fa442773be4b",
+              "name": "A paged array of reservations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "membership_programs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "membership_ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"membership_programs\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"point_multiplier\": \"string\",\n      \"franchise\": {\n        \"id\": \"a33e5357ed5d6893e5ca1fd2\",\n        \"name\": {}\n      },\n      \"membership_tiers\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"code\": \"string\",\n          \"tier\": 1832.2698460063514\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"code\": \"string\",\n          \"tier\": 4057.3935937813985\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"point_multiplier\": \"string\",\n      \"franchise\": {\n        \"id\": \"a33e5357ed5d6893e5ca1fd2\",\n        \"name\": {}\n      },\n      \"membership_tiers\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"code\": \"string\",\n          \"tier\": 6825.970135814146\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"code\": \"string\",\n          \"tier\": 1004.0381272582844\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"page\": 3,\n    \"per_page\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64f6a785-f963-40f0-95a2-cfdaf39fc176",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "membership_programs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "membership_ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53905768-8734-43a1-8ba1-a7c56ee46b5f",
+          "name": "Fetch a specific Membership Program",
+          "request": {
+            "name": "Fetch a specific Membership Program",
+            "description": {},
+            "url": {
+              "path": [
+                "membership_programs",
+                ":membership_program_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membership_program_id",
+                  "description": "(Required) The ID of the Membership Program to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d97507fc-a038-45fa-b37e-50e73ae583bd",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "membership_programs",
+                    ":membership_program_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_program_id",
+                      "description": "(Required) The ID of the Membership Program to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"membership_program\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"point_multiplier\": \"string\",\n    \"franchise\": {\n      \"id\": \"a33e5357ed5d6893e5ca1fd2\",\n      \"name\": {}\n    },\n    \"membership_tiers\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"code\": \"string\",\n        \"tier\": 2334.9073721008117\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"code\": \"string\",\n        \"tier\": 1342.0211095606871\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4b3e9d6-cba1-478d-9a28-ece1ed8cf980",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "membership_programs",
+                    ":membership_program_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_program_id",
+                      "description": "(Required) The ID of the Membership Program to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3a4a3b67-cd0e-4002-9489-45d67dfdc2e4",
+    "name": "TableCheck API - V1 availability membership_programs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

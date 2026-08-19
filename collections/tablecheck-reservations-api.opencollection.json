@@ -1,0 +1,420 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability reservations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reservations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific reservation IDs to return."
+              },
+              {
+                "name": "shop_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of shop IDs to filter reservations."
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "start_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of start_at field (ISO timestamp)."
+              },
+              {
+                "name": "start_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of start_at field (ISO timestamp)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The field by which to sort the results."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort the results (asc or desc.)"
+              },
+              {
+                "name": "customer_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of customer IDs to filter reservations."
+              },
+              {
+                "name": "service_category_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of service category IDs to filter reservations."
+              }
+            ]
+          },
+          "docs": "List all Reservations"
+        },
+        {
+          "info": {
+            "name": "Create Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Reservation"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations/:reservation_id_or_ref",
+            "params": [
+              {
+                "name": "reservation_id_or_ref",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Reservation to retrieve"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch a specific Reservation"
+        },
+        {
+          "info": {
+            "name": "Update Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations/:reservation_id_or_ref",
+            "params": [
+              {
+                "name": "reservation_id_or_ref",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Reservation to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Reservation"
+        },
+        {
+          "info": {
+            "name": "Cancel Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations/:reservation_id_or_ref/cancel",
+            "params": [
+              {
+                "name": "reservation_id_or_ref",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Reservation to cancel"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel Reservation"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations/:reservation_id",
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or slug of the Reservation to retrieve"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch a specific Reservation"
+        },
+        {
+          "info": {
+            "name": "Update Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservations/:reservation_id",
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Reservation to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Reservation"
+        },
+        {
+          "info": {
+            "name": "List all Reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/reservations",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "start_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of start_at field (ISO timestamp)."
+              },
+              {
+                "name": "start_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of start_at field (ISO timestamp)."
+              },
+              {
+                "name": "customer_name",
+                "value": "",
+                "type": "query",
+                "description": "The name of the customer to search for reservations. Can be full name, first name, or last name."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "List all Reservations"
+        },
+        {
+          "info": {
+            "name": "Get Reservation information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/reservations/:reservation_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or code of the Reservation"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Get Reservation information"
+        },
+        {
+          "info": {
+            "name": "Update Reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/reservations/:reservation_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or code of the Reservation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Reservation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

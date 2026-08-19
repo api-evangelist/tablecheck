@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability franchises API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "franchises",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Franchises",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/franchises",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific IDs to return."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific IDs to return."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific slugs to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "List all Franchises"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Franchise",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/franchises/:franchise_id",
+            "params": [
+              {
+                "name": "franchise_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or slug of the Franchise to retrieve"
+              }
+            ]
+          },
+          "docs": "Fetch a specific Franchise"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

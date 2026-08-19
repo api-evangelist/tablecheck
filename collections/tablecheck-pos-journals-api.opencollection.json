@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability pos_journals API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pos_journals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all PosJournals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              }
+            ]
+          },
+          "docs": "List all PosJournals"
+        },
+        {
+          "info": {
+            "name": "Create PosJournal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create PosJournal"
+        },
+        {
+          "info": {
+            "name": "Get PosJournal information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "pos_journal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the PosJournal"
+              }
+            ]
+          },
+          "docs": "Get PosJournal information"
+        },
+        {
+          "info": {
+            "name": "Update PosJournal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "pos_journal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the PosJournal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update PosJournal"
+        },
+        {
+          "info": {
+            "name": "Delete PosJournal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals/:pos_journal_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "pos_journal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the PosJournal"
+              }
+            ]
+          },
+          "docs": "Delete PosJournal"
+        },
+        {
+          "info": {
+            "name": "Void PosJournal (Check Void)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/pos_journals/void",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Voids a check by adding a '--VOID--' marker, setting total_price to 0, and preserving original line items for audit purposes. Used by POS integrations to handle check cancellations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

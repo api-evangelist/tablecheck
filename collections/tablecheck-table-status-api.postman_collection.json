@@ -1,0 +1,719 @@
+{
+  "item": [
+    {
+      "id": "14363545-0d03-4b60-b36e-55d10237e677",
+      "name": "table_status",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61d01eab-b4bd-4d39-80d2-1ed79f596db9",
+          "name": "Get Table Status",
+          "request": {
+            "name": "Get Table Status",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "table_status",
+                "show"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<bson-id>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"<bson-id>\",\n  \"time\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9c5db7bd-96cf-4a6f-9040-b53d5508bcb7",
+              "name": "The Table Status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "show"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table_status\": {\n    \"reservation_id\": \"1fd337ed5d6893e2ae5355ca\",\n    \"reservation_start_at\": \"2020-01-29T19:00:00Z\",\n    \"reservation_end_at\": \"2020-01-29T19:00:00Z\",\n    \"status\": \"call_absent\",\n    \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"table_name\": \"A1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74c56a0d-0f71-449e-a361-f1313df8bff1",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "show"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65d5729e-81c7-4776-9a7d-96851e0b918d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "show"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aea6abc9-966e-4435-86f8-d9faeaecb461",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "show"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4034e957-3c9e-422c-b2b5-46c0a5011eef",
+          "name": "Update Table Status",
+          "request": {
+            "name": "Update Table Status",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "table_status",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<bson-id>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"<bson-id>\",\n  \"time\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"allow_create_reservation\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07feeb8a-2d58-4ec4-bdf7-3b2fcf63a279",
+              "name": "The Table Status which was updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\",\n  \"status\": \"vacant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table_status\": {\n    \"reservation_id\": \"1fd337ed5d6893e2ae5355ca\",\n    \"reservation_start_at\": \"2020-01-29T19:00:00Z\",\n    \"reservation_end_at\": \"2020-01-29T19:00:00Z\",\n    \"status\": \"call_absent\",\n    \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"table_name\": \"A1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2904623-bef5-4610-ae37-a31bce762367",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\",\n  \"status\": \"vacant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "048243b1-a5d4-4af9-84b3-3e263a4fa4b3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\",\n  \"status\": \"vacant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e9ce6af-e00e-4882-87f1-034c58442999",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\",\n  \"status\": \"vacant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb41a832-0ced-400c-b575-71b090783cb2",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "table_status",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<bson-id>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"time\": \"2020-01-29T19:00:00Z\",\n  \"status\": \"vacant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6a638ab7-d180-4e14-b589-9ba1f177157e",
+    "name": "TableCheck API - V1 availability table_status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

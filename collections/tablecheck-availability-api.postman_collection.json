@@ -1,0 +1,281 @@
+{
+  "item": [
+    {
+      "id": "ff3076b1-ea84-423e-92c8-4201fccac017",
+      "name": "availability",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "902fdb61-56d9-428a-a656-9638d71e8929",
+          "name": "Fetch availability tables of a specific shop.",
+          "request": {
+            "name": "Fetch availability tables of a specific shop.",
+            "description": {},
+            "url": {
+              "path": [
+                "availability_tables",
+                ":shop_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pax",
+                  "value": "<integer>",
+                  "description": "(Required) Desired number of guests for which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<dateTime>",
+                  "description": "(Required) Desired datetime around which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "seat_types",
+                  "value": "<string>",
+                  "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "service_category_id",
+                  "value": "<string>",
+                  "description": "The id of the service category"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The id or slug of the shop to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "853ff888-d8c9-4331-b8e6-440410d5e3ac",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "availability_tables",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timetable\": {\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"slug\": \"my-shop-slug\",\n    \"tables\": [\n      \"65e963e36ff2a92b0fb1fcfd\",\n      \"65e963756ff2a92b0fb1fcf6\"\n    ],\n    \"table_combos\": [\n      \"65e963e36ff2a92b0fb1fcfd\",\n      \"65e963756ff2a92b0fb1fcf6\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57a7b7de-8630-4610-9d24-1e53835a9c76",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "availability_tables",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "56126eb2-3d40-4731-8a36-6de4af4b1a2c",
+    "name": "TableCheck API - V1 availability API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

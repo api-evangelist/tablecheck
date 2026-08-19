@@ -1,0 +1,413 @@
+{
+  "item": [
+    {
+      "id": "63d42bbb-a46f-46be-aa70-4a0708c5d90b",
+      "name": "franchises",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "955f6af1-a007-4ada-a144-3c4938f523f4",
+          "name": "List all Franchises",
+          "request": {
+            "name": "List all Franchises",
+            "description": {},
+            "url": {
+              "path": [
+                "franchises"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific slugs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "100",
+                  "description": "Number of items to return at once. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b92bab03-1ce6-4198-a87a-601f880d5385",
+              "name": "A paged array of franchises",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "franchises"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"franchises\": [\n    {\n      \"id\": \"bdf535el45ft283vs13f8841\",\n      \"name\": \"Rival Dining Co.\",\n      \"name_translations\": {\n        \"en\": \"Rival Dining Co.\",\n        \"fr\": \"Rival Dining Co.\",\n        \"ja\": \"ライバルダイニング株式会社\"\n      },\n      \"slug\": \"rival-slug\"\n    },\n    {\n      \"id\": \"bdf535el45ft283vs13f8841\",\n      \"name\": \"Rival Dining Co.\",\n      \"name_translations\": {\n        \"en\": \"Rival Dining Co.\",\n        \"fr\": \"Rival Dining Co.\",\n        \"ja\": \"ライバルダイニング株式会社\"\n      },\n      \"slug\": \"rival-slug\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 3,\n    \"per_page\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d633074e-ff4b-4d42-a1c6-d2bf8b32ed27",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "franchises"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fb89d3a-6f7a-4c66-a4b5-6fe51118d67f",
+          "name": "Fetch a specific Franchise",
+          "request": {
+            "name": "Fetch a specific Franchise",
+            "description": {},
+            "url": {
+              "path": [
+                "franchises",
+                ":franchise_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "franchise_id",
+                  "description": "(Required) The ID or slug of the Franchise to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f47a2dfd-a12e-48f0-aa3a-fc4bbf945024",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "franchises",
+                    ":franchise_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "franchise_id",
+                      "description": "(Required) The ID or slug of the Franchise to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation\": {\n    \"id\": \"bdf535el45ft283vs13f8841\",\n    \"name\": \"Rival Dining Co.\",\n    \"name_translations\": {\n      \"en\": \"Rival Dining Co.\",\n      \"fr\": \"Rival Dining Co.\",\n      \"ja\": \"ライバルダイニング株式会社\"\n    },\n    \"slug\": \"rival-slug\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bb224d4-2cff-4b5d-ab35-410c98a0361e",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "franchises",
+                    ":franchise_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "franchise_id",
+                      "description": "(Required) The ID or slug of the Franchise to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f7451505-2a46-4960-92b3-370945c1af31",
+    "name": "TableCheck API - V1 availability franchises API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

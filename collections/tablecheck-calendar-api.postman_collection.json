@@ -1,0 +1,407 @@
+{
+  "item": [
+    {
+      "id": "e71218d9-f290-4e8b-8e97-1a1b3d4a69b1",
+      "name": "calendar",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f738b50d-8c43-4ac7-a71e-c1abce030dc5",
+          "name": "Fetch availability calendar of a specific shop.",
+          "request": {
+            "name": "Fetch availability calendar of a specific shop.",
+            "description": {},
+            "url": {
+              "path": [
+                "calendar",
+                ":shop_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pax",
+                  "value": "<integer>",
+                  "description": "Desired number of guests for which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<dateTime>",
+                  "description": "Desired datetime around which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime_min",
+                  "value": "<dateTime>",
+                  "description": "Lower-bound datetime for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime_max",
+                  "value": "<dateTime>",
+                  "description": "Upper-bound datetime for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "Desired date in which to search availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_min",
+                  "value": "<date>",
+                  "description": "Lower-bound date for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_max",
+                  "value": "<date>",
+                  "description": "Upper-bound date for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "time",
+                  "value": "<time-of-day>",
+                  "description": "Desired time of day in which to search availability. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "time_min",
+                  "value": "<time-of-day>",
+                  "description": "Lower-bound time of day for range query. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "time_max",
+                  "value": "<time-of-day>",
+                  "description": "Upper-bound time of day for range query. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "seat_types",
+                  "value": "<string>",
+                  "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "smoking",
+                  "value": "<string>",
+                  "description": "Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_category_id",
+                  "value": "<string>",
+                  "description": "The id of the service category"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The id or slug of the shop calendar to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "61bcbb22-aa16-4351-8c64-7b4843044081",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_min",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_max",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_min",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_max",
+                      "value": "2026-07-08"
+                    },
+                    {
+                      "key": "time",
+                      "value": "17:00"
+                    },
+                    {
+                      "key": "time_min",
+                      "value": "15:00"
+                    },
+                    {
+                      "key": "time_max",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop calendar to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"calendar\": {\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"slug\": \"my-shop-slug\",\n    \"availability_cached_at\": \"2023-06-23T11:07:01.595Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ec5d9c8-82a6-47bb-9df7-71f6aed43ec8",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendar",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_min",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_max",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_min",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_max",
+                      "value": "2026-07-08"
+                    },
+                    {
+                      "key": "time",
+                      "value": "17:00"
+                    },
+                    {
+                      "key": "time_min",
+                      "value": "15:00"
+                    },
+                    {
+                      "key": "time_max",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop calendar to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d6d1d540-1aed-45f4-aca5-de48aaea7810",
+    "name": "TableCheck API - V1 availability calendar API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

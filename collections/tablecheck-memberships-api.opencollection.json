@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability memberships API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/memberships",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific IDs to return."
+              },
+              {
+                "name": "customer_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific customer IDs."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "Search using specific code."
+              },
+              {
+                "name": "membership_program_id",
+                "value": "",
+                "type": "query",
+                "description": "Search using specific membership program ids"
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "List all Memberships"
+        },
+        {
+          "info": {
+            "name": "Create Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/memberships",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Membership"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/memberships/:membership_id",
+            "params": [
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Membership to retrieve"
+              }
+            ]
+          },
+          "docs": "Fetch a specific Membership"
+        },
+        {
+          "info": {
+            "name": "Update Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/memberships/:membership_id",
+            "params": [
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Membership to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Membership"
+        },
+        {
+          "info": {
+            "name": "Destroy the membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tablecheck.com/api/availability/v1/memberships/:membership_id",
+            "params": [
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Membership to delete"
+              }
+            ]
+          },
+          "docs": "Destroy the membership"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

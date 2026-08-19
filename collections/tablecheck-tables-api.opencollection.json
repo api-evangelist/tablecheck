@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability tables API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/tables",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              },
+              {
+                "name": "time",
+                "value": "",
+                "type": "query",
+                "description": "Specific time to search for tables (ISO timestamp). If \"now\" is passed, the current time will be used."
+              }
+            ]
+          },
+          "docs": "List all Tables"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

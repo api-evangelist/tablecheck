@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "availability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch availability tables of a specific shop.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/availability_tables/:shop_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The id or slug of the shop to retrieve"
+              },
+              {
+                "name": "pax",
+                "value": "2",
+                "type": "query",
+                "description": "Desired number of guests for which to search for availability."
+              },
+              {
+                "name": "datetime",
+                "value": "2026-07-06T17:00:00.000Z",
+                "type": "query",
+                "description": "Desired datetime around which to search for availability."
+              },
+              {
+                "name": "seat_types",
+                "value": "",
+                "type": "query",
+                "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+              },
+              {
+                "name": "service_category_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the service category"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch availability tables of a specific shop."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

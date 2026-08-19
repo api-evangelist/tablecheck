@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability membership_programs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "membership_programs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Membership Programs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/membership_programs",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific IDs to return."
+              },
+              {
+                "name": "membership_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific membership IDs."
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "List all Membership Programs"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Membership Program",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/membership_programs/:membership_program_id",
+            "params": [
+              {
+                "name": "membership_program_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Membership Program to retrieve"
+              }
+            ]
+          },
+          "docs": "Fetch a specific Membership Program"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

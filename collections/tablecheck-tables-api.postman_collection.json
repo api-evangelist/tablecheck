@@ -1,0 +1,272 @@
+{
+  "item": [
+    {
+      "id": "c7ff3e9d-7623-411f-aa5d-02b137fa0821",
+      "name": "tables",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6056fce4-677b-4804-9946-2596d6b449e7",
+          "name": "List all Tables",
+          "request": {
+            "name": "List all Tables",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "time",
+                  "value": "<dateTime>",
+                  "description": "Specific time to search for tables (ISO timestamp). If \"now\" is passed, the current time will be used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2bff021-84e0-4fad-9e29-62610b9f3ece",
+              "name": "A list of Table Names",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "time",
+                      "value": "2020-01-29T19:00:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tables\": [\n    {\n      \"id\": \"ea1fd65d5357ed3ac5893e43\",\n      \"floor_plan_id\": \"5357ed5dc5893e433aea1fd6\",\n      \"section_id\": \"5357ed5dc5893e433aea1fd6\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"floor_plan_name\": \"Holiday Layout\",\n      \"is_smoking\": false,\n      \"max_pax\": 4,\n      \"min_pax\": 4,\n      \"name\": \"string\",\n      \"position\": 5795.672607390502,\n      \"seat_type\": \"tatami\",\n      \"section_name\": \"F1 Inside\",\n      \"section_position\": 1341.8772258695478,\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ea1fd65d5357ed3ac5893e43\",\n      \"floor_plan_id\": \"5357ed5dc5893e433aea1fd6\",\n      \"section_id\": \"5357ed5dc5893e433aea1fd6\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"floor_plan_name\": \"Holiday Layout\",\n      \"is_smoking\": true,\n      \"max_pax\": 4,\n      \"min_pax\": 4,\n      \"name\": \"string\",\n      \"position\": 8098.851552481062,\n      \"seat_type\": \"curtain\",\n      \"section_name\": \"F1 Inside\",\n      \"section_position\": 8315.613723813018,\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4101d4a-696a-4242-8595-d0ed503f966b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "time",
+                      "value": "2020-01-29T19:00:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b77ffe05-5e2d-42cf-9ecf-8cbaa9dc49a2",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "time",
+                      "value": "2020-01-29T19:00:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1c4c423d-d904-4dd0-9f37-9c13bfb436a1",
+    "name": "TableCheck API - V1 availability tables API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

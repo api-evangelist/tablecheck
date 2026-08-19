@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability table_status API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "table_status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Table Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/table_status/show",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get Table Status"
+        },
+        {
+          "info": {
+            "name": "Update Table Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/shops/:shop_id/table_status/update",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID, slug or ref of the Shop"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Table Status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

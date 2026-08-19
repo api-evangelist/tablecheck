@@ -1,0 +1,407 @@
+{
+  "item": [
+    {
+      "id": "84e2f901-3f16-46af-876c-ccdcb604e556",
+      "name": "timetable",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "155024b5-ea30-4e60-a90d-9e6e7b965b95",
+          "name": "Fetch availability timetable of a specific shop.",
+          "request": {
+            "name": "Fetch availability timetable of a specific shop.",
+            "description": {},
+            "url": {
+              "path": [
+                "timetable",
+                ":shop_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pax",
+                  "value": "<integer>",
+                  "description": "Desired number of guests for which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<dateTime>",
+                  "description": "Desired datetime around which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime_min",
+                  "value": "<dateTime>",
+                  "description": "Lower-bound datetime for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime_max",
+                  "value": "<dateTime>",
+                  "description": "Upper-bound datetime for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "Desired date in which to search availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_min",
+                  "value": "<date>",
+                  "description": "Lower-bound date for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_max",
+                  "value": "<date>",
+                  "description": "Upper-bound date for range query."
+                },
+                {
+                  "disabled": false,
+                  "key": "time",
+                  "value": "<time-of-day>",
+                  "description": "Desired time of day in which to search availability. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "time_min",
+                  "value": "<time-of-day>",
+                  "description": "Lower-bound time of day for range query. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "time_max",
+                  "value": "<time-of-day>",
+                  "description": "Upper-bound time of day for range query. Can be specified as time string or integer seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "seat_types",
+                  "value": "<string>",
+                  "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "smoking",
+                  "value": "<string>",
+                  "description": "Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_category_id",
+                  "value": "<string>",
+                  "description": "The id of the service category"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The id or slug of the shop timetable to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d07d6ba6-0c63-4b80-a2d2-2b5b6939e182",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timetable",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_min",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_max",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_min",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_max",
+                      "value": "2026-07-08"
+                    },
+                    {
+                      "key": "time",
+                      "value": "17:00"
+                    },
+                    {
+                      "key": "time_min",
+                      "value": "15:00"
+                    },
+                    {
+                      "key": "time_max",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop timetable to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timetable\": {\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"slug\": \"my-shop-slug\",\n    \"availability_cached_at\": \"2005-09-09T19:32:14.906Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a82a3cb5-fded-472e-afed-5cd81ca4d2b2",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timetable",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_min",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "datetime_max",
+                      "value": "2026-07-06T16:00:00.000Z"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_min",
+                      "value": "2026-07-06"
+                    },
+                    {
+                      "key": "date_max",
+                      "value": "2026-07-08"
+                    },
+                    {
+                      "key": "time",
+                      "value": "17:00"
+                    },
+                    {
+                      "key": "time_min",
+                      "value": "15:00"
+                    },
+                    {
+                      "key": "time_max",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop timetable to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ac22a996-b917-4c8d-adbc-ce00f84823d1",
+    "name": "TableCheck API - V1 availability timetable API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

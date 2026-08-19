@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability calendar API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "calendar",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch availability calendar of a specific shop.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/calendar/:shop_id",
+            "params": [
+              {
+                "name": "shop_id",
+                "value": "",
+                "type": "path",
+                "description": "The id or slug of the shop calendar to retrieve"
+              },
+              {
+                "name": "pax",
+                "value": "2",
+                "type": "query",
+                "description": "Desired number of guests for which to search for availability."
+              },
+              {
+                "name": "datetime",
+                "value": "2026-07-06T17:00:00.000Z",
+                "type": "query",
+                "description": "Desired datetime around which to search for availability."
+              },
+              {
+                "name": "datetime_min",
+                "value": "2026-07-06T16:00:00.000Z",
+                "type": "query",
+                "description": "Lower-bound datetime for range query."
+              },
+              {
+                "name": "datetime_max",
+                "value": "2026-07-06T16:00:00.000Z",
+                "type": "query",
+                "description": "Upper-bound datetime for range query."
+              },
+              {
+                "name": "date",
+                "value": "2026-07-06",
+                "type": "query",
+                "description": "Desired date in which to search availability."
+              },
+              {
+                "name": "date_min",
+                "value": "2026-07-06",
+                "type": "query",
+                "description": "Lower-bound date for range query."
+              },
+              {
+                "name": "date_max",
+                "value": "2026-07-08",
+                "type": "query",
+                "description": "Upper-bound date for range query."
+              },
+              {
+                "name": "time",
+                "value": "17:00",
+                "type": "query",
+                "description": "Desired time of day in which to search availability. Can be specified as time string or integer seconds."
+              },
+              {
+                "name": "time_min",
+                "value": "15:00",
+                "type": "query",
+                "description": "Lower-bound time of day for range query. Can be specified as time string or integer seconds."
+              },
+              {
+                "name": "time_max",
+                "value": "20:00",
+                "type": "query",
+                "description": "Upper-bound time of day for range query. Can be specified as time string or integer seconds."
+              },
+              {
+                "name": "seat_types",
+                "value": "",
+                "type": "query",
+                "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+              },
+              {
+                "name": "smoking",
+                "value": "",
+                "type": "query",
+                "description": "Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed."
+              },
+              {
+                "name": "service_category_id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the service category"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch availability calendar of a specific shop."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

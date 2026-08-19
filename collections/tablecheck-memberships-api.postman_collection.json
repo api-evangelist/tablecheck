@@ -1,0 +1,1037 @@
+{
+  "item": [
+    {
+      "id": "5800f8bf-f8a1-4832-809e-d96ca8d3570b",
+      "name": "memberships",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "48d47f0c-23cd-474c-83f0-8eeae62e9985",
+          "name": "List all Memberships",
+          "request": {
+            "name": "List all Memberships",
+            "description": {},
+            "url": {
+              "path": [
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific customer IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "Search using specific code."
+                },
+                {
+                  "disabled": false,
+                  "key": "membership_program_id",
+                  "value": "<bson-id>",
+                  "description": "Search using specific membership program ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "100",
+                  "description": "Number of items to return at once. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa32f6ff-bd5a-46bc-b610-1bae36544683",
+              "name": "The Memberships list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "customer_ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "membership_program_id",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation\": {\n    \"id\": \"string\",\n    \"code\": \"string\",\n    \"membership_program_id\": \"string\",\n    \"membership_program_name\": \"string\",\n    \"membership_tier_id\": \"string\",\n    \"membership_tier_name\": \"string\",\n    \"status\": \"pre_enrollment\",\n    \"customers\": [\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"female\",\n        \"locale\": \"es\",\n        \"source\": \"tablecheck_user\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"3L-qCQHZRd@fGYpwSNJfOctiQaMmPjuneMg.qs\",\n          \"tuwcl815t@PmuwBiPAyV.avew\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"2_month\",\n            \"date\": \"1959-07-14\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 5651.676080528424,\n            \"memo\": \"string\",\n            \"created_at\": \"1965-05-26T17:56:10.891Z\",\n            \"updated_at\": \"1984-02-10T22:42:21.602Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"1_month\",\n            \"date\": \"1983-09-09\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 5342.233120393363,\n            \"memo\": \"string\",\n            \"created_at\": \"2016-12-08T15:11:46.154Z\",\n            \"updated_at\": \"1986-03-09T11:01:35.213Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"naver\",\n            \"created_at\": \"1975-04-08T19:12:53.000Z\",\n            \"updated_at\": \"1947-06-26T01:38:45.109Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"line\",\n            \"created_at\": \"1974-05-25T05:36:48.620Z\",\n            \"updated_at\": \"2019-08-23T03:33:37.812Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": false,\n        \"allow_marketing\": true,\n        \"allow_direct_mail\": true,\n        \"allow_surveys\": false,\n        \"is_incognito\": true,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"pre_enrollment\",\n            \"points\": 1208.1643348531445\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"cancelled\",\n            \"points\": 5239.921828544558\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"female\",\n        \"locale\": \"id\",\n        \"source\": \"import\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"tw7uPv0@mBhPJnjddegT.shu\",\n          \"YDICflv0ecPx@nI.yh\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"6_month\",\n            \"date\": \"1948-12-30\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 9978.370536051576,\n            \"memo\": \"string\",\n            \"created_at\": \"1992-08-05T18:44:09.947Z\",\n            \"updated_at\": \"1967-08-12T04:31:00.211Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"birthday\",\n            \"date\": \"2017-02-27\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 3880.7983251519086,\n            \"memo\": \"string\",\n            \"created_at\": \"1963-01-08T04:44:14.256Z\",\n            \"updated_at\": \"1983-12-14T05:40:08.705Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"naver\",\n            \"created_at\": \"2002-10-27T15:02:21.824Z\",\n            \"updated_at\": \"2017-08-13T04:46:28.046Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"line\",\n            \"created_at\": \"1953-04-30T21:45:08.821Z\",\n            \"updated_at\": \"1963-11-01T14:37:46.597Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": false,\n        \"allow_marketing\": false,\n        \"allow_direct_mail\": true,\n        \"allow_surveys\": true,\n        \"is_incognito\": false,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"active\",\n            \"points\": 5309.120428597087\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"active\",\n            \"points\": 3995.8313708529968\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"created_at\": \"2004-07-25T05:50:29.669Z\",\n    \"updated_at\": \"1953-10-15T23:10:59.992Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49b09fc5-c9cc-4fc7-8cc4-da862dd3dfef",
+          "name": "Create Membership",
+          "request": {
+            "name": "Create Membership",
+            "description": {},
+            "url": {
+              "path": [
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"membership_program_id\": \"<bson-id>\",\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a217637-3896-4fbe-b5aa-137fd0ee729c",
+              "name": "A paged array of memberships",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"membership_program_id\": \"<bson-id>\",\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservations\": [\n    {\n      \"id\": \"string\",\n      \"code\": \"string\",\n      \"membership_program_id\": \"string\",\n      \"membership_program_name\": \"string\",\n      \"membership_tier_id\": \"string\",\n      \"membership_tier_name\": \"string\",\n      \"status\": \"active\",\n      \"customers\": [\n        {\n          \"id\": \"string\",\n          \"ref\": \"string\",\n          \"franchise_id\": \"string\",\n          \"created_at\": \"string\",\n          \"updated_at\": \"string\",\n          \"name\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"alt_first_name\": \"string\",\n          \"alt_last_name\": \"string\",\n          \"alpha_first_name\": \"string\",\n          \"alpha_last_name\": \"string\",\n          \"company_name\": \"string\",\n          \"company_title\": \"string\",\n          \"company_division\": \"string\",\n          \"gender\": \"female\",\n          \"locale\": \"hi\",\n          \"source\": \"pms\",\n          \"memo\": \"string\",\n          \"phones\": [\n            \"string\",\n            \"string\"\n          ],\n          \"phone_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"emails\": [\n            \"kYhjbV@rynBQSLmMTjSB.cli\",\n            \"rK1KU5YyjYe1j@LIs.ao\"\n          ],\n          \"email_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"events\": [\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            },\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            }\n          ],\n          \"socials\": [\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ],\n          \"likes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"dislikes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"allergies\": [\n            \"string\",\n            \"string\"\n          ],\n          \"is_temporary\": false,\n          \"allow_marketing\": false,\n          \"allow_direct_mail\": false,\n          \"allow_surveys\": false,\n          \"is_incognito\": false,\n          \"addresses\": [\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            },\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            }\n          ],\n          \"memberships\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"parent_shop_id\": \"string\",\n          \"merged_customer_ids\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"ref\": \"string\",\n          \"franchise_id\": \"string\",\n          \"created_at\": \"string\",\n          \"updated_at\": \"string\",\n          \"name\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"alt_first_name\": \"string\",\n          \"alt_last_name\": \"string\",\n          \"alpha_first_name\": \"string\",\n          \"alpha_last_name\": \"string\",\n          \"company_name\": \"string\",\n          \"company_title\": \"string\",\n          \"company_division\": \"string\",\n          \"gender\": \"female\",\n          \"locale\": \"he\",\n          \"source\": \"manual\",\n          \"memo\": \"string\",\n          \"phones\": [\n            \"string\",\n            \"string\"\n          ],\n          \"phone_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"emails\": [\n            \"vqn4mcPfZ5t@MTWzUGUlpGzdTuxrQbiwimnm.epbn\",\n            \"x4r5aZIHxoG7@KOjU.sjpq\"\n          ],\n          \"email_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"events\": [\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            },\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            }\n          ],\n          \"socials\": [\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ],\n          \"likes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"dislikes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"allergies\": [\n            \"string\",\n            \"string\"\n          ],\n          \"is_temporary\": true,\n          \"allow_marketing\": true,\n          \"allow_direct_mail\": true,\n          \"allow_surveys\": false,\n          \"is_incognito\": true,\n          \"addresses\": [\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            },\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            }\n          ],\n          \"memberships\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"parent_shop_id\": \"string\",\n          \"merged_customer_ids\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"created_at\": \"1972-02-27T19:24:08.403Z\",\n      \"updated_at\": \"2016-09-06T07:55:56.596Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"code\": \"string\",\n      \"membership_program_id\": \"string\",\n      \"membership_program_name\": \"string\",\n      \"membership_tier_id\": \"string\",\n      \"membership_tier_name\": \"string\",\n      \"status\": \"active\",\n      \"customers\": [\n        {\n          \"id\": \"string\",\n          \"ref\": \"string\",\n          \"franchise_id\": \"string\",\n          \"created_at\": \"string\",\n          \"updated_at\": \"string\",\n          \"name\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"alt_first_name\": \"string\",\n          \"alt_last_name\": \"string\",\n          \"alpha_first_name\": \"string\",\n          \"alpha_last_name\": \"string\",\n          \"company_name\": \"string\",\n          \"company_title\": \"string\",\n          \"company_division\": \"string\",\n          \"gender\": \"male\",\n          \"locale\": \"vi\",\n          \"source\": \"ota\",\n          \"memo\": \"string\",\n          \"phones\": [\n            \"string\",\n            \"string\"\n          ],\n          \"phone_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"emails\": [\n            \"T8JLIrM@dCXjHTmdpiNxrTjrgauuzZoQYZ.mexh\",\n            \"yZgDe9xQQ-pQ@PBsiBMwRXpqykAdYIkoXPiIJeRNGUAjYc.xviu\"\n          ],\n          \"email_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"events\": [\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            },\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            }\n          ],\n          \"socials\": [\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ],\n          \"likes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"dislikes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"allergies\": [\n            \"string\",\n            \"string\"\n          ],\n          \"is_temporary\": true,\n          \"allow_marketing\": true,\n          \"allow_direct_mail\": true,\n          \"allow_surveys\": true,\n          \"is_incognito\": true,\n          \"addresses\": [\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            },\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            }\n          ],\n          \"memberships\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"parent_shop_id\": \"string\",\n          \"merged_customer_ids\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"ref\": \"string\",\n          \"franchise_id\": \"string\",\n          \"created_at\": \"string\",\n          \"updated_at\": \"string\",\n          \"name\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"alt_first_name\": \"string\",\n          \"alt_last_name\": \"string\",\n          \"alpha_first_name\": \"string\",\n          \"alpha_last_name\": \"string\",\n          \"company_name\": \"string\",\n          \"company_title\": \"string\",\n          \"company_division\": \"string\",\n          \"gender\": \"female\",\n          \"locale\": \"km\",\n          \"source\": \"tablecheck_user\",\n          \"memo\": \"string\",\n          \"phones\": [\n            \"string\",\n            \"string\"\n          ],\n          \"phone_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"emails\": [\n            \"jKFfrk@qiuNGpLUdyXZy.od\",\n            \"TyIEZsxXd@uUueJobhexaJlBCRcAmN.uzu\"\n          ],\n          \"email_objects\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"events\": [\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            },\n            {\n              \"date\": \"01-01-2020\",\n              \"tag\": \"anniversary\"\n            }\n          ],\n          \"socials\": [\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"service\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"created_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"updated_at\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"string\",\n            \"string\"\n          ],\n          \"likes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"dislikes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"allergies\": [\n            \"string\",\n            \"string\"\n          ],\n          \"is_temporary\": true,\n          \"allow_marketing\": true,\n          \"allow_direct_mail\": true,\n          \"allow_surveys\": true,\n          \"is_incognito\": true,\n          \"addresses\": [\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            },\n            {\n              \"tag\": \"home\",\n              \"street\": \"123 Main St\",\n              \"city\": \"Seattle\",\n              \"state\": \"WA\",\n              \"country\": \"US\"\n            }\n          ],\n          \"memberships\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"code\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_program_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"membership_tier_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"points\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"parent_shop_id\": \"string\",\n          \"merged_customer_ids\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"created_at\": \"1966-03-16T18:07:06.857Z\",\n      \"updated_at\": \"1970-01-02T23:58:45.575Z\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 3,\n    \"per_page\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23e6199b-e147-41fc-8ac8-a23546562753",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"membership_program_id\": \"<bson-id>\",\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fef12968-4e41-4a7b-9f32-3d1ce07935c9",
+          "name": "Fetch a specific Membership",
+          "request": {
+            "name": "Fetch a specific Membership",
+            "description": {},
+            "url": {
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membership_id",
+                  "description": "(Required) The ID of the Membership to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b64a95d6-ae33-450d-bd1d-c44e3ed97445",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation\": {\n    \"id\": \"string\",\n    \"code\": \"string\",\n    \"membership_program_id\": \"string\",\n    \"membership_program_name\": \"string\",\n    \"membership_tier_id\": \"string\",\n    \"membership_tier_name\": \"string\",\n    \"status\": \"cancelled\",\n    \"customers\": [\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"male\",\n        \"locale\": \"id\",\n        \"source\": \"edm_subscribe\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"mm2wdy5DgWPH63p@srRwBMPIqsDdYPXLhvrKBymSCXNpJJtrU.ylcr\",\n          \"cWPMwPnVbQ@mQe.ga\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"3_month\",\n            \"date\": \"2001-06-17\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 3055.5433137600685,\n            \"memo\": \"string\",\n            \"created_at\": \"1992-06-08T21:13:12.582Z\",\n            \"updated_at\": \"1960-10-15T23:43:09.366Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"single\",\n            \"date\": \"1956-04-29\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 1833.8388302865017,\n            \"memo\": \"string\",\n            \"created_at\": \"1965-08-20T21:03:14.769Z\",\n            \"updated_at\": \"1969-03-31T21:09:15.722Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"weibo\",\n            \"created_at\": \"1982-04-26T10:42:23.799Z\",\n            \"updated_at\": \"2007-06-11T00:29:11.820Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"weibo\",\n            \"created_at\": \"1983-09-11T08:03:06.369Z\",\n            \"updated_at\": \"2019-09-19T20:21:35.404Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": false,\n        \"allow_marketing\": true,\n        \"allow_direct_mail\": false,\n        \"allow_surveys\": false,\n        \"is_incognito\": false,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"cancelled\",\n            \"points\": 2289.8384325405154\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"active\",\n            \"points\": 6678.287509392199\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"female\",\n        \"locale\": \"km\",\n        \"source\": \"api\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"61QBtsPa@NTqbYiLGxNy.yk\",\n          \"vSvaLIHrRr0@nUSJ.po\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"anniversary\",\n            \"date\": \"2019-10-13\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 5533.882427299687,\n            \"memo\": \"string\",\n            \"created_at\": \"1959-02-22T01:05:59.935Z\",\n            \"updated_at\": \"1953-06-08T07:11:59.972Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"anniversary\",\n            \"date\": \"1995-06-21\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 200.64744823224734,\n            \"memo\": \"string\",\n            \"created_at\": \"1986-03-18T23:35:01.406Z\",\n            \"updated_at\": \"1951-10-04T10:21:40.823Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"kakao\",\n            \"created_at\": \"1963-08-27T02:12:15.158Z\",\n            \"updated_at\": \"1955-10-02T09:19:29.295Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"mixi\",\n            \"created_at\": \"1954-12-08T19:33:12.451Z\",\n            \"updated_at\": \"2017-03-27T18:21:46.370Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": true,\n        \"allow_marketing\": false,\n        \"allow_direct_mail\": true,\n        \"allow_surveys\": true,\n        \"is_incognito\": true,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"pre_enrollment\",\n            \"points\": 5657.932571093776\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"cancelled\",\n            \"points\": 7156.8789627135275\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"created_at\": \"1956-10-09T19:58:20.994Z\",\n    \"updated_at\": \"1983-07-24T05:48:35.222Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d457e6ce-f899-4852-b771-530bb030dd13",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6e39d7e-f78e-4c07-ad9d-710d763b1901",
+          "name": "Update Membership",
+          "request": {
+            "name": "Update Membership",
+            "description": {},
+            "url": {
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membership_id",
+                  "description": "(Required) The ID of the Membership to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29849af0-ca91-458e-9929-ab4ed9e0b220",
+              "name": "The Reservation which was updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation\": {\n    \"id\": \"string\",\n    \"code\": \"string\",\n    \"membership_program_id\": \"string\",\n    \"membership_program_name\": \"string\",\n    \"membership_tier_id\": \"string\",\n    \"membership_tier_name\": \"string\",\n    \"status\": \"cancelled\",\n    \"customers\": [\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"male\",\n        \"locale\": \"id\",\n        \"source\": \"edm_subscribe\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"mm2wdy5DgWPH63p@srRwBMPIqsDdYPXLhvrKBymSCXNpJJtrU.ylcr\",\n          \"cWPMwPnVbQ@mQe.ga\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"3_month\",\n            \"date\": \"2001-06-17\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 3055.5433137600685,\n            \"memo\": \"string\",\n            \"created_at\": \"1992-06-08T21:13:12.582Z\",\n            \"updated_at\": \"1960-10-15T23:43:09.366Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"single\",\n            \"date\": \"1956-04-29\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 1833.8388302865017,\n            \"memo\": \"string\",\n            \"created_at\": \"1965-08-20T21:03:14.769Z\",\n            \"updated_at\": \"1969-03-31T21:09:15.722Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"weibo\",\n            \"created_at\": \"1982-04-26T10:42:23.799Z\",\n            \"updated_at\": \"2007-06-11T00:29:11.820Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"weibo\",\n            \"created_at\": \"1983-09-11T08:03:06.369Z\",\n            \"updated_at\": \"2019-09-19T20:21:35.404Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": false,\n        \"allow_marketing\": true,\n        \"allow_direct_mail\": false,\n        \"allow_surveys\": false,\n        \"is_incognito\": false,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"cancelled\",\n            \"points\": 2289.8384325405154\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"active\",\n            \"points\": 6678.287509392199\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"ref\": \"string\",\n        \"franchise_id\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"name\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"alt_first_name\": \"string\",\n        \"alt_last_name\": \"string\",\n        \"alpha_first_name\": \"string\",\n        \"alpha_last_name\": \"string\",\n        \"company_name\": \"string\",\n        \"company_title\": \"string\",\n        \"company_division\": \"string\",\n        \"gender\": \"female\",\n        \"locale\": \"km\",\n        \"source\": \"api\",\n        \"memo\": \"string\",\n        \"phones\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone_objects\": [\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"number\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"emails\": [\n          \"61QBtsPa@NTqbYiLGxNy.yk\",\n          \"vSvaLIHrRr0@nUSJ.po\"\n        ],\n        \"email_objects\": [\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"email\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tag\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"id\": \"string\",\n            \"tag\": \"anniversary\",\n            \"date\": \"2019-10-13\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 5533.882427299687,\n            \"memo\": \"string\",\n            \"created_at\": \"1959-02-22T01:05:59.935Z\",\n            \"updated_at\": \"1953-06-08T07:11:59.972Z\"\n          },\n          {\n            \"id\": \"string\",\n            \"tag\": \"anniversary\",\n            \"date\": \"1995-06-21\",\n            \"months\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"day\": 200.64744823224734,\n            \"memo\": \"string\",\n            \"created_at\": \"1986-03-18T23:35:01.406Z\",\n            \"updated_at\": \"1951-10-04T10:21:40.823Z\"\n          }\n        ],\n        \"socials\": [\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"kakao\",\n            \"created_at\": \"1963-08-27T02:12:15.158Z\",\n            \"updated_at\": \"1955-10-02T09:19:29.295Z\"\n          },\n          {\n            \"username\": \"string\",\n            \"id\": \"string\",\n            \"service\": \"mixi\",\n            \"created_at\": \"1954-12-08T19:33:12.451Z\",\n            \"updated_at\": \"2017-03-27T18:21:46.370Z\"\n          }\n        ],\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"likes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"dislikes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"allergies\": [\n          \"string\",\n          \"string\"\n        ],\n        \"is_temporary\": true,\n        \"allow_marketing\": false,\n        \"allow_direct_mail\": true,\n        \"allow_surveys\": true,\n        \"is_incognito\": true,\n        \"addresses\": [\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          },\n          {\n            \"tag\": \"home\",\n            \"street\": \"123 Main St\",\n            \"city\": \"Seattle\",\n            \"state\": \"WA\",\n            \"country\": \"US\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"pre_enrollment\",\n            \"points\": 5657.932571093776\n          },\n          {\n            \"id\": \"string\",\n            \"code\": \"string\",\n            \"membership_program_id\": \"string\",\n            \"membership_program_name\": \"string\",\n            \"membership_tier_id\": \"string\",\n            \"membership_tier_name\": \"string\",\n            \"status\": \"cancelled\",\n            \"points\": 7156.8789627135275\n          }\n        ],\n        \"parent_shop_id\": \"string\",\n        \"merged_customer_ids\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"created_at\": \"1956-10-09T19:58:20.994Z\",\n    \"updated_at\": \"1983-07-24T05:48:35.222Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6a24ff6-99af-4f03-be40-cbc551d1d38a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c9839ca-b754-42a9-99c2-e170c8b82d40",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e46199c6-d3af-467f-82fc-93057f059bac",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c72f657d-eb42-4007-912d-0f68c3fa3469",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"<string>\",\n  \"customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"membership_program_id\": \"<bson-id>\",\n  \"membership_tier_id\": \"<bson-id>\",\n  \"points\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"expiry_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31a7c430-1e0e-4234-8311-053124432f4c",
+          "name": "Destroy the membership",
+          "request": {
+            "name": "Destroy the membership",
+            "description": {},
+            "url": {
+              "path": [
+                "memberships",
+                ":membership_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membership_id",
+                  "description": "(Required) The ID of the Membership to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55a70c7d-a59f-4081-8f8b-ad7cf9fc2acb",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5be86abc-5fef-466e-acb4-30cc18fdad35",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membership_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membership_id",
+                      "description": "(Required) The ID of the Membership to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "72a4daec-279f-4eb4-a43d-4ae36b127353",
+    "name": "TableCheck API - V1 availability memberships API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

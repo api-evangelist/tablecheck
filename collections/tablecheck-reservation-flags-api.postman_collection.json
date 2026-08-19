@@ -1,0 +1,735 @@
+{
+  "item": [
+    {
+      "id": "bdcd0b6f-2caa-4e2c-9af7-097c7ec88adb",
+      "name": "reservation_flags",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "791e8148-6e2c-4a92-97bb-cdb36f593886",
+          "name": "List all Reservation Flags",
+          "request": {
+            "name": "List all Reservation Flags",
+            "description": {},
+            "url": {
+              "path": [
+                "reservation_flags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific reservation flag IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "shop_ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of shop IDs to filter reservation flags."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "100",
+                  "description": "Number of items to return at once. Used for pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "982bbd68-8d86-49bb-94cf-00049b339fcb",
+              "name": "A paged array of reservation flags",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation_flags\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"string\",\n      \"all_shops\": true,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"icon\": \"string\",\n      \"color\": \"string\",\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"string\",\n      \"all_shops\": true,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"icon\": \"string\",\n      \"color\": \"string\",\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 3,\n    \"per_page\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a2655b8-8566-471c-a920-f58db4531f68",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7652fe16-7284-4983-b9a4-0c963bd99a4c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ad07c56-fe91-4af5-815f-9c2eae7e687c",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "ae5355ca1fd337ed5d6893e2"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "2020-01-29T19:00:00Z"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2fa2d673-4dc9-4a70-8def-7fccf518bdd5",
+          "name": "Fetch a specific Reservation Flag",
+          "request": {
+            "name": "Fetch a specific Reservation Flag",
+            "description": {},
+            "url": {
+              "path": [
+                "reservation_flags",
+                ":reservation_flag_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reservation_flag_id",
+                  "description": "(Required) The ID of the Reservation Flag to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "929b529d-2129-44b9-b133-ad8f3df9645e",
+              "name": "The specified Reservation Flag",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags",
+                    ":reservation_flag_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reservation_flag_id",
+                      "description": "(Required) The ID of the Reservation Flag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservation\": {\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"franchise_id\": \"string\",\n    \"all_shops\": true,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"icon\": \"string\",\n    \"color\": \"string\",\n    \"created_at\": \"2020-01-29T19:12:34Z\",\n    \"updated_at\": \"2020-01-29T19:12:34Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d44578ec-1cd7-4804-8e86-e01da54c4cea",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags",
+                    ":reservation_flag_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reservation_flag_id",
+                      "description": "(Required) The ID of the Reservation Flag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebf33ac8-a9e6-4b5e-96c4-930a293a9a5c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags",
+                    ":reservation_flag_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reservation_flag_id",
+                      "description": "(Required) The ID of the Reservation Flag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0626b224-d025-452d-a411-f0dea70eab31",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags",
+                    ":reservation_flag_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reservation_flag_id",
+                      "description": "(Required) The ID of the Reservation Flag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a35d7e7f-2ff2-43c5-8cbf-6c439beede2f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reservation_flags",
+                    ":reservation_flag_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reservation_flag_id",
+                      "description": "(Required) The ID of the Reservation Flag to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f91a7148-9105-4767-92f5-0a9a88d3528b",
+    "name": "TableCheck API - V1 availability reservation_flags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

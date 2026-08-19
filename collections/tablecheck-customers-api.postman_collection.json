@@ -1,0 +1,1099 @@
+{
+  "item": [
+    {
+      "id": "23ce723e-4245-453f-86f1-72f5e4d998e1",
+      "name": "customers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f8721fb8-f52c-4a7a-915d-013ed997be61",
+          "name": "List all Customers",
+          "request": {
+            "name": "List all Customers",
+            "description": {},
+            "url": {
+              "path": [
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific customer IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "shop_ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific shop IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of created_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_min",
+                  "value": "<dateTime>",
+                  "description": "Search lower bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_max",
+                  "value": "<dateTime>",
+                  "description": "Search upper bound of updated_at field (ISO timestamp)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "100",
+                  "description": "Number of items to return at once. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5dd691b4-f8af-490a-a1c0-fd07b2fa4e09",
+              "name": "A paged array of customers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customers\": [\n    {\n      \"id\": \"string\",\n      \"ref\": \"string\",\n      \"franchise_id\": \"string\",\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"name\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"alt_first_name\": \"string\",\n      \"alt_last_name\": \"string\",\n      \"alpha_first_name\": \"string\",\n      \"alpha_last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"company_title\": \"string\",\n      \"company_division\": \"string\",\n      \"gender\": \"female\",\n      \"locale\": \"es\",\n      \"source\": \"pms\",\n      \"memo\": \"string\",\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phone_objects\": [\n        {\n          \"number\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"none\",\n          \"created_at\": \"1976-11-29T19:02:47.064Z\",\n          \"updated_at\": \"1983-01-26T06:48:49.459Z\"\n        },\n        {\n          \"number\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"work\",\n          \"created_at\": \"1990-03-04T00:25:48.601Z\",\n          \"updated_at\": \"2014-02-15T08:56:38.702Z\"\n        }\n      ],\n      \"emails\": [\n        \"bdx@q.lcob\",\n        \"ydcF59g6-4SLn@UZkHGejLeUrTWlFFZRzokhy.qry\"\n      ],\n      \"email_objects\": [\n        {\n          \"email\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"home\",\n          \"created_at\": \"1947-04-28T09:24:32.951Z\",\n          \"updated_at\": \"1960-01-17T16:57:21.889Z\"\n        },\n        {\n          \"email\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"other\",\n          \"created_at\": \"1993-01-19T17:16:02.378Z\",\n          \"updated_at\": \"2002-10-17T15:57:52.771Z\"\n        }\n      ],\n      \"events\": [\n        {\n          \"id\": \"string\",\n          \"tag\": \"birthday\",\n          \"date\": \"1975-09-24\",\n          \"months\": [\n            2686.145808388036,\n            1120.6548809322926\n          ],\n          \"day\": 8955.322764131637,\n          \"memo\": \"string\",\n          \"created_at\": \"2002-09-30T08:32:29.147Z\",\n          \"updated_at\": \"1957-01-06T11:04:49.071Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"tag\": \"2_month\",\n          \"date\": \"2024-08-07\",\n          \"months\": [\n            3153.638582483863,\n            8250.475300220316\n          ],\n          \"day\": 4421.095725336221,\n          \"memo\": \"string\",\n          \"created_at\": \"1982-06-16T04:43:02.295Z\",\n          \"updated_at\": \"1952-05-21T12:02:41.941Z\"\n        }\n      ],\n      \"socials\": [\n        {\n          \"username\": \"string\",\n          \"id\": \"string\",\n          \"service\": \"line\",\n          \"created_at\": \"1958-10-12T18:19:43.115Z\",\n          \"updated_at\": \"1948-05-12T09:02:11.782Z\"\n        },\n        {\n          \"username\": \"string\",\n          \"id\": \"string\",\n          \"service\": \"google\",\n          \"created_at\": \"1990-11-28T22:57:30.489Z\",\n          \"updated_at\": \"1946-12-13T23:47:43.047Z\"\n        }\n      ],\n      \"images\": [\n        {\n          \"id\": \"65dcd5f935288116d268b45b\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n          \"content_type\": \"image/jpeg\",\n          \"dimensions\": [\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"created_at\": \"2002-09-09T17:56:42.056Z\"\n        },\n        {\n          \"id\": \"65dcd5f935288116d268b45b\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n          \"content_type\": \"image/jpeg\",\n          \"dimensions\": [\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"created_at\": \"1955-11-04T14:14:31.210Z\"\n        }\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"likes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dislikes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"allergies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_temporary\": false,\n      \"allow_marketing\": true,\n      \"allow_direct_mail\": true,\n      \"allow_surveys\": false,\n      \"is_incognito\": false,\n      \"addresses\": [\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        },\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_program_name\": \"string\",\n          \"membership_tier_id\": \"string\",\n          \"membership_tier_name\": \"string\",\n          \"status\": \"pre_enrollment\",\n          \"points\": 4243.134097580039\n        },\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_program_name\": \"string\",\n          \"membership_tier_id\": \"string\",\n          \"membership_tier_name\": \"string\",\n          \"status\": \"cancelled\",\n          \"points\": 6083.346387337238\n        }\n      ],\n      \"parent_shop_id\": \"string\",\n      \"merged_customer_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"visits_count\": 9179,\n      \"cancels_count\": 3555,\n      \"noshows_count\": 7956,\n      \"visits_count_by_shop_id\": {\n        \"key_0\": 4937,\n        \"key_1\": 1454,\n        \"key_2\": 1564\n      },\n      \"previous_visit_at\": \"2014-07-11T17:09:21.669Z\",\n      \"next_visit_at\": \"1973-06-28T15:01:42.708Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"ref\": \"string\",\n      \"franchise_id\": \"string\",\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"name\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"alt_first_name\": \"string\",\n      \"alt_last_name\": \"string\",\n      \"alpha_first_name\": \"string\",\n      \"alpha_last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"company_title\": \"string\",\n      \"company_division\": \"string\",\n      \"gender\": \"male\",\n      \"locale\": \"it\",\n      \"source\": \"edm_subscribe\",\n      \"memo\": \"string\",\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"phone_objects\": [\n        {\n          \"number\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"fax\",\n          \"created_at\": \"1975-09-10T05:39:38.709Z\",\n          \"updated_at\": \"2017-12-16T06:56:05.443Z\"\n        },\n        {\n          \"number\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"none\",\n          \"created_at\": \"1982-08-22T22:09:38.466Z\",\n          \"updated_at\": \"1971-09-05T14:11:20.351Z\"\n        }\n      ],\n      \"emails\": [\n        \"oX7GbyuqNKiu@XdasrjrZOWpwvAiCbyOlqRWMVT.efvz\",\n        \"NsqJZysY@hwoXZlQwZsbOCPfa.syx\"\n      ],\n      \"email_objects\": [\n        {\n          \"email\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"work\",\n          \"created_at\": \"2000-06-24T16:16:13.207Z\",\n          \"updated_at\": \"2011-07-07T03:57:37.031Z\"\n        },\n        {\n          \"email\": \"string\",\n          \"id\": \"string\",\n          \"tag\": \"none\",\n          \"created_at\": \"2021-10-25T00:26:04.478Z\",\n          \"updated_at\": \"2000-09-27T08:24:03.523Z\"\n        }\n      ],\n      \"events\": [\n        {\n          \"id\": \"string\",\n          \"tag\": \"anniversary\",\n          \"date\": \"1992-04-29\",\n          \"months\": [\n            4638.717406558809,\n            9757.477750740469\n          ],\n          \"day\": 7711.5147515617155,\n          \"memo\": \"string\",\n          \"created_at\": \"1986-04-15T20:18:45.021Z\",\n          \"updated_at\": \"1991-08-19T14:32:25.483Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"tag\": \"anniversary\",\n          \"date\": \"1970-06-16\",\n          \"months\": [\n            41.45188005177047,\n            9822.78706858195\n          ],\n          \"day\": 9012.829587890776,\n          \"memo\": \"string\",\n          \"created_at\": \"2026-01-14T19:06:11.065Z\",\n          \"updated_at\": \"2022-01-08T02:55:25.398Z\"\n        }\n      ],\n      \"socials\": [\n        {\n          \"username\": \"string\",\n          \"id\": \"string\",\n          \"service\": \"linkedin\",\n          \"created_at\": \"1996-02-27T23:12:17.853Z\",\n          \"updated_at\": \"1995-11-04T20:12:20.625Z\"\n        },\n        {\n          \"username\": \"string\",\n          \"id\": \"string\",\n          \"service\": \"naver\",\n          \"created_at\": \"2007-05-11T04:56:00.442Z\",\n          \"updated_at\": \"1959-08-15T19:11:05.507Z\"\n        }\n      ],\n      \"images\": [\n        {\n          \"id\": \"65dcd5f935288116d268b45b\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n          \"content_type\": \"image/jpeg\",\n          \"dimensions\": [\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"created_at\": \"1959-03-15T02:20:49.566Z\"\n        },\n        {\n          \"id\": \"65dcd5f935288116d268b45b\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n          \"content_type\": \"image/jpeg\",\n          \"dimensions\": [\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"large\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"medium\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"small\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"created_at\": \"1976-11-08T05:42:40.611Z\"\n        }\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"likes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dislikes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"allergies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_temporary\": true,\n      \"allow_marketing\": false,\n      \"allow_direct_mail\": false,\n      \"allow_surveys\": true,\n      \"is_incognito\": true,\n      \"addresses\": [\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        },\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_program_name\": \"string\",\n          \"membership_tier_id\": \"string\",\n          \"membership_tier_name\": \"string\",\n          \"status\": \"active\",\n          \"points\": 3805.3245190493944\n        },\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_program_name\": \"string\",\n          \"membership_tier_id\": \"string\",\n          \"membership_tier_name\": \"string\",\n          \"status\": \"active\",\n          \"points\": 3291.30388830155\n        }\n      ],\n      \"parent_shop_id\": \"string\",\n      \"merged_customer_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"visits_count\": 8126,\n      \"cancels_count\": 9648,\n      \"noshows_count\": 40,\n      \"visits_count_by_shop_id\": {\n        \"key_0\": 1510,\n        \"key_1\": 4790\n      },\n      \"previous_visit_at\": \"2023-01-23T10:49:34.154Z\",\n      \"next_visit_at\": \"1969-01-19T14:56:27.085Z\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 3,\n    \"per_page\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6909eefd-e10f-42b5-af7a-4ae538cb82dd",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "shop_ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "created_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_min",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_max",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b753017c-2092-4f2f-9089-638f3f0d248e",
+          "name": "Create a new customer",
+          "request": {
+            "name": "Create a new customer",
+            "description": {},
+            "url": {
+              "path": [
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"franchise_id\": \"<bson-id>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"<url>\"\n    },\n    {\n      \"image_upload_url\": \"<url>\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"street\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<iso-country>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"street\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<iso-country>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "258dbd09-14b8-49a5-9f92-c0a4f88718c4",
+              "name": "Information about the customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"franchise_id\": \"<bson-id>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    },\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    },\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer\": {\n    \"id\": \"string\",\n    \"ref\": \"string\",\n    \"franchise_id\": \"string\",\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"name\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"alt_first_name\": \"string\",\n    \"alt_last_name\": \"string\",\n    \"alpha_first_name\": \"string\",\n    \"alpha_last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"company_title\": \"string\",\n    \"company_division\": \"string\",\n    \"gender\": \"female\",\n    \"locale\": \"ko\",\n    \"source\": \"tablecheck_guest\",\n    \"memo\": \"string\",\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"phone_objects\": [\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"emails\": [\n      \"HTld1QdBUj@XHxFCFuPGWUDlYNPWTQPnfvFiI.ppbu\",\n      \"rnk@lAykXpwtRbF.nhhs\"\n    ],\n    \"email_objects\": [\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"socials\": [\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"images\": [\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"medium\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"large\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"1977-11-06T09:53:13.336Z\"\n      },\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"medium\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"medium\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"1966-11-19T23:29:39.017Z\"\n      }\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"likes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"dislikes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allergies\": [\n      \"string\",\n      \"string\"\n    ],\n    \"is_temporary\": false,\n    \"allow_marketing\": true,\n    \"allow_direct_mail\": true,\n    \"allow_surveys\": false,\n    \"is_incognito\": false,\n    \"addresses\": [\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      },\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      }\n    ],\n    \"memberships\": [\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"cancelled\",\n        \"points\": 6368.525048155539\n      },\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"pre_enrollment\",\n        \"points\": 8526.781510363313\n      }\n    ],\n    \"parent_shop_id\": \"string\",\n    \"merged_customer_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"visits_count\": 9289,\n    \"cancels_count\": 3742,\n    \"noshows_count\": 5606,\n    \"visits_count_by_shop_id\": {\n      \"key_0\": 8230,\n      \"key_1\": 7220\n    },\n    \"previous_visit_at\": \"1999-10-10T16:42:36.785Z\",\n    \"next_visit_at\": \"1957-07-23T11:00:15.691Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8626729d-9c70-4f36-9932-a250da5e95f1",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"franchise_id\": \"<bson-id>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    },\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    },\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7788ec44-13b1-4d2c-aebf-aca5a5607263",
+          "name": "Fetch a specific Customer",
+          "request": {
+            "name": "Fetch a specific Customer",
+            "description": {},
+            "url": {
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) The ID of the Customer to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b288c2f2-32d5-4abd-bf65-7fab6b04f759",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer\": {\n    \"id\": \"string\",\n    \"ref\": \"string\",\n    \"franchise_id\": \"string\",\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"name\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"alt_first_name\": \"string\",\n    \"alt_last_name\": \"string\",\n    \"alpha_first_name\": \"string\",\n    \"alpha_last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"company_title\": \"string\",\n    \"company_division\": \"string\",\n    \"gender\": \"male\",\n    \"locale\": \"nl\",\n    \"source\": \"import\",\n    \"memo\": \"string\",\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"phone_objects\": [\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"emails\": [\n      \"fD02FgSt@PKXEQpsrADWNDLwrAVOpwYIBqoRWumcOI.gofv\",\n      \"nF84BjJX@IUlOWRwpLmpSDRDaqAEJRH.sio\"\n    ],\n    \"email_objects\": [\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"socials\": [\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"images\": [\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"small\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"original\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"2023-10-28T05:09:55.565Z\"\n      },\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"original\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"small\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"1961-03-13T01:07:01.146Z\"\n      }\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"likes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"dislikes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allergies\": [\n      \"string\",\n      \"string\"\n    ],\n    \"is_temporary\": true,\n    \"allow_marketing\": false,\n    \"allow_direct_mail\": true,\n    \"allow_surveys\": true,\n    \"is_incognito\": false,\n    \"addresses\": [\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      },\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      }\n    ],\n    \"memberships\": [\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"cancelled\",\n        \"points\": 2359.5564054362385\n      },\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"cancelled\",\n        \"points\": 5020.613680358378\n      }\n    ],\n    \"parent_shop_id\": \"string\",\n    \"merged_customer_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"visits_count\": 4488,\n    \"cancels_count\": 1438,\n    \"noshows_count\": 4651,\n    \"visits_count_by_shop_id\": {\n      \"key_0\": 8048,\n      \"key_1\": 3789\n    },\n    \"previous_visit_at\": \"1982-02-26T04:41:57.322Z\",\n    \"next_visit_at\": \"1972-12-16T11:36:10.948Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56276fd4-8521-4bcb-a721-7c4e246163d6",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2398e02-c3d6-4614-aaf4-e9b2ced3008a",
+          "name": "Amend the Customer",
+          "request": {
+            "name": "Amend the Customer",
+            "description": {},
+            "url": {
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) The ID of the Customer to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"last_name\": \"<string>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"<url>\"\n    },\n    {\n      \"image_upload_url\": \"<url>\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"street\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<iso-country>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"street\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<iso-country>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3eec388d-8bb4-4e73-8731-a3086e1b13c8",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"last_name\": \"<string>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    },\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    },\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer\": {\n    \"id\": \"string\",\n    \"ref\": \"string\",\n    \"franchise_id\": \"string\",\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"name\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"alt_first_name\": \"string\",\n    \"alt_last_name\": \"string\",\n    \"alpha_first_name\": \"string\",\n    \"alpha_last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"company_title\": \"string\",\n    \"company_division\": \"string\",\n    \"gender\": \"male\",\n    \"locale\": \"nl\",\n    \"source\": \"import\",\n    \"memo\": \"string\",\n    \"phones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"phone_objects\": [\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"number\": \"<phone-e164>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"emails\": [\n      \"fD02FgSt@PKXEQpsrADWNDLwrAVOpwYIBqoRWumcOI.gofv\",\n      \"nF84BjJX@IUlOWRwpLmpSDRDaqAEJRH.sio\"\n    ],\n    \"email_objects\": [\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"email\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"events\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"tag\": \"<string>\",\n        \"date\": \"<date>\",\n        \"months\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"day\": \"<integer>\",\n        \"memo\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"socials\": [\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      },\n      {\n        \"username\": \"<string>\",\n        \"id\": \"<bson-id>\",\n        \"service\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"images\": [\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"small\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"original\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"2023-10-28T05:09:55.565Z\"\n      },\n      {\n        \"id\": \"65dcd5f935288116d268b45b\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n        \"content_type\": \"image/jpeg\",\n        \"dimensions\": [\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          },\n          {\n            \"large\": [\n              1280,\n              704\n            ],\n            \"medium\": [\n              800,\n              440\n            ],\n            \"small\": [\n              256,\n              141\n            ]\n          }\n        ],\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"original\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"small\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"created_at\": \"1961-03-13T01:07:01.146Z\"\n      }\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"likes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"dislikes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allergies\": [\n      \"string\",\n      \"string\"\n    ],\n    \"is_temporary\": true,\n    \"allow_marketing\": false,\n    \"allow_direct_mail\": true,\n    \"allow_surveys\": true,\n    \"is_incognito\": false,\n    \"addresses\": [\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      },\n      {\n        \"tag\": \"home\",\n        \"street\": \"123 Main St\",\n        \"city\": \"Seattle\",\n        \"state\": \"WA\",\n        \"country\": \"US\"\n      }\n    ],\n    \"memberships\": [\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"cancelled\",\n        \"points\": 2359.5564054362385\n      },\n      {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"membership_program_id\": \"string\",\n        \"membership_program_name\": \"string\",\n        \"membership_tier_id\": \"string\",\n        \"membership_tier_name\": \"string\",\n        \"status\": \"cancelled\",\n        \"points\": 5020.613680358378\n      }\n    ],\n    \"parent_shop_id\": \"string\",\n    \"merged_customer_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"visits_count\": 4488,\n    \"cancels_count\": 1438,\n    \"noshows_count\": 4651,\n    \"visits_count_by_shop_id\": {\n      \"key_0\": 8048,\n      \"key_1\": 3789\n    },\n    \"previous_visit_at\": \"1982-02-26T04:41:57.322Z\",\n    \"next_visit_at\": \"1972-12-16T11:36:10.948Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7510723d-d441-43fb-995d-07372ed63d19",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"last_name\": \"<string>\",\n  \"parent_shop_id\": \"<bson-id>\",\n  \"name_prefix\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"phones\": [\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"number\": \"<phone-e164>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_phones\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_emails\": \"<boolean>\",\n  \"socials\": [\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"username\": \"<string>\",\n      \"id\": \"<bson-id>\",\n      \"service\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"images\": [\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    },\n    {\n      \"image_upload_url\": \"https://your.domain.com/image.png\"\n    }\n  ],\n  \"overwrite_socials\": \"<boolean>\",\n  \"events\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"tag\": \"<string>\",\n      \"date\": \"<date>\",\n      \"months\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"day\": \"<integer>\",\n      \"memo\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"overwrite_events\": \"<boolean>\",\n  \"addresses\": [\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    },\n    {\n      \"tag\": \"home\",\n      \"street\": \"123 Main St\",\n      \"city\": \"Seattle\",\n      \"state\": \"WA\",\n      \"country\": \"US\"\n    }\n  ],\n  \"overwrite_addresses\": \"<boolean>\",\n  \"kanji_first_name\": \"<string>\",\n  \"kanji_last_name\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sex\": \"<integer>\",\n  \"division\": \"<string>\",\n  \"source\": \"<string>\",\n  \"age_range\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allerges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"locale\": \"<string>\",\n  \"country\": \"<string>\",\n  \"base_count_visits\": \"<integer>\",\n  \"base_count_cancels\": \"<integer>\",\n  \"base_count_noshows\": \"<integer>\",\n  \"email_marketing\": \"<boolean>\",\n  \"email_reminders\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_incognito\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"memo\": \"<string>\",\n  \"shop_memos\": [\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ],\n    [\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"shop_id\": \"<string>\",\n        \"memo\": \"<string>\"\n      }\n    ]\n  ],\n  \"allow_surveys\": \"<boolean>\",\n  \"merge_customer_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41e93c38-4396-4fef-a42e-ee73d2fd0a82",
+          "name": "Destroy the customer",
+          "request": {
+            "name": "Destroy the customer",
+            "description": {},
+            "url": {
+              "path": [
+                "customers",
+                ":customer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customer_id",
+                  "description": "(Required) The ID of the Customer to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6b796af-ff3c-4e46-9455-6b9fefb658f7",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2000ff09-97ad-4796-a7d6-f90d61f68ed9",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    ":customer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customer_id",
+                      "description": "(Required) The ID of the Customer to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36f7edef-18ea-4b49-b787-896c6dd4a950",
+          "name": "Search and bulk export customers",
+          "request": {
+            "name": "Search and bulk export customers",
+            "description": {},
+            "url": {
+              "path": [
+                "customer_search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scroll_id\": \"<string>\",\n  \"franchise_id\": \"<bson-id>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"alt_first_name\": \"<string>\",\n  \"alt_last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"company_division\": \"<string>\",\n  \"company_title\": \"<string>\",\n  \"has_phone\": \"<boolean>\",\n  \"phone\": \"<phone-e164>\",\n  \"has_email\": \"<boolean>\",\n  \"email\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"shop_memos_memo\": \"<string>\",\n  \"shop_memos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"gender\": \"<string>\",\n  \"allow_marketing\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allergies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"age_ranges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sales_rep_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assigned_staff_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"locales\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"social_username\": \"<string>\",\n  \"event_date_min\": \"<date>\",\n  \"event_date_max\": \"<date>\",\n  \"event_tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_months\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at_min\": \"<dateTime>\",\n  \"created_at_max\": \"<dateTime>\",\n  \"updated_at_min\": \"<dateTime>\",\n  \"updated_at_max\": \"<dateTime>\",\n  \"address_postal_code\": \"<string>\",\n  \"address_country\": \"<country>\",\n  \"address_region\": \"<string>\",\n  \"address_city\": \"<string>\",\n  \"reservation_stages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_start_date_min\": \"<date>\",\n  \"reservation_start_date_max\": \"<date>\",\n  \"reservation_created_date_min\": \"<date>\",\n  \"reservation_created_date_max\": \"<date>\",\n  \"reservation_updated_date_min\": \"<date>\",\n  \"reservation_updated_date_max\": \"<date>\",\n  \"reservation_pax_min\": \"<integer>\",\n  \"reservation_pax_max\": \"<integer>\",\n  \"reservation_count_visits_min\": \"<integer>\",\n  \"reservation_count_visits_max\": \"<integer>\",\n  \"reservation_shop_visits_min\": \"<integer>\",\n  \"reservation_shop_visits_max\": \"<integer>\",\n  \"reservation_shop_cancels_min\": \"<integer>\",\n  \"reservation_shop_cancels_max\": \"<integer>\",\n  \"reservation_shop_noshows_min\": \"<integer>\",\n  \"reservation_shop_noshows_max\": \"<integer>\",\n  \"reservation_memo\": \"<string>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_party_name\": \"<string>\",\n  \"reservation_room_name\": \"<string>\",\n  \"reservation_flag_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_status_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_objectives\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_sources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_channels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_providers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"membership_program_id\": \"<string>\",\n  \"membership_tier_id\": \"<string>\",\n  \"membership_code\": \"<string>\",\n  \"membership_points_min\": \"<string>\",\n  \"membership_points_max\": \"<string>\",\n  \"membership_start_date_min\": \"<date>\",\n  \"membership_start_date_max\": \"<date>\",\n  \"membership_expiry_date_min\": \"<date>\",\n  \"membership_expiry_date_max\": \"<date>\",\n  \"payment_currency\": \"<string>\",\n  \"payment_average_amt_min\": \"<float>\",\n  \"payment_average_amt_max\": \"<float>\",\n  \"payment_lifetime_amt_min\": \"<float>\",\n  \"payment_lifetime_amt_max\": \"<float>\",\n  \"payment_last_amt_min\": \"<float>\",\n  \"payment_last_amt_max\": \"<float>\",\n  \"payment_avg_spend_per_pax_min\": \"<float>\",\n  \"payment_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_condition\": \"<string>\",\n  \"pos_currency\": \"<string>\",\n  \"pos_average_amt_min\": \"<float>\",\n  \"pos_average_amt_max\": \"<float>\",\n  \"pos_lifetime_amt_min\": \"<float>\",\n  \"pos_lifetime_amt_max\": \"<float>\",\n  \"pos_last_amt_min\": \"<float>\",\n  \"pos_last_amt_max\": \"<float>\",\n  \"pos_avg_spend_per_pax_min\": \"<float>\",\n  \"pos_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_category_name\": \"<string>\",\n  \"pos_menu_item_name\": \"<string>\",\n  \"pos_price_min\": \"<float>\",\n  \"pos_price_max\": \"<float>\",\n  \"pos_qty_min\": \"<integer>\",\n  \"pos_qty_max\": \"<integer>\",\n  \"pos_total_min\": \"<float>\",\n  \"pos_total_max\": \"<float>\",\n  \"pos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"order_currency\": \"<string>\",\n  \"order_menu_category_name\": \"<string>\",\n  \"order_menu_item_name\": \"<string>\",\n  \"order_menu_category_id\": \"<bson-id>\",\n  \"order_menu_item_id\": \"<bson-id>\",\n  \"order_price_min\": \"<float>\",\n  \"order_price_max\": \"<float>\",\n  \"order_qty_min\": \"<integer>\",\n  \"order_qty_max\": \"<integer>\",\n  \"order_total_min\": \"<float>\",\n  \"order_total_max\": \"<float>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "969f0782-fa2a-4c84-8099-ab464c369b97",
+              "name": "List of exported customers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer_search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scroll_id\": \"<string>\",\n  \"franchise_id\": \"<bson-id>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"alt_first_name\": \"<string>\",\n  \"alt_last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"company_division\": \"<string>\",\n  \"company_title\": \"<string>\",\n  \"has_phone\": \"<boolean>\",\n  \"phone\": \"<phone-e164>\",\n  \"has_email\": \"<boolean>\",\n  \"email\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"shop_memos_memo\": \"<string>\",\n  \"shop_memos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"gender\": \"<string>\",\n  \"allow_marketing\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allergies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"age_ranges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sales_rep_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assigned_staff_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"locales\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"social_username\": \"<string>\",\n  \"event_date_min\": \"<date>\",\n  \"event_date_max\": \"<date>\",\n  \"event_tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_months\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at_min\": \"<dateTime>\",\n  \"created_at_max\": \"<dateTime>\",\n  \"updated_at_min\": \"<dateTime>\",\n  \"updated_at_max\": \"<dateTime>\",\n  \"address_postal_code\": \"<string>\",\n  \"address_country\": \"<country>\",\n  \"address_region\": \"<string>\",\n  \"address_city\": \"<string>\",\n  \"reservation_stages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_start_date_min\": \"<date>\",\n  \"reservation_start_date_max\": \"<date>\",\n  \"reservation_created_date_min\": \"<date>\",\n  \"reservation_created_date_max\": \"<date>\",\n  \"reservation_updated_date_min\": \"<date>\",\n  \"reservation_updated_date_max\": \"<date>\",\n  \"reservation_pax_min\": \"<integer>\",\n  \"reservation_pax_max\": \"<integer>\",\n  \"reservation_count_visits_min\": \"<integer>\",\n  \"reservation_count_visits_max\": \"<integer>\",\n  \"reservation_shop_visits_min\": \"<integer>\",\n  \"reservation_shop_visits_max\": \"<integer>\",\n  \"reservation_shop_cancels_min\": \"<integer>\",\n  \"reservation_shop_cancels_max\": \"<integer>\",\n  \"reservation_shop_noshows_min\": \"<integer>\",\n  \"reservation_shop_noshows_max\": \"<integer>\",\n  \"reservation_memo\": \"<string>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_party_name\": \"<string>\",\n  \"reservation_room_name\": \"<string>\",\n  \"reservation_flag_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_status_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_objectives\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_sources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_channels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_providers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"membership_program_id\": \"<string>\",\n  \"membership_tier_id\": \"<string>\",\n  \"membership_code\": \"<string>\",\n  \"membership_points_min\": \"<string>\",\n  \"membership_points_max\": \"<string>\",\n  \"membership_start_date_min\": \"<date>\",\n  \"membership_start_date_max\": \"<date>\",\n  \"membership_expiry_date_min\": \"<date>\",\n  \"membership_expiry_date_max\": \"<date>\",\n  \"payment_currency\": \"<string>\",\n  \"payment_average_amt_min\": \"<float>\",\n  \"payment_average_amt_max\": \"<float>\",\n  \"payment_lifetime_amt_min\": \"<float>\",\n  \"payment_lifetime_amt_max\": \"<float>\",\n  \"payment_last_amt_min\": \"<float>\",\n  \"payment_last_amt_max\": \"<float>\",\n  \"payment_avg_spend_per_pax_min\": \"<float>\",\n  \"payment_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_condition\": \"<string>\",\n  \"pos_currency\": \"<string>\",\n  \"pos_average_amt_min\": \"<float>\",\n  \"pos_average_amt_max\": \"<float>\",\n  \"pos_lifetime_amt_min\": \"<float>\",\n  \"pos_lifetime_amt_max\": \"<float>\",\n  \"pos_last_amt_min\": \"<float>\",\n  \"pos_last_amt_max\": \"<float>\",\n  \"pos_avg_spend_per_pax_min\": \"<float>\",\n  \"pos_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_category_name\": \"<string>\",\n  \"pos_menu_item_name\": \"<string>\",\n  \"pos_price_min\": \"<float>\",\n  \"pos_price_max\": \"<float>\",\n  \"pos_qty_min\": \"<integer>\",\n  \"pos_qty_max\": \"<integer>\",\n  \"pos_total_min\": \"<float>\",\n  \"pos_total_max\": \"<float>\",\n  \"pos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"order_currency\": \"<string>\",\n  \"order_menu_category_name\": \"<string>\",\n  \"order_menu_item_name\": \"<string>\",\n  \"order_menu_category_id\": \"<bson-id>\",\n  \"order_menu_item_id\": \"<bson-id>\",\n  \"order_price_min\": \"<float>\",\n  \"order_price_max\": \"<float>\",\n  \"order_qty_min\": \"<integer>\",\n  \"order_qty_max\": \"<integer>\",\n  \"order_total_min\": \"<float>\",\n  \"order_total_max\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customers\": [\n    {\n      \"id\": \"string\",\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"name\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"alt_first_name\": \"string\",\n      \"alt_last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"company_title\": \"string\",\n      \"company_division\": \"string\",\n      \"gender\": \"female\",\n      \"locale\": \"lo\",\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"emails\": [\n        \"BYr2uK0EK@RspOFjhLoKnRuqSiIGkHGIFT.vbjm\",\n        \"X3iOEwm@iSzy.xe\"\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"likes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dislikes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"allergies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_temporary\": true,\n      \"allow_marketing\": true,\n      \"allow_direct_mail\": true,\n      \"memo\": \"string\",\n      \"addresses\": [\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        },\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_tier_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_tier_id\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"name\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"alt_first_name\": \"string\",\n      \"alt_last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"company_title\": \"string\",\n      \"company_division\": \"string\",\n      \"gender\": \"male\",\n      \"locale\": \"zh-TW\",\n      \"phones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"emails\": [\n        \"oaqAsB@efpZmxIArkidOkOsZtFkVAwBrqtatILfu.udht\",\n        \"ierK@DzViNldWs.mx\"\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"likes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dislikes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"allergies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_temporary\": false,\n      \"allow_marketing\": true,\n      \"allow_direct_mail\": true,\n      \"memo\": \"string\",\n      \"addresses\": [\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        },\n        {\n          \"tag\": \"home\",\n          \"street\": \"123 Main St\",\n          \"city\": \"Seattle\",\n          \"state\": \"WA\",\n          \"country\": \"US\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_tier_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"code\": \"string\",\n          \"membership_program_id\": \"string\",\n          \"membership_tier_id\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"scroll_id\": \"string\",\n    \"total_results\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d691783-7986-4f9e-afc3-e85a2c9db6ab",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer_search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scroll_id\": \"<string>\",\n  \"franchise_id\": \"<bson-id>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"alt_first_name\": \"<string>\",\n  \"alt_last_name\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"company_division\": \"<string>\",\n  \"company_title\": \"<string>\",\n  \"has_phone\": \"<boolean>\",\n  \"phone\": \"<phone-e164>\",\n  \"has_email\": \"<boolean>\",\n  \"email\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"shop_memos_memo\": \"<string>\",\n  \"shop_memos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"gender\": \"<string>\",\n  \"allow_marketing\": \"<boolean>\",\n  \"direct_mail\": \"<boolean>\",\n  \"is_temporary\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"likes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"dislikes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allergies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"age_ranges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sales_rep_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assigned_staff_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"locales\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"social_username\": \"<string>\",\n  \"event_date_min\": \"<date>\",\n  \"event_date_max\": \"<date>\",\n  \"event_tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_months\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at_min\": \"<dateTime>\",\n  \"created_at_max\": \"<dateTime>\",\n  \"updated_at_min\": \"<dateTime>\",\n  \"updated_at_max\": \"<dateTime>\",\n  \"address_postal_code\": \"<string>\",\n  \"address_country\": \"<country>\",\n  \"address_region\": \"<string>\",\n  \"address_city\": \"<string>\",\n  \"reservation_stages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_start_date_min\": \"<date>\",\n  \"reservation_start_date_max\": \"<date>\",\n  \"reservation_created_date_min\": \"<date>\",\n  \"reservation_created_date_max\": \"<date>\",\n  \"reservation_updated_date_min\": \"<date>\",\n  \"reservation_updated_date_max\": \"<date>\",\n  \"reservation_pax_min\": \"<integer>\",\n  \"reservation_pax_max\": \"<integer>\",\n  \"reservation_count_visits_min\": \"<integer>\",\n  \"reservation_count_visits_max\": \"<integer>\",\n  \"reservation_shop_visits_min\": \"<integer>\",\n  \"reservation_shop_visits_max\": \"<integer>\",\n  \"reservation_shop_cancels_min\": \"<integer>\",\n  \"reservation_shop_cancels_max\": \"<integer>\",\n  \"reservation_shop_noshows_min\": \"<integer>\",\n  \"reservation_shop_noshows_max\": \"<integer>\",\n  \"reservation_memo\": \"<string>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_party_name\": \"<string>\",\n  \"reservation_room_name\": \"<string>\",\n  \"reservation_flag_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_status_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_objectives\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"reservation_sources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_channels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"reservation_providers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"membership_program_id\": \"<string>\",\n  \"membership_tier_id\": \"<string>\",\n  \"membership_code\": \"<string>\",\n  \"membership_points_min\": \"<string>\",\n  \"membership_points_max\": \"<string>\",\n  \"membership_start_date_min\": \"<date>\",\n  \"membership_start_date_max\": \"<date>\",\n  \"membership_expiry_date_min\": \"<date>\",\n  \"membership_expiry_date_max\": \"<date>\",\n  \"payment_currency\": \"<string>\",\n  \"payment_average_amt_min\": \"<float>\",\n  \"payment_average_amt_max\": \"<float>\",\n  \"payment_lifetime_amt_min\": \"<float>\",\n  \"payment_lifetime_amt_max\": \"<float>\",\n  \"payment_last_amt_min\": \"<float>\",\n  \"payment_last_amt_max\": \"<float>\",\n  \"payment_avg_spend_per_pax_min\": \"<float>\",\n  \"payment_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_condition\": \"<string>\",\n  \"pos_currency\": \"<string>\",\n  \"pos_average_amt_min\": \"<float>\",\n  \"pos_average_amt_max\": \"<float>\",\n  \"pos_lifetime_amt_min\": \"<float>\",\n  \"pos_lifetime_amt_max\": \"<float>\",\n  \"pos_last_amt_min\": \"<float>\",\n  \"pos_last_amt_max\": \"<float>\",\n  \"pos_avg_spend_per_pax_min\": \"<float>\",\n  \"pos_avg_spend_per_pax_max\": \"<float>\",\n  \"pos_menu_category_name\": \"<string>\",\n  \"pos_menu_item_name\": \"<string>\",\n  \"pos_price_min\": \"<float>\",\n  \"pos_price_max\": \"<float>\",\n  \"pos_qty_min\": \"<integer>\",\n  \"pos_qty_max\": \"<integer>\",\n  \"pos_total_min\": \"<float>\",\n  \"pos_total_max\": \"<float>\",\n  \"pos_shop_ids\": [\n    \"<bson-id>\",\n    \"<bson-id>\"\n  ],\n  \"order_currency\": \"<string>\",\n  \"order_menu_category_name\": \"<string>\",\n  \"order_menu_item_name\": \"<string>\",\n  \"order_menu_category_id\": \"<bson-id>\",\n  \"order_menu_item_id\": \"<bson-id>\",\n  \"order_price_min\": \"<float>\",\n  \"order_price_max\": \"<float>\",\n  \"order_qty_min\": \"<integer>\",\n  \"order_qty_max\": \"<integer>\",\n  \"order_total_min\": \"<float>\",\n  \"order_total_max\": \"<float>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22b1c06a-b167-4ae6-b4f4-1d9612769179",
+    "name": "TableCheck API - V1 availability customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

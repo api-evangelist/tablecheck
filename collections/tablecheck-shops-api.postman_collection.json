@@ -1,0 +1,949 @@
+{
+  "item": [
+    {
+      "id": "79521002-8ae1-44ec-a360-5b1f2a06e57f",
+      "name": "shops",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d3c98309-c556-42c0-a9e3-862a8fb7e1d4",
+          "name": "Search for availability across all shops",
+          "request": {
+            "name": "Search for availability across all shops",
+            "description": {},
+            "url": {
+              "path": [
+                "shops"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pax",
+                  "value": "<integer>",
+                  "description": "Desired number of guests for which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "datetime",
+                  "value": "<dateTime>",
+                  "description": "Desired datetime around which to search for availability."
+                },
+                {
+                  "disabled": false,
+                  "key": "mini",
+                  "value": "<boolean>",
+                  "description": "If true, returns only availablity without including shop info."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<bson-id>",
+                  "description": "Array or comma-separated list of specific IDs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Array or comma-separated list of specific slugs to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The zero-based page number. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Number of items to return at once. Used for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "distance",
+                  "description": "The field by which to sort the results. Distance sort is applied only if geo parameters are present."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "asc",
+                  "description": "asc or desc."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by the shop name."
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_latitude",
+                  "value": "<float>",
+                  "description": "The latitude of the geocode center point used to evaluate distance query."
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_longitude",
+                  "value": "<float>",
+                  "description": "The longitude of the geocode center point used to evaluate distance query."
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_distance",
+                  "value": "<float>",
+                  "description": "The maximum distance in meters from the geocode center point from which to return results."
+                },
+                {
+                  "disabled": false,
+                  "key": "cuisines",
+                  "value": "<string>",
+                  "description": "Filter by a list of cuisine values (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Filter by a list of tag values (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "seat_types",
+                  "value": "<string>",
+                  "description": "Filters availability by the type of seating, e.g. table, counter, private room, etc. (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "smoking",
+                  "value": "<string>",
+                  "description": "Filters availability by whether the seating allows smoking or not. If unspecified, both smoking and non-smoking are allowed."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_modes",
+                  "value": "<string>",
+                  "description": "Service mode selection of dining, pickup, etc. (array or comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "budget_lunch_min",
+                  "value": "<float>",
+                  "description": "Minimum of lunch budget range filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "budget_lunch_max",
+                  "value": "<float>",
+                  "description": "Maximum of lunch budget range filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "budget_dinner_min",
+                  "value": "<float>",
+                  "description": "Minimum of dinner budget range filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "budget_dinner_max",
+                  "value": "<float>",
+                  "description": "Maximum of dinner budget range filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "address_city",
+                  "value": "<string>",
+                  "description": "Filter by the shop's address city, ward, or municipality."
+                },
+                {
+                  "disabled": false,
+                  "key": "address_region",
+                  "value": "<string>",
+                  "description": "Filter by the shop's address region, state, or province."
+                },
+                {
+                  "disabled": false,
+                  "key": "address_postal_code",
+                  "value": "<string>",
+                  "description": "Filter by the shop's address postal code."
+                },
+                {
+                  "disabled": false,
+                  "key": "address_country",
+                  "value": "<string>",
+                  "description": "Filter by the shop's address country."
+                },
+                {
+                  "disabled": false,
+                  "key": "search_after",
+                  "value": "<string>",
+                  "description": "Use for pagination. Set this value to obtain the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1319f7c3-7d3a-4cc6-863a-a962598de479",
+              "name": "A paged array of shops",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "mini",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "distance"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "geo_latitude",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "geo_longitude",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "geo_distance",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "cuisines",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_modes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "budget_lunch_min",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_lunch_max",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_dinner_min",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_dinner_max",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "address_city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shops\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"slug\": \"my-shop-slug\",\n      \"name_translations\": {\n        \"en\": \"Paris Cafe\",\n        \"fr\": \"Café de Paris\",\n        \"ja\": \"カフェデパリ\"\n      },\n      \"alt_name\": \"カフェデパリ\",\n      \"location_name_translations\": {\n        \"en\": \"Hotel Kyoto\",\n        \"fr\": \"Hôtel Kyoto\",\n        \"ja\": \"ホテル京都\"\n      },\n      \"alt_location_name\": \"ホテルキョウト\",\n      \"latitude\": 35.0116,\n      \"longitude\": 135.768,\n      \"google_place_ref\": \"ChIJ39ZjD-GLGGARBF5Aq0l7iPE\",\n      \"google_place_cid\": \"Use-google_place_ref-instead\",\n      \"country\": \"JP\",\n      \"currency\": \"JPY\",\n      \"time_zone\": \"Asia/Tokyo\",\n      \"phone\": \"+81355650112\",\n      \"phone_natl\": \"03-5565-0112\",\n      \"homepage_url\": \"https://www.myrestaurant.com/ja\",\n      \"homepage_url_translations\": {\n        \"en\": \"https://www.myrestaurant.com/en\",\n        \"ja\": \"https://www.myrestaurant.com/ja\"\n      },\n      \"tablecheck_shop_url\": \"https://www.tablecheck.com/my-shop-slug\",\n      \"tablecheck_booking_url\": \"https://www.tablecheck.com/shops/my-shop-slug/reserve\",\n      \"tags\": [\n        \"outdoor\",\n        \"quiet\"\n      ],\n      \"cuisines\": [\n        \"sushi\",\n        \"tempura\"\n      ],\n      \"budget_lunch\": \"10000.0\",\n      \"budget_dinner\": \"10000.0\",\n      \"updated_at\": \"2021-11-19T03:13:23.062Z\",\n      \"content_title_translations\": {\n        \"en\": \"A truly great restuarant\",\n        \"ja\": \"本当にすごいレストランです\"\n      },\n      \"content_body_translations\": {\n        \"en\": \"I love this restuarant!\",\n        \"ja\": \"このレストラン大好きです！\"\n      },\n      \"show_pax_senior\": true,\n      \"show_pax_child\": false,\n      \"show_pax_baby\": false,\n      \"pax_senior_age_min\": 65,\n      \"pax_child_age_max\": 12,\n      \"pax_baby_age_max\": 5,\n      \"service_categories\": [\n        {\n          \"id\": \"5e281bfa7df93f63e0000003\",\n          \"image\": {\n            \"id\": \"string\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              1280,\n              960\n            ],\n            \"content_type\": \"image/jpeg\",\n            \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n            \"image_variants\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"tags\": [\n              \"primary\"\n            ],\n            \"created_at\": \"2018-03-28T16:43:51.944Z\"\n          },\n          \"image_url\": \"string\"\n        },\n        {\n          \"id\": \"5e281bfa7df93f63e0000003\",\n          \"image\": {\n            \"id\": \"string\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              1280,\n              960\n            ],\n            \"content_type\": \"image/jpeg\",\n            \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n            \"image_variants\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"tags\": [\n              \"primary\"\n            ],\n            \"created_at\": \"1956-07-25T17:52:06.241Z\"\n          },\n          \"image_url\": \"string\"\n        }\n      ],\n      \"address\": {\n        \"street\": \"2-14-5 Ginza\",\n        \"street2\": \"Dai-27 Chuo Bldg 4F\",\n        \"city\": \"Chuo-ku\",\n        \"region\": \"Tokyo\",\n        \"postal_code\": \"104-0061\",\n        \"country\": \"JP\"\n      },\n      \"alt_address\": {\n        \"street\": \"2-14-5 Ginza\",\n        \"street2\": \"Dai-27 Chuo Bldg 4F\",\n        \"city\": \"Chuo-ku\",\n        \"region\": \"Tokyo\",\n        \"postal_code\": \"104-0061\",\n        \"country\": \"JP\"\n      },\n      \"images\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1985-02-26T18:26:26.904Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1977-11-19T06:32:47.824Z\"\n        }\n      ],\n      \"image_url\": \"string\",\n      \"availability\": [\n        \"2018-11-10T02:30:00.000Z\",\n        \"2018-11-10T02:45:00.000Z\",\n        \"2018-11-10T05:30:00.000Z\"\n      ],\n      \"availability_cached_at\": \"1965-08-30T12:20:34.020Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"slug\": \"my-shop-slug\",\n      \"name_translations\": {\n        \"en\": \"Paris Cafe\",\n        \"fr\": \"Café de Paris\",\n        \"ja\": \"カフェデパリ\"\n      },\n      \"alt_name\": \"カフェデパリ\",\n      \"location_name_translations\": {\n        \"en\": \"Hotel Kyoto\",\n        \"fr\": \"Hôtel Kyoto\",\n        \"ja\": \"ホテル京都\"\n      },\n      \"alt_location_name\": \"ホテルキョウト\",\n      \"latitude\": 35.0116,\n      \"longitude\": 135.768,\n      \"google_place_ref\": \"ChIJ39ZjD-GLGGARBF5Aq0l7iPE\",\n      \"google_place_cid\": \"Use-google_place_ref-instead\",\n      \"country\": \"JP\",\n      \"currency\": \"JPY\",\n      \"time_zone\": \"Asia/Tokyo\",\n      \"phone\": \"+81355650112\",\n      \"phone_natl\": \"03-5565-0112\",\n      \"homepage_url\": \"https://www.myrestaurant.com/ja\",\n      \"homepage_url_translations\": {\n        \"en\": \"https://www.myrestaurant.com/en\",\n        \"ja\": \"https://www.myrestaurant.com/ja\"\n      },\n      \"tablecheck_shop_url\": \"https://www.tablecheck.com/my-shop-slug\",\n      \"tablecheck_booking_url\": \"https://www.tablecheck.com/shops/my-shop-slug/reserve\",\n      \"tags\": [\n        \"outdoor\",\n        \"quiet\"\n      ],\n      \"cuisines\": [\n        \"sushi\",\n        \"tempura\"\n      ],\n      \"budget_lunch\": \"10000.0\",\n      \"budget_dinner\": \"10000.0\",\n      \"updated_at\": \"2000-06-16T09:27:00.138Z\",\n      \"content_title_translations\": {\n        \"en\": \"A truly great restuarant\",\n        \"ja\": \"本当にすごいレストランです\"\n      },\n      \"content_body_translations\": {\n        \"en\": \"I love this restuarant!\",\n        \"ja\": \"このレストラン大好きです！\"\n      },\n      \"show_pax_senior\": false,\n      \"show_pax_child\": true,\n      \"show_pax_baby\": true,\n      \"pax_senior_age_min\": 65,\n      \"pax_child_age_max\": 12,\n      \"pax_baby_age_max\": 5,\n      \"service_categories\": [\n        {\n          \"id\": \"5e281bfa7df93f63e0000003\",\n          \"image\": {\n            \"id\": \"string\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              1280,\n              960\n            ],\n            \"content_type\": \"image/jpeg\",\n            \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n            \"image_variants\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"tags\": [\n              \"primary\"\n            ],\n            \"created_at\": \"1952-02-22T17:29:22.968Z\"\n          },\n          \"image_url\": \"string\"\n        },\n        {\n          \"id\": \"5e281bfa7df93f63e0000003\",\n          \"image\": {\n            \"id\": \"string\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              1280,\n              960\n            ],\n            \"content_type\": \"image/jpeg\",\n            \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n            \"image_variants\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"tags\": [\n              \"primary\"\n            ],\n            \"created_at\": \"1999-06-07T18:55:33.591Z\"\n          },\n          \"image_url\": \"string\"\n        }\n      ],\n      \"address\": {\n        \"street\": \"2-14-5 Ginza\",\n        \"street2\": \"Dai-27 Chuo Bldg 4F\",\n        \"city\": \"Chuo-ku\",\n        \"region\": \"Tokyo\",\n        \"postal_code\": \"104-0061\",\n        \"country\": \"JP\"\n      },\n      \"alt_address\": {\n        \"street\": \"2-14-5 Ginza\",\n        \"street2\": \"Dai-27 Chuo Bldg 4F\",\n        \"city\": \"Chuo-ku\",\n        \"region\": \"Tokyo\",\n        \"postal_code\": \"104-0061\",\n        \"country\": \"JP\"\n      },\n      \"images\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1985-11-27T04:24:43.868Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"variant\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"dimensions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"content_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1996-01-17T08:36:32.606Z\"\n        }\n      ],\n      \"image_url\": \"string\",\n      \"availability\": [\n        \"2018-11-10T02:30:00.000Z\",\n        \"2018-11-10T02:45:00.000Z\",\n        \"2018-11-10T05:30:00.000Z\"\n      ],\n      \"availability_cached_at\": \"1986-11-10T12:14:45.712Z\"\n    }\n  ],\n  \"pagination\": {\n    \"search_after\": \"string\",\n    \"page\": 3,\n    \"per_page\": 100,\n    \"page_count\": 8,\n    \"item_count\": 742\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d13a467-1b35-4ed5-acb5-2c2d2a21da7d",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pax",
+                      "value": "2"
+                    },
+                    {
+                      "key": "datetime",
+                      "value": "2026-07-06T17:00:00.000Z"
+                    },
+                    {
+                      "key": "mini",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<bson-id>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "distance"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "geo_latitude",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "geo_longitude",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "geo_distance",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "cuisines",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seat_types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smoking",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_modes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "budget_lunch_min",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_lunch_max",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_dinner_min",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "budget_dinner_max",
+                      "value": "<float>"
+                    },
+                    {
+                      "key": "address_city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address_country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77f96d04-92a0-4279-9d3f-df9da64220fc",
+          "name": "Fetch info of a specific shop. Does not include availability.",
+          "request": {
+            "name": "Fetch info of a specific shop. Does not include availability.",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The id or slug of the shop to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eb2628d4-b462-4e52-a1c4-99594e116961",
+              "name": "Expected response to a valid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shop\": {\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"name_translations\": {\n      \"en\": \"Paris Cafe\",\n      \"fr\": \"Café de Paris\",\n      \"ja\": \"カフェデパリ\"\n    },\n    \"slug\": \"my-shop-slug\",\n    \"alt_name\": \"カフェデパリ\",\n    \"location_name_translations\": {\n      \"en\": \"Hotel Kyoto\",\n      \"fr\": \"Hôtel Kyoto\",\n      \"ja\": \"ホテル京都\"\n    },\n    \"alt_location_name\": \"ホテルキョウト\",\n    \"latitude\": 35.0116,\n    \"longitude\": 135.768,\n    \"google_place_ref\": \"ChIJ39ZjD-GLGGARBF5Aq0l7iPE\",\n    \"google_place_cid\": \"Use-google_place_ref-instead\",\n    \"country\": \"JP\",\n    \"currency\": \"JPY\",\n    \"time_zone\": \"Asia/Tokyo\",\n    \"phone\": \"+81355650112\",\n    \"phone_natl\": \"03-5565-0112\",\n    \"homepage_url\": \"https://www.myrestaurant.com/ja\",\n    \"homepage_url_translations\": {\n      \"en\": \"https://www.myrestaurant.com/en\",\n      \"ja\": \"https://www.myrestaurant.com/ja\"\n    },\n    \"tablecheck_shop_url\": \"https://www.tablecheck.com/my-shop-slug\",\n    \"tablecheck_booking_url\": \"https://www.tablecheck.com/shops/my-shop-slug/reserve\",\n    \"tags\": [\n      \"outdoor\",\n      \"quiet\"\n    ],\n    \"cuisines\": [\n      \"sushi\",\n      \"tempura\"\n    ],\n    \"budget_lunch\": \"10000.0\",\n    \"budget_dinner\": \"10000.0\",\n    \"updated_at\": \"1975-09-29T19:38:05.031Z\",\n    \"content_title_translations\": {\n      \"en\": \"A truly great restuarant\",\n      \"ja\": \"本当にすごいレストランです\"\n    },\n    \"content_body_translations\": {\n      \"en\": \"I love this restuarant!\",\n      \"ja\": \"このレストラン大好きです！\"\n    },\n    \"show_pax_senior\": true,\n    \"show_pax_child\": true,\n    \"show_pax_baby\": true,\n    \"pax_senior_age_min\": 65,\n    \"pax_child_age_max\": 12,\n    \"pax_baby_age_max\": 5,\n    \"service_categories\": [\n      {\n        \"id\": \"5e281bfa7df93f63e0000003\",\n        \"image\": {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1951-09-06T12:24:09.363Z\"\n        },\n        \"image_url\": \"string\"\n      },\n      {\n        \"id\": \"5e281bfa7df93f63e0000003\",\n        \"image\": {\n          \"id\": \"string\",\n          \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n          \"dimensions\": [\n            1280,\n            960\n          ],\n          \"content_type\": \"image/jpeg\",\n          \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n          \"image_variants\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"tags\": [\n            \"primary\"\n          ],\n          \"created_at\": \"1953-07-27T07:30:50.088Z\"\n        },\n        \"image_url\": \"string\"\n      }\n    ],\n    \"address\": {\n      \"street\": \"2-14-5 Ginza\",\n      \"street2\": \"Dai-27 Chuo Bldg 4F\",\n      \"city\": \"Chuo-ku\",\n      \"region\": \"Tokyo\",\n      \"postal_code\": \"104-0061\",\n      \"country\": \"JP\"\n    },\n    \"alt_address\": {\n      \"street\": \"2-14-5 Ginza\",\n      \"street2\": \"Dai-27 Chuo Bldg 4F\",\n      \"city\": \"Chuo-ku\",\n      \"region\": \"Tokyo\",\n      \"postal_code\": \"104-0061\",\n      \"country\": \"JP\"\n    },\n    \"images\": [\n      {\n        \"id\": \"string\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n        \"dimensions\": [\n          1280,\n          960\n        ],\n        \"content_type\": \"image/jpeg\",\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"original\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"small\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"tags\": [\n          \"primary\"\n        ],\n        \"created_at\": \"2019-09-21T14:29:02.800Z\"\n      },\n      {\n        \"id\": \"string\",\n        \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n        \"dimensions\": [\n          1280,\n          960\n        ],\n        \"content_type\": \"image/jpeg\",\n        \"fingerprint\": \"af6515a29e04ac61d4379a3181140647\",\n        \"image_variants\": [\n          {\n            \"variant\": \"medium\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          },\n          {\n            \"variant\": \"large\",\n            \"url\": \"https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg\",\n            \"dimensions\": [\n              2000,\n              1500\n            ],\n            \"content_type\": \"image/jpeg\"\n          }\n        ],\n        \"tags\": [\n          \"primary\"\n        ],\n        \"created_at\": \"2003-01-24T18:29:00.542Z\"\n      }\n    ],\n    \"image_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4027a30a-b501-4f2c-80df-b0fcb82d84d6",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_fields",
+                      "value": "id,name,addresses.city"
+                    },
+                    {
+                      "key": "exclude_fields",
+                      "value": "created_at,socials.username"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The id or slug of the shop to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    },\n    {\n      \"code\": \"not_found\",\n      \"message\": \"Item not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f90ef4f-2108-4ab6-83c5-292d224e5ac7",
+          "name": "Get Shop information",
+          "request": {
+            "name": "Get Shop information",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69db54ed-02aa-4702-bda9-cf96f8cf7440",
+              "name": "A shop's information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ae5355ca1fd337ed5d6893e2\",\n  \"franchise_id\": \"ae53d5d6893e255ca1fd337e\",\n  \"address\": {\n    \"street\": \"2-14-5 Ginza\",\n    \"city\": \"Chuo-ku\",\n    \"postal_code\": \"104-0061\",\n    \"country\": \"JP\",\n    \"tag\": \"home\",\n    \"street2\": \"Dai-27 Chuo Bldg 4F\",\n    \"region\": \"Tokyo\"\n  },\n  \"alt_address\": {\n    \"street\": \"2-14-5 Ginza\",\n    \"city\": \"Chuo-ku\",\n    \"postal_code\": \"104-0061\",\n    \"country\": \"JP\",\n    \"tag\": \"home\",\n    \"street2\": \"Dai-27 Chuo Bldg 4F\",\n    \"region\": \"Tokyo\"\n  },\n  \"country\": \"JP\",\n  \"currency\": \"JPY\",\n  \"franchise_name_translations\": {\n    \"en\": \"Hotel Kyoto\",\n    \"fr\": \"Hôtel Kyoto\",\n    \"ja\": \"ホテル京都\"\n  },\n  \"latitude\": 35.0116,\n  \"location_name_translations\": {\n    \"en\": \"Hotel Kyoto\",\n    \"fr\": \"Hôtel Kyoto\",\n    \"ja\": \"ホテル京都\"\n  },\n  \"longitude\": 135.768,\n  \"name_translations\": {\n    \"en\": \"Paris Cafe\",\n    \"fr\": \"Café de Paris\",\n    \"ja\": \"カフェデパリ\"\n  },\n  \"phone\": \"+81355650112\",\n  \"slug\": \"my-shop-slug\",\n  \"time_zone\": \"Asia/Tokyo\",\n  \"created_at\": \"2020-01-29T19:12:34Z\",\n  \"updated_at\": \"2020-01-29T19:12:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "853e8f9f-84be-4e7b-8ace-ea3976c0cdf6",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8509305f-3776-42a4-bad8-0e4edbec0fa6",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c7798a0e-2d87-4163-a884-600860877c62",
+    "name": "TableCheck API - V1 availability shops API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1975 @@
+{
+  "item": [
+    {
+      "id": "d6fa1378-75d9-4899-82d1-8ae8e555bd8a",
+      "name": "pos_journals",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "34e3289a-d236-4988-af9e-d21e27e925cf",
+          "name": "List all PosJournals",
+          "request": {
+            "name": "List all PosJournals",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "85eff883-3afe-4ca4-a1f2-0d44d4f2840d",
+              "name": "A list of PosJournals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pos_journals\": [\n    {\n      \"batch_date\": \"2020-01-01\",\n      \"change_amt\": \"string\",\n      \"country\": \"JP\",\n      \"coupon_amt\": \"string\",\n      \"currency\": \"JPY\",\n      \"customer_name\": \"string\",\n      \"discount_amt\": \"string\",\n      \"membership_code\": \"string\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"original_receipt_num\": \"string\",\n      \"pax\": 2243.391730253963,\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"pos_discounts\": [\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"name\": \"Summer Sale 20%\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"name\": \"Summer Sale 20%\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\"\n        }\n      ],\n      \"pos_orders\": [\n        {\n          \"id\": \"string\",\n          \"menu_category_name\": \"Appetizer\",\n          \"menu_category_ref\": \"ABC123DEF\",\n          \"menu_item_name\": \"Chicken Soup\",\n          \"menu_item_ref\": \"ABC123DEF\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"qty\": 4567.116989622696,\n          \"ref\": \"string\",\n          \"sku\": \"string\",\n          \"unit_price\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"menu_category_name\": \"Appetizer\",\n          \"menu_category_ref\": \"ABC123DEF\",\n          \"menu_item_name\": \"Chicken Soup\",\n          \"menu_item_ref\": \"ABC123DEF\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"qty\": 3443.0941000864177,\n          \"ref\": \"string\",\n          \"sku\": \"string\",\n          \"unit_price\": \"string\"\n        }\n      ],\n      \"pos_payments\": [\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"brand\": \"visa\",\n          \"issuer\": \"citibank\",\n          \"payment_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\",\n          \"tender\": \"credit_card\"\n        },\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"brand\": \"visa\",\n          \"issuer\": \"citibank\",\n          \"payment_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\",\n          \"tender\": \"credit_card\"\n        }\n      ],\n      \"receipt_num\": \"string\",\n      \"revenue_center\": \"MyRestaurant/1\",\n      \"room_name\": \"string\",\n      \"service_fee_amt\": \"string\",\n      \"service_fee_rate\": \"0.15\",\n      \"settle_amt\": \"string\",\n      \"site_name\": \"MyHotel\",\n      \"staff_name\": \"string\",\n      \"staff_ref\": \"string\",\n      \"subtotal_amt\": \"string\",\n      \"system_api_provider\": \"acme\",\n      \"system_maker\": \"oracle\",\n      \"system_model\": \"micros9700\",\n      \"system_version\": \"12.1.0\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tax_amt\": \"string\",\n      \"tax_included_amt\": \"string\",\n      \"tax_rate\": \"0.08\",\n      \"terminal_name\": \"string\",\n      \"total_amt\": \"string\",\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n      \"ref\": \"string\",\n      \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n      \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"batch_date\": \"2020-01-01\",\n      \"change_amt\": \"string\",\n      \"country\": \"JP\",\n      \"coupon_amt\": \"string\",\n      \"currency\": \"JPY\",\n      \"customer_name\": \"string\",\n      \"discount_amt\": \"string\",\n      \"membership_code\": \"string\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"original_receipt_num\": \"string\",\n      \"pax\": 9383.395860386512,\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"pos_discounts\": [\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"name\": \"Summer Sale 20%\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"name\": \"Summer Sale 20%\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\"\n        }\n      ],\n      \"pos_orders\": [\n        {\n          \"id\": \"string\",\n          \"menu_category_name\": \"Appetizer\",\n          \"menu_category_ref\": \"ABC123DEF\",\n          \"menu_item_name\": \"Chicken Soup\",\n          \"menu_item_ref\": \"ABC123DEF\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"qty\": 2876.011148329264,\n          \"ref\": \"string\",\n          \"sku\": \"string\",\n          \"unit_price\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"menu_category_name\": \"Appetizer\",\n          \"menu_category_ref\": \"ABC123DEF\",\n          \"menu_item_name\": \"Chicken Soup\",\n          \"menu_item_ref\": \"ABC123DEF\",\n          \"order_at\": \"2020-01-29T19:12:34Z\",\n          \"qty\": 5408.31522647697,\n          \"ref\": \"string\",\n          \"sku\": \"string\",\n          \"unit_price\": \"string\"\n        }\n      ],\n      \"pos_payments\": [\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"brand\": \"visa\",\n          \"issuer\": \"citibank\",\n          \"payment_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\",\n          \"tender\": \"credit_card\"\n        },\n        {\n          \"id\": \"string\",\n          \"amt\": \"string\",\n          \"brand\": \"visa\",\n          \"issuer\": \"citibank\",\n          \"payment_at\": \"2020-01-29T19:12:34Z\",\n          \"ref\": \"string\",\n          \"tender\": \"credit_card\"\n        }\n      ],\n      \"receipt_num\": \"string\",\n      \"revenue_center\": \"MyRestaurant/1\",\n      \"room_name\": \"string\",\n      \"service_fee_amt\": \"string\",\n      \"service_fee_rate\": \"0.15\",\n      \"settle_amt\": \"string\",\n      \"site_name\": \"MyHotel\",\n      \"staff_name\": \"string\",\n      \"staff_ref\": \"string\",\n      \"subtotal_amt\": \"string\",\n      \"system_api_provider\": \"acme\",\n      \"system_maker\": \"oracle\",\n      \"system_model\": \"micros9700\",\n      \"system_version\": \"12.1.0\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tax_amt\": \"string\",\n      \"tax_included_amt\": \"string\",\n      \"tax_rate\": \"0.08\",\n      \"terminal_name\": \"string\",\n      \"total_amt\": \"string\",\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n      \"ref\": \"string\",\n      \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n      \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ],\n  \"reservations\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"shop\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"fr\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"birthday\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"counter\",\n        \"tatami\"\n      ],\n      \"smoking\": \"true\",\n      \"source\": \"email\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"pending\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"mistake\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"km\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"birthday_self\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"tatami\",\n        \"private\"\n      ],\n      \"smoking\": \"true\",\n      \"source\": \"phone\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"noshow\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c54fdc3-7fcf-432a-a4df-8423a5c53f28",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cb7986b-5405-499b-97cd-1ba00fade0a8",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3f5322f-de2d-4dee-9b70-3d619d5a3997",
+          "name": "Create PosJournal",
+          "request": {
+            "name": "Create PosJournal",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"batch_date\": \"<date>\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"<country>\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"<dateTime>\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"<dateTime>\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"<string>\",\n      \"menu_category_ref\": \"<string>\",\n      \"menu_item_name\": \"<string>\",\n      \"menu_item_ref\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"<string>\",\n      \"menu_category_ref\": \"<string>\",\n      \"menu_item_name\": \"<string>\",\n      \"menu_item_ref\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"<string>\",\n      \"issuer\": \"<string>\",\n      \"payment_at\": \"<dateTime>\",\n      \"ref\": \"<string>\",\n      \"tender\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"<string>\",\n      \"issuer\": \"<string>\",\n      \"payment_at\": \"<dateTime>\",\n      \"ref\": \"<string>\",\n      \"tender\": \"<string>\"\n    }\n  ],\n  \"revenue_center\": \"<string>\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"<decimal>\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"<string>\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"<string>\",\n  \"system_maker\": \"<string>\",\n  \"system_model\": \"<string>\",\n  \"system_version\": \"<string>\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"<decimal>\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d551682-11d0-4737-8c5f-9e7bf9d592f3",
+              "name": "The PosJournal which was created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pos_journal\": {\n    \"batch_date\": \"2020-01-01\",\n    \"change_amt\": \"string\",\n    \"country\": \"JP\",\n    \"coupon_amt\": \"string\",\n    \"currency\": \"JPY\",\n    \"customer_name\": \"string\",\n    \"discount_amt\": \"string\",\n    \"membership_code\": \"string\",\n    \"order_at\": \"2020-01-29T19:12:34Z\",\n    \"original_receipt_num\": \"string\",\n    \"pax\": 2546.665810979333,\n    \"payment_at\": \"2020-01-29T19:12:34Z\",\n    \"pos_discounts\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      }\n    ],\n    \"pos_orders\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      }\n    ],\n    \"pos_payments\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      }\n    ],\n    \"receipt_num\": \"string\",\n    \"revenue_center\": \"MyRestaurant/1\",\n    \"room_name\": \"string\",\n    \"service_fee_amt\": \"string\",\n    \"service_fee_rate\": \"0.15\",\n    \"settle_amt\": \"string\",\n    \"site_name\": \"MyHotel\",\n    \"staff_name\": \"string\",\n    \"staff_ref\": \"string\",\n    \"subtotal_amt\": \"string\",\n    \"system_api_provider\": \"acme\",\n    \"system_maker\": \"oracle\",\n    \"system_model\": \"micros9700\",\n    \"system_version\": \"12.1.0\",\n    \"table_names\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tax_amt\": \"string\",\n    \"tax_included_amt\": \"string\",\n    \"tax_rate\": \"0.08\",\n    \"terminal_name\": \"string\",\n    \"total_amt\": \"string\",\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n    \"ref\": \"string\",\n    \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n    \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n    \"created_at\": \"2020-01-29T19:12:34Z\",\n    \"updated_at\": \"2020-01-29T19:12:34Z\"\n  },\n  \"reservations\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"shop\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"nl\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"group_reunion\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"tatami\",\n        \"outside\"\n      ],\n      \"smoking\": \"true\",\n      \"source\": \"other\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"tentative\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"delay\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"ja\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"group_wedding\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"curtain\",\n        \"private\"\n      ],\n      \"smoking\": \"false\",\n      \"source\": \"phone\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"rejected\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3568e573-9e6a-4ce6-b46b-8a351a2ca984",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc55241e-408d-46b1-bd10-779f3cb231b1",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d84df9a0-25f2-4197-a16d-3a0d9a4d56ba",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fc6b4b5-c179-4ff3-9387-bdf5ca2a8b26",
+          "name": "Get PosJournal information",
+          "request": {
+            "name": "Get PosJournal information",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pos_journal_id",
+                  "description": "(Required) The ID of the PosJournal"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c4404c2-e246-4d39-aeac-a06446f50a55",
+              "name": "The PosJournal",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pos_journal\": {\n    \"batch_date\": \"2020-01-01\",\n    \"change_amt\": \"string\",\n    \"country\": \"JP\",\n    \"coupon_amt\": \"string\",\n    \"currency\": \"JPY\",\n    \"customer_name\": \"string\",\n    \"discount_amt\": \"string\",\n    \"membership_code\": \"string\",\n    \"order_at\": \"2020-01-29T19:12:34Z\",\n    \"original_receipt_num\": \"string\",\n    \"pax\": 9563.620672176401,\n    \"payment_at\": \"2020-01-29T19:12:34Z\",\n    \"pos_discounts\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      }\n    ],\n    \"pos_orders\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      }\n    ],\n    \"pos_payments\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      }\n    ],\n    \"receipt_num\": \"string\",\n    \"revenue_center\": \"MyRestaurant/1\",\n    \"room_name\": \"string\",\n    \"service_fee_amt\": \"string\",\n    \"service_fee_rate\": \"0.15\",\n    \"settle_amt\": \"string\",\n    \"site_name\": \"MyHotel\",\n    \"staff_name\": \"string\",\n    \"staff_ref\": \"string\",\n    \"subtotal_amt\": \"string\",\n    \"system_api_provider\": \"acme\",\n    \"system_maker\": \"oracle\",\n    \"system_model\": \"micros9700\",\n    \"system_version\": \"12.1.0\",\n    \"table_names\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tax_amt\": \"string\",\n    \"tax_included_amt\": \"string\",\n    \"tax_rate\": \"0.08\",\n    \"terminal_name\": \"string\",\n    \"total_amt\": \"string\",\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n    \"ref\": \"string\",\n    \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n    \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n    \"created_at\": \"2020-01-29T19:12:34Z\",\n    \"updated_at\": \"2020-01-29T19:12:34Z\"\n  },\n  \"reservations\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"covid\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"km\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"date_proposal\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"open\",\n        \"tatami\"\n      ],\n      \"smoking\": \"none\",\n      \"source\": \"other\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"iou_prepay\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"personal\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"ru\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"date_anniversary\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"tatami\",\n        \"counter\"\n      ],\n      \"smoking\": \"false\",\n      \"source\": \"email\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"tentative\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5a8cbbc-5eb7-4f1d-ab93-42aa52e34609",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72eacf9e-6e96-4c80-b492-fc172545fb50",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92db7f66-1d8f-41e0-98bf-55db43bc9ff3",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cf901d3-421a-49e8-9fe9-9c909243092d",
+          "name": "Update PosJournal",
+          "request": {
+            "name": "Update PosJournal",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pos_journal_id",
+                  "description": "(Required) The ID of the PosJournal"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_date\": \"<date>\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"<country>\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"<dateTime>\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"<dateTime>\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"<string>\",\n      \"menu_category_ref\": \"<string>\",\n      \"menu_item_name\": \"<string>\",\n      \"menu_item_ref\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"<string>\",\n      \"menu_category_ref\": \"<string>\",\n      \"menu_item_name\": \"<string>\",\n      \"menu_item_ref\": \"<string>\",\n      \"order_at\": \"<dateTime>\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"<string>\",\n      \"issuer\": \"<string>\",\n      \"payment_at\": \"<dateTime>\",\n      \"ref\": \"<string>\",\n      \"tender\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"<string>\",\n      \"issuer\": \"<string>\",\n      \"payment_at\": \"<dateTime>\",\n      \"ref\": \"<string>\",\n      \"tender\": \"<string>\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"<string>\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"<decimal>\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"<string>\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"<string>\",\n  \"system_maker\": \"<string>\",\n  \"system_model\": \"<string>\",\n  \"system_version\": \"<string>\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"<decimal>\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "20c8bbbb-eb80-43a9-b0c4-87b2ffd7b64d",
+              "name": "The PosJournal which was updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pos_journal\": {\n    \"batch_date\": \"2020-01-01\",\n    \"change_amt\": \"string\",\n    \"country\": \"JP\",\n    \"coupon_amt\": \"string\",\n    \"currency\": \"JPY\",\n    \"customer_name\": \"string\",\n    \"discount_amt\": \"string\",\n    \"membership_code\": \"string\",\n    \"order_at\": \"2020-01-29T19:12:34Z\",\n    \"original_receipt_num\": \"string\",\n    \"pax\": 9563.620672176401,\n    \"payment_at\": \"2020-01-29T19:12:34Z\",\n    \"pos_discounts\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      }\n    ],\n    \"pos_orders\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      }\n    ],\n    \"pos_payments\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      }\n    ],\n    \"receipt_num\": \"string\",\n    \"revenue_center\": \"MyRestaurant/1\",\n    \"room_name\": \"string\",\n    \"service_fee_amt\": \"string\",\n    \"service_fee_rate\": \"0.15\",\n    \"settle_amt\": \"string\",\n    \"site_name\": \"MyHotel\",\n    \"staff_name\": \"string\",\n    \"staff_ref\": \"string\",\n    \"subtotal_amt\": \"string\",\n    \"system_api_provider\": \"acme\",\n    \"system_maker\": \"oracle\",\n    \"system_model\": \"micros9700\",\n    \"system_version\": \"12.1.0\",\n    \"table_names\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tax_amt\": \"string\",\n    \"tax_included_amt\": \"string\",\n    \"tax_rate\": \"0.08\",\n    \"terminal_name\": \"string\",\n    \"total_amt\": \"string\",\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n    \"ref\": \"string\",\n    \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n    \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n    \"created_at\": \"2020-01-29T19:12:34Z\",\n    \"updated_at\": \"2020-01-29T19:12:34Z\"\n  },\n  \"reservations\": [\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"covid\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"km\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"date_proposal\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"open\",\n        \"tatami\"\n      ],\n      \"smoking\": \"none\",\n      \"source\": \"other\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"iou_prepay\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    },\n    {\n      \"id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"franchise_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"shop_id\": \"ae5355ca1fd337ed5d6893e2\",\n      \"cancel_reason\": \"Cancelled due to weather\",\n      \"cancel_reason_type\": \"personal\",\n      \"channel\": \"instagram\",\n      \"code\": \"ABC123\",\n      \"customer_name\": \"string\",\n      \"duration\": 7200,\n      \"locale\": \"ru\",\n      \"memo\": \"string\",\n      \"party_name\": \"string\",\n      \"pax\": 3,\n      \"points\": 200,\n      \"provider\": \"tablecheck\",\n      \"provider_ref\": \"ABC123DEF\",\n      \"purpose\": \"date_anniversary\",\n      \"room_name\": \"string\",\n      \"seat_types\": [\n        \"tatami\",\n        \"counter\"\n      ],\n      \"smoking\": \"false\",\n      \"source\": \"email\",\n      \"start_at\": \"2020-01-29T19:15:00Z\",\n      \"status\": \"tentative\",\n      \"table_names\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2020-01-29T19:12:34Z\",\n      \"updated_at\": \"2020-01-29T19:12:34Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84d04899-a9a3-47c2-91b2-f6607709a219",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c4f7a5a-330c-4423-bba9-343b0ac860e2",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef884722-739d-4296-9111-a2ca71a1f366",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52601126-3166-481a-8ef4-6cae7865122d",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_date\": \"2020-01-01\",\n  \"change_amt\": \"<decimal>\",\n  \"country\": \"JP\",\n  \"coupon_amt\": \"<decimal>\",\n  \"currency\": \"JPY\",\n  \"customer_name\": \"<string>\",\n  \"discount_amt\": \"<decimal>\",\n  \"membership_code\": \"<string>\",\n  \"order_at\": \"2020-01-29T19:12:34Z\",\n  \"original_receipt_num\": \"<string>\",\n  \"pax\": \"<integer>\",\n  \"payment_at\": \"2020-01-29T19:12:34Z\",\n  \"pos_discounts\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"name\": \"Summer Sale 20%\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\"\n    }\n  ],\n  \"pos_orders\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"menu_category_name\": \"Appetizer\",\n      \"menu_category_ref\": \"ABC123DEF\",\n      \"menu_item_name\": \"Chicken Soup\",\n      \"menu_item_ref\": \"ABC123DEF\",\n      \"order_at\": \"2020-01-29T19:12:34Z\",\n      \"qty\": \"<integer>\",\n      \"ref\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"unit_price\": \"<decimal>\"\n    }\n  ],\n  \"pos_payments\": [\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    },\n    {\n      \"id\": \"<bson-id>\",\n      \"amt\": \"<decimal>\",\n      \"brand\": \"visa\",\n      \"issuer\": \"citibank\",\n      \"payment_at\": \"2020-01-29T19:12:34Z\",\n      \"ref\": \"<string>\",\n      \"tender\": \"credit_card\"\n    }\n  ],\n  \"receipt_num\": \"<string>\",\n  \"revenue_center\": \"MyRestaurant/1\",\n  \"room_name\": \"<string>\",\n  \"service_fee_amt\": \"<decimal>\",\n  \"service_fee_rate\": \"0.15\",\n  \"settle_amt\": \"<decimal>\",\n  \"site_name\": \"MyHotel\",\n  \"staff_name\": \"<string>\",\n  \"staff_ref\": \"<string>\",\n  \"subtotal_amt\": \"<decimal>\",\n  \"system_api_provider\": \"acme\",\n  \"system_maker\": \"oracle\",\n  \"system_model\": \"micros9700\",\n  \"system_version\": \"12.1.0\",\n  \"table_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tax_amt\": \"<decimal>\",\n  \"tax_included_amt\": \"<decimal>\",\n  \"tax_rate\": \"0.08\",\n  \"terminal_name\": \"<string>\",\n  \"total_amt\": \"<decimal>\",\n  \"reservation_ref\": \"<string>\",\n  \"reservation_status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e9760c3-3638-4532-9fcc-2a0af821dc4b",
+          "name": "Delete PosJournal",
+          "request": {
+            "name": "Delete PosJournal",
+            "description": {},
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                ":pos_journal_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pos_journal_id",
+                  "description": "(Required) The ID of the PosJournal"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e029691a-30fc-458c-9734-cf96ee790b37",
+              "name": "The PosJournal was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f75ba087-e187-47f4-b582-916144470edf",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd82ca29-46ed-4a98-95a0-95dc14c3f12e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b74de97e-dd81-4bce-8688-dc5bd40038ee",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "582403aa-372c-4e0a-8050-e1c2e81cb477",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    ":pos_journal_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pos_journal_id",
+                      "description": "(Required) The ID of the PosJournal"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e280e49-a10b-4229-b99c-2a52a78e1051",
+          "name": "Void PosJournal (Check Void)",
+          "request": {
+            "name": "Void PosJournal (Check Void)",
+            "description": {
+              "content": "Voids a check by adding a '--VOID--' marker, setting total_price to 0, and preserving original line items for audit purposes. Used by POS integrations to handle check cancellations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shop_id",
+                "pos_journals",
+                "void"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shop_id",
+                  "description": "(Required) The ID, slug or ref of the Shop"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"receipt_num\": \"<string>\",\n  \"void_reason\": \"<string>\",\n  \"voided_at\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1e697d8-836d-4410-9996-1038d67b3090",
+              "name": "The PosJournal was successfully voided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"12345\",\n  \"void_reason\": \"customer_cancellation\",\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"pos_journal\": {\n    \"batch_date\": \"2020-01-01\",\n    \"change_amt\": \"string\",\n    \"country\": \"JP\",\n    \"coupon_amt\": \"string\",\n    \"currency\": \"JPY\",\n    \"customer_name\": \"string\",\n    \"discount_amt\": \"string\",\n    \"membership_code\": \"string\",\n    \"order_at\": \"2020-01-29T19:12:34Z\",\n    \"original_receipt_num\": \"string\",\n    \"pax\": 6408.230042962849,\n    \"payment_at\": \"2020-01-29T19:12:34Z\",\n    \"pos_discounts\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"name\": \"Summer Sale 20%\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\"\n      }\n    ],\n    \"pos_orders\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"menu_category_name\": \"Appetizer\",\n        \"menu_category_ref\": \"ABC123DEF\",\n        \"menu_item_name\": \"Chicken Soup\",\n        \"menu_item_ref\": \"ABC123DEF\",\n        \"order_at\": \"2020-01-29T19:12:34Z\",\n        \"qty\": \"<integer>\",\n        \"ref\": \"<string>\",\n        \"sku\": \"<string>\",\n        \"unit_price\": \"<decimal>\"\n      }\n    ],\n    \"pos_payments\": [\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      },\n      {\n        \"id\": \"<bson-id>\",\n        \"amt\": \"<decimal>\",\n        \"brand\": \"visa\",\n        \"issuer\": \"citibank\",\n        \"payment_at\": \"2020-01-29T19:12:34Z\",\n        \"ref\": \"<string>\",\n        \"tender\": \"credit_card\"\n      }\n    ],\n    \"receipt_num\": \"string\",\n    \"revenue_center\": \"MyRestaurant/1\",\n    \"room_name\": \"string\",\n    \"service_fee_amt\": \"string\",\n    \"service_fee_rate\": \"0.15\",\n    \"settle_amt\": \"string\",\n    \"site_name\": \"MyHotel\",\n    \"staff_name\": \"string\",\n    \"staff_ref\": \"string\",\n    \"subtotal_amt\": \"string\",\n    \"system_api_provider\": \"acme\",\n    \"system_maker\": \"oracle\",\n    \"system_model\": \"micros9700\",\n    \"system_version\": \"12.1.0\",\n    \"table_names\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tax_amt\": \"string\",\n    \"tax_included_amt\": \"string\",\n    \"tax_rate\": \"0.08\",\n    \"terminal_name\": \"string\",\n    \"total_amt\": \"string\",\n    \"id\": \"ae5355ca1fd337ed5d6893e2\",\n    \"franchise_id\": \"d337ed5d6ae5355ca1f893e2\",\n    \"ref\": \"string\",\n    \"reservation_id\": \"55ca1fd33ae537ede25d6893\",\n    \"shop_id\": \"37ed555ca1fd3d6893e2ae53\",\n    \"created_at\": \"2020-01-29T19:12:34Z\",\n    \"updated_at\": \"2020-01-29T19:12:34Z\"\n  },\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "321c1deb-7b25-4996-b1a2-5c0c06182bd7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"12345\",\n  \"void_reason\": \"customer_cancellation\",\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    },\n    {\n      \"code\": \"parameter_missing\",\n      \"message\": \"Required parameter is missing.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "055b65c4-2620-4531-a8bb-747c01ec34ef",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"12345\",\n  \"void_reason\": \"customer_cancellation\",\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    },\n    {\n      \"code\": \"api_key_invalid\",\n      \"message\": \"Your API key is invalid.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18aba64c-9d86-41f6-a34d-ed0d0b9754b6",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"12345\",\n  \"void_reason\": \"customer_cancellation\",\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    },\n    {\n      \"code\": \"resource_not_found\",\n      \"message\": \"Resource not found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8181b17e-1877-433c-915d-fa669576eaee",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shop_id",
+                    "pos_journals",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shop_id",
+                      "description": "(Required) The ID, slug or ref of the Shop"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AUTHORIZATION",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"receipt_num\": \"12345\",\n  \"void_reason\": \"customer_cancellation\",\n  \"voided_at\": \"2026-01-29T19:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    },\n    {\n      \"code\": \"not_created\",\n      \"message\": \"Could not create resource due to missing parameter.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tablecheck.com/api/availability/v1/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "AUTHORIZATION"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6699534f-a9bf-4293-8d4b-0688cbbdb06b",
+    "name": "TableCheck API - V1 availability pos_journals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Availability API is used to obtain near real-time table availability for online reservation booking.",
+      "type": "text/plain"
+    }
+  }
+}

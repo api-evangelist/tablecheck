@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability reservation_flags API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reservation_flags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Reservation Flags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservation_flags",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of specific reservation flag IDs to return."
+              },
+              {
+                "name": "shop_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array or comma-separated list of shop IDs to filter reservation flags."
+              },
+              {
+                "name": "created_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "created_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of created_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_min",
+                "value": "",
+                "type": "query",
+                "description": "Search lower bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "updated_at_max",
+                "value": "",
+                "type": "query",
+                "description": "Search upper bound of updated_at field (ISO timestamp)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based page number. Used for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return at once. Used for pagination."
+              }
+            ]
+          },
+          "docs": "List all Reservation Flags"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Reservation Flag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/reservation_flags/:reservation_flag_id",
+            "params": [
+              {
+                "name": "reservation_flag_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Reservation Flag to retrieve"
+              }
+            ]
+          },
+          "docs": "Fetch a specific Reservation Flag"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

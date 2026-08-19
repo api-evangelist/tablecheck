@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TableCheck API - V1 availability blockages API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "AUTHORIZATION",
+      "value": "{{AUTHORIZATION}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "blockages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Blockage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tablecheck.com/api/availability/v1/blockages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Blockage"
+        },
+        {
+          "info": {
+            "name": "Fetch a specific Blockage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tablecheck.com/api/availability/v1/blockages/:blockage_id",
+            "params": [
+              {
+                "name": "blockage_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Blockage to retrieve"
+              },
+              {
+                "name": "include_fields",
+                "value": "id,name,addresses.city",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields."
+              },
+              {
+                "name": "exclude_fields",
+                "value": "created_at,socials.username",
+                "type": "query",
+                "description": "Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields."
+              }
+            ]
+          },
+          "docs": "Fetch a specific Blockage"
+        },
+        {
+          "info": {
+            "name": "Update Blockage",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tablecheck.com/api/availability/v1/blockages/:blockage_id",
+            "params": [
+              {
+                "name": "blockage_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Blockage to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Blockage"
+        },
+        {
+          "info": {
+            "name": "Delete Blockage",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tablecheck.com/api/availability/v1/blockages/:blockage_id",
+            "params": [
+              {
+                "name": "blockage_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or ref of the Blockage to delete"
+              }
+            ]
+          },
+          "docs": "Delete Blockage"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
