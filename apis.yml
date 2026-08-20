@@ -32,6 +32,15 @@ tags:
 - Hospitality
 - Availability
 - Guest CRM
+- Point-of-Sale
+- Japan
+tags_raw:
+- Restaurant
+- Reservations
+- Booking
+- Hospitality
+- Availability
+- Guest CRM
 - Point of Sale
 - Japan
 created: '2026-07-05'
@@ -44,6 +53,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Availability
+  tags_raw:
   - availability
   properties:
   - type: OpenAPI
@@ -120,6 +131,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Calendar
+  tags_raw:
   - calendar
   properties:
   - type: OpenAPI
@@ -158,6 +171,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Customers
+  tags_raw:
   - customers
   properties:
   - type: OpenAPI
@@ -196,6 +211,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Franchises
+  tags_raw:
   - franchises
   properties:
   - type: OpenAPI
@@ -233,7 +250,8 @@ apis:
   description: The membership_programs API from TableCheck — 2 operation(s) for membership_programs.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
-  tags:
+  tags: []
+  tags_raw:
   - membership_programs
   properties:
   - type: OpenAPI
@@ -272,6 +290,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Memberships
+  tags_raw:
   - memberships
   properties:
   - type: OpenAPI
@@ -309,7 +329,8 @@ apis:
   description: The pos_journals API from TableCheck — 3 operation(s) for pos_journals.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
-  tags:
+  tags: []
+  tags_raw:
   - pos_journals
   properties:
   - type: OpenAPI
@@ -347,7 +368,8 @@ apis:
   description: The reservation_flags API from TableCheck — 2 operation(s) for reservation_flags.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
-  tags:
+  tags: []
+  tags_raw:
   - reservation_flags
   properties:
   - type: OpenAPI
@@ -386,6 +408,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Reservations
+  tags_raw:
   - reservations
   properties:
   - type: OpenAPI
@@ -424,6 +448,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Shops
+  tags_raw:
   - shops
   properties:
   - type: OpenAPI
@@ -461,7 +487,8 @@ apis:
   description: The table_status API from TableCheck — 2 operation(s) for table_status.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
-  tags:
+  tags: []
+  tags_raw:
   - table_status
   properties:
   - type: OpenAPI
@@ -500,6 +527,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Tables
+  tags_raw:
   - tables
   properties:
   - type: OpenAPI
@@ -538,6 +567,8 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
+  - Timetable
+  tags_raw:
   - timetable
   properties:
   - type: OpenAPI
