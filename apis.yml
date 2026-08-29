@@ -614,6 +614,9 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 common:
+- type: CapabilityMap
+  url: capabilities/tablecheck-capability-edges.yml
+  name: TableCheck Business Capability Map
 - type: AgenticAccess
   url: agentic-access/tablecheck-agentic-access.yml
 - type: DomainSecurity
