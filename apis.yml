@@ -11,6 +11,18 @@ description: TableCheck is a restaurant booking and guest-experience platform (f
   and a per-environment secret_key is issued by the TableCheck API team on approval, while
   some components (notably the direct Booking API) are available only by special
   arrangement. Each component publishes an OpenAPI 3.0 description.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
