@@ -223,7 +223,7 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - Franchises
+  - franchises
   tags_raw:
   - franchises
   properties:
@@ -579,7 +579,7 @@ apis:
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
   tags:
-  - Timetable
+  - timetable
   tags_raw:
   - timetable
   properties:
