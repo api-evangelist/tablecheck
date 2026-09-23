@@ -1,23 +1,29 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability shops API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  title: Tablecheck Shops API
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+  version: '1.0'
+  description: 'Operations tagged shops across 4 of this provider''s published API definitions: tablecheck-availability.yml, tablecheck-booking.yml, tablecheck-crm.yml, tablecheck-pos.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.tablecheck.com/api/availability/v1/
+  description: Production (uses live data)
+- url: https://api.tablecheck.com/api/booking/v1/
+  description: Production (uses live data)
+- url: https://api.tablecheck.com/api/crm/v1/
+  description: Production (uses live data)
+- url: https://api.tablecheck.com/api/pos/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
 tags:
-- name: shops
+- name: Shops
 paths:
   /shops:
     get:
       summary: Search for availability across all shops
       operationId: listShops
       tags:
-      - shops
+      - Shops
       parameters:
       - name: pax
         in: query
@@ -244,12 +250,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://api.tablecheck.com/api/availability/v1/
+      description: Production (uses live data)
   /shops/{shop_id}:
     get:
-      summary: Fetch info of a specific shop. Does not include availability.
+      summary: Fetch info of a specific shop. Does not include availability
       operationId: showShopById
       tags:
-      - shops
+      - Shops
       parameters:
       - name: shop_id
         in: path
@@ -272,12 +281,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://api.tablecheck.com/api/availability/v1/
+      description: Production (uses live data)
   /shops/{id}:
     get:
       summary: Get Shop information
       operationId: showShop
       tags:
-      - shops
+      - Shops
       parameters:
       - name: id
         in: path
@@ -306,9 +318,226 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/UnprocessableEntityError'
                 - $ref: '#/components/schemas/ShopNotFoundError'
+    servers:
+    - url: https://api.tablecheck.com/api/pos/v1/
+      description: Production (uses live data)
 components:
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   schemas:
-    ShopNotFoundError:
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopAvailability'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    PaginationData:
+      type: object
+      properties:
+        search_after:
+          description: The value to use as the search_after parameter for the next page of results.
+          type: string
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        page_count:
+          type: number
+          format: integer
+          example: 8
+        item_count:
+          type: number
+          format: integer
+          example: 742
+    Shop:
+      required:
+      - id
+      - name_translations
+      properties:
+        id:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        slug:
+          type: string
+          example: my-shop-slug
+        name_translations:
+          type: object
+          format: translations
+          example:
+            en: Paris Cafe
+            fr: Café de Paris
+            ja: カフェデパリ
+        alt_name:
+          type: string
+          example: カフェデパリ
+        location_name_translations:
+          type: object
+          format: translations
+          example:
+            en: Hotel Kyoto
+            fr: Hôtel Kyoto
+            ja: ホテル京都
+        alt_location_name:
+          type: string
+          example: ホテルキョウト
+        latitude:
+          type: number
+          format: float
+          example: 35.0116
+        longitude:
+          type: number
+          format: float
+          example: 135.768
+        google_place_ref:
+          type: string
+          example: ChIJ39ZjD-GLGGARBF5Aq0l7iPE
+        google_place_cid:
+          description: DEPRECATED. Use google_place_ref instead.
+          type: string
+          example: Use-google_place_ref-instead
+        country:
+          type: string
+          format: country
+          example: JP
+        currency:
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        phone:
+          type: string
+          format: phone-e164
+          example: '+81355650112'
+        phone_natl:
+          type: string
+          format: phone-national
+          example: 03-5565-0112
+        homepage_url:
+          type: string
+          format: url
+          example: https://www.myrestaurant.com/ja
+        homepage_url_translations:
+          type: object
+          format: translations
+          example:
+            en: https://www.myrestaurant.com/en
+            ja: https://www.myrestaurant.com/ja
+        tablecheck_shop_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/my-shop-slug
+        tablecheck_booking_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
+        tags:
+          type: array
+          example:
+          - outdoor
+          - quiet
+          items:
+            type: string
+        cuisines:
+          type: array
+          example:
+          - sushi
+          - tempura
+          items:
+            type: string
+        budget_lunch:
+          type: string
+          format: float
+          example: '10000.0'
+        budget_dinner:
+          type: string
+          format: float
+          example: '10000.0'
+        updated_at:
+          type: string
+          format: date-time
+        content_title_translations:
+          type: object
+          format: translations
+          description: Short catchphrase for the restaurant.
+          example:
+            en: A truly great restuarant
+            ja: 本当にすごいレストランです
+        content_body_translations:
+          type: object
+          format: translations
+          description: Paragraph of content about the restaurant.
+          example:
+            en: I love this restuarant!
+            ja: このレストラン大好きです！
+        show_pax_senior:
+          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
+          type: boolean
+        show_pax_child:
+          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
+          type: boolean
+        show_pax_baby:
+          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
+          type: boolean
+        pax_senior_age_min:
+          description: The minimum age for a person to be considered a senior.
+          type: number
+          format: integer
+          example: 65
+        pax_child_age_max:
+          description: The maximum age for a person to be considered a child.
+          type: number
+          format: integer
+          example: 12
+        pax_baby_age_max:
+          description: The maximum age for a person to be considered a baby.
+          type: number
+          format: integer
+          example: 5
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCategory'
+        address:
+          $ref: '#/components/schemas/Address'
+        alt_address:
+          $ref: '#/components/schemas/Address'
+        images:
+          description: List of images depicting the shop. Consistent sizing of images is not guaranteed.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageEmbed'
+        image_url:
+          type: string
+          format: url
+          description: (Deprecated) Please use "images" field instead.
+    Error:
       required:
       - errors
       properties:
@@ -317,9 +546,92 @@ components:
           items:
             type: object
             properties:
+              code:
+                type: string
+                example: not_found
               message:
                 type: string
-                example: Venue not found.
+                example: Item not found
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          description: The dimensions of the image as a large size JPEG.
+          type: array
+          example:
+          - 1280
+          - 960
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes. Note that "original" size variant may be a format other than JPEG.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariant'
+        tags:
+          description: Identifier tags associated with the image.
+          type: array
+          example:
+          - primary
+        created_at:
+          type: string
+          format: date-time
+    Address:
+      properties:
+        street:
+          type: string
+          example: 2-14-5 Ginza
+        street2:
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          type: string
+          example: Chuo-ku
+        region:
+          type: string
+          example: Tokyo
+        postal_code:
+          type: string
+          example: 104-0061
+        country:
+          type: string
+          example: JP
+    ImageVariant:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          type: array
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
     ShopShowResponse:
       type: object
       properties:
@@ -351,35 +663,6 @@ components:
           description: (Deprecated) Please use "image" field instead.
           type: string
           format: url
-    ShopsListResponse:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShopAvailability'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    Address:
-      properties:
-        street:
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          type: string
-          example: Chuo-ku
-        region:
-          type: string
-          example: Tokyo
-        postal_code:
-          type: string
-          example: 104-0061
-        country:
-          type: string
-          example: JP
     ShopAvailability:
       properties:
         id:
@@ -552,6 +835,448 @@ components:
         availability_cached_at:
           type: string
           format: date-time
+    ShopsListResponse_2:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_2'
+        pagination:
+          $ref: '#/components/schemas/PaginationData_2'
+    PaginationData_2:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Shop_2:
+      required:
+      - id
+      - name_translations
+      properties:
+        id:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        slug:
+          type: string
+          example: my-shop-slug
+        name_translations:
+          type: object
+          format: translations
+          example:
+            en: Paris Cafe
+            fr: Café de Paris
+            ja: カフェデパリ
+        alt_name:
+          type: string
+          example: カフェデパリ
+        location_name_translations:
+          type: object
+          format: translations
+          example:
+            en: Hotel Kyoto
+            fr: Hôtel Kyoto
+            ja: ホテル京都
+        alt_location_name:
+          type: string
+          example: ホテルキョウト
+        latitude:
+          type: number
+          format: float
+          example: 35.0116
+        longitude:
+          type: number
+          format: float
+          example: 135.768
+        google_place_ref:
+          type: string
+          example: ChIJ39ZjD-GLGGARBF5Aq0l7iPE
+        google_place_cid:
+          description: DEPRECATED. Use google_place_ref instead.
+          type: string
+          example: Use-google_place_ref-instead
+        country:
+          type: string
+          format: country
+          example: JP
+        currency:
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        phone:
+          type: string
+          format: phone-e164
+          example: '+81355650112'
+        phone_natl:
+          type: string
+          format: phone-national
+          example: 03-5565-0112
+        homepage_url:
+          type: string
+          format: url
+          example: https://www.myrestaurant.com/ja
+        homepage_url_translations:
+          type: object
+          format: translations
+          example:
+            en: https://www.myrestaurant.com/en
+            ja: https://www.myrestaurant.com/ja
+        tablecheck_shop_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/my-shop-slug
+        tablecheck_booking_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
+        tags:
+          type: array
+          example:
+          - outdoor
+          - quiet
+          items:
+            type: string
+        cuisines:
+          type: array
+          example:
+          - sushi
+          - tempura
+          items:
+            type: string
+        budget_lunch:
+          type: string
+          format: float
+          example: '10000.0'
+        budget_dinner:
+          type: string
+          format: float
+          example: '10000.0'
+        updated_at:
+          type: string
+          format: date-time
+        content_title_translations:
+          type: object
+          format: translations
+          description: Short catchphrase for the restaurant.
+          example:
+            en: A truly great restuarant
+            ja: 本当にすごいレストランです
+        content_body_translations:
+          type: object
+          format: translations
+          description: Paragraph of content about the restaurant.
+          example:
+            en: I love this restuarant!
+            ja: このレストラン大好きです！
+        show_pax_senior:
+          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
+          type: boolean
+        show_pax_child:
+          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
+          type: boolean
+        show_pax_baby:
+          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
+          type: boolean
+        pax_senior_age_min:
+          description: The minimum age for a person to be considered a senior.
+          type: number
+          format: integer
+          example: 65
+        pax_child_age_max:
+          description: The maximum age for a person to be considered a child.
+          type: number
+          format: integer
+          example: 12
+        pax_baby_age_max:
+          description: The maximum age for a person to be considered a baby.
+          type: number
+          format: integer
+          example: 5
+        min_pax:
+          description: Indicates the minimum party size which must be selected.
+          type: integer
+          example: 1
+        max_pax:
+          description: Indicates the maximum party size which must be selected.
+          type: integer
+          example: 50
+        has_smoking:
+          description: Indicates where the shop has one or more tables are in a smoking-allowed area.
+          type: boolean
+        seat_types:
+          description: List of seat types available in the shop.
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCategory_2'
+        image_url:
+          type: string
+          format: url
+          description: Image to be shown in search result. Consistent sizing of images is not guaranteed.
+          example: https://cdn1.tablecheck.com/images/b1fffbe000a92a5435085ea8/images/md/image.jpg
+        address:
+          $ref: '#/components/schemas/Address'
+        alt_address:
+          $ref: '#/components/schemas/Address'
+    ServiceCategory_2:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: 5e281bfa7df93f63e0000003
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: This is the sushi bar at our restaurant.
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image_url:
+          description: Image of the service category.
+          type: string
+          format: url
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
+    ShopsListResponse_3:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_3'
+        pagination:
+          $ref: '#/components/schemas/PaginationData_3'
+    PaginationData_3:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Shop_3:
+      properties:
+        id:
+          description: ID of the Shop.
+          type: string
+          format: bson-id
+          example: ede535ea33fd275ca15d6893
+        name_translations:
+          description: The name of the Shop.
+          type: object
+          format: translations
+          example:
+            en: Paris Cafe
+            fr: Café de Paris
+            ja: カフェデパリ
+        internal_name:
+          description: The shorthand name of the Shop.
+          type: object
+          format: string
+          example: Paris Cafe
+        slug:
+          description: The web ID of the Shop.
+          type: string
+          example: my-shop-slug
+        country:
+          description: The country where the Shop is located.
+          type: string
+          format: country
+          example: JP
+        currency:
+          description: The monetary currency used by the Shop.
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          description: The time zone used by the Shop.
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCategory_3'
+        franchise:
+          $ref: '#/components/schemas/FranchiseEmbed'
+    ImageEmbed_2:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 200
+          - 200
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariants'
+        tags:
+          description: Not used.
+          type: array
+          example: []
+        created_at:
+          type: string
+          format: date-time
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    ShopShowResponse_2:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Shop_3'
+    ImageVariants:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+    ServiceCategory_3:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: 5e281bfa7df93f63e0000003
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: This is the sushi bar at our restaurant.
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: '#/components/schemas/ImageEmbed_2'
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    ShopsListResponse_4:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_4'
     Shop_4:
       type: object
       properties:
@@ -887,6 +1612,33 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
     Address_2:
       type: object
       required:
@@ -1179,321 +1931,13 @@ components:
           - work
           - other
           example: home
-    ImageEmbed:
-      properties:
-        id:
-          description: The database ID of the Image.
-          type: string
-          format: bson-id
-        url:
-          description: The URL of the image as a large size JPEG.
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
-        dimensions:
-          description: The dimensions of the image as a large size JPEG.
-          type: array
-          example:
-          - 1280
-          - 960
-        content_type:
-          description: The MIME content type of the image.
-          type: string
-          example: image/jpeg
-        fingerprint:
-          description: The fingerprint of the image used for deduplication.
-          type: string
-          example: af6515a29e04ac61d4379a3181140647
-        image_variants:
-          description: A list of image size variants scaled to different sizes. Note that "original" size variant may be a format other than JPEG.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageVariant'
-        tags:
-          description: Identifier tags associated with the image.
-          type: array
-          example:
-          - primary
-        created_at:
-          type: string
-          format: date-time
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
-    ImageVariant:
-      properties:
-        variant:
-          type: string
-          enum:
-          - original
-          - large
-          - medium
-          - small
-        url:
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
-        dimensions:
-          type: array
-          example:
-          - 2000
-          - 1500
-        content_type:
-          description: The MIME content type of the image variant.
-          type: string
-          example: image/jpeg
-    PaginationData:
-      type: object
-      properties:
-        search_after:
-          description: The value to use as the search_after parameter for the next page of results.
-          type: string
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-        page_count:
-          type: number
-          format: integer
-          example: 8
-        item_count:
-          type: number
-          format: integer
-          example: 742
-    Shop:
-      required:
-      - id
-      - name_translations
-      properties:
-        id:
-          type: string
-          format: bson-id
-          example: ae5355ca1fd337ed5d6893e2
-        slug:
-          type: string
-          example: my-shop-slug
-        name_translations:
-          type: object
-          format: translations
-          example:
-            en: Paris Cafe
-            fr: Café de Paris
-            ja: カフェデパリ
-        alt_name:
-          type: string
-          example: カフェデパリ
-        location_name_translations:
-          type: object
-          format: translations
-          example:
-            en: Hotel Kyoto
-            fr: Hôtel Kyoto
-            ja: ホテル京都
-        alt_location_name:
-          type: string
-          example: ホテルキョウト
-        latitude:
-          type: number
-          format: float
-          example: 35.0116
-        longitude:
-          type: number
-          format: float
-          example: 135.768
-        google_place_ref:
-          type: string
-          example: ChIJ39ZjD-GLGGARBF5Aq0l7iPE
-        google_place_cid:
-          description: DEPRECATED. Use google_place_ref instead.
-          type: string
-          example: Use-google_place_ref-instead
-        country:
-          type: string
-          format: country
-          example: JP
-        currency:
-          type: string
-          format: currency
-          example: JPY
-        time_zone:
-          type: string
-          format: time-zone
-          example: Asia/Tokyo
-        phone:
-          type: string
-          format: phone-e164
-          example: '+81355650112'
-        phone_natl:
-          type: string
-          format: phone-national
-          example: 03-5565-0112
-        homepage_url:
-          type: string
-          format: url
-          example: https://www.myrestaurant.com/ja
-        homepage_url_translations:
-          type: object
-          format: translations
-          example:
-            en: https://www.myrestaurant.com/en
-            ja: https://www.myrestaurant.com/ja
-        tablecheck_shop_url:
-          type: string
-          format: url
-          example: https://www.tablecheck.com/my-shop-slug
-        tablecheck_booking_url:
-          type: string
-          format: url
-          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
-        tags:
-          type: array
-          example:
-          - outdoor
-          - quiet
-          items:
-            type: string
-        cuisines:
-          type: array
-          example:
-          - sushi
-          - tempura
-          items:
-            type: string
-        budget_lunch:
-          type: string
-          format: float
-          example: '10000.0'
-        budget_dinner:
-          type: string
-          format: float
-          example: '10000.0'
-        updated_at:
-          type: string
-          format: date-time
-        content_title_translations:
-          type: object
-          format: translations
-          description: Short catchphrase for the restaurant.
-          example:
-            en: A truly great restuarant
-            ja: 本当にすごいレストランです
-        content_body_translations:
-          type: object
-          format: translations
-          description: Paragraph of content about the restaurant.
-          example:
-            en: I love this restuarant!
-            ja: このレストラン大好きです！
-        show_pax_senior:
-          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
-          type: boolean
-        show_pax_child:
-          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
-          type: boolean
-        show_pax_baby:
-          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
-          type: boolean
-        pax_senior_age_min:
-          description: The minimum age for a person to be considered a senior.
-          type: number
-          format: integer
-          example: 65
-        pax_child_age_max:
-          description: The maximum age for a person to be considered a child.
-          type: number
-          format: integer
-          example: 12
-        pax_baby_age_max:
-          description: The maximum age for a person to be considered a baby.
-          type: number
-          format: integer
-          example: 5
-        service_categories:
-          description: The ServiceCategories of the Shop.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceCategory'
-        address:
-          $ref: '#/components/schemas/Address'
-        alt_address:
-          $ref: '#/components/schemas/Address'
-        images:
-          description: List of images depicting the shop. Consistent sizing of images is not guaranteed.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageEmbed'
-        image_url:
-          type: string
-          format: url
-          description: (Deprecated) Please use "images" field instead.
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-  parameters:
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: AUTHORIZATION
-externalDocs:
-  description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+x-refined-from:
+- tablecheck-availability.yml
+- tablecheck-booking.yml
+- tablecheck-crm.yml
+- tablecheck-pos.yml

@@ -1,23 +1,23 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability memberships API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  version: 1.0.2
+  title: TableCheck API - CRM V1 Memberships API
+  description: The CRM API is used by restaurant operators to obtain full customer, reservation, membership, and other related data from the TableSolution system.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/crm/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
 tags:
-- name: memberships
+- name: Memberships
 paths:
   /memberships:
     get:
       summary: List all Memberships
       operationId: listMemberships
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: ids
         in: query
@@ -105,7 +105,7 @@ paths:
       summary: Create Membership
       operationId: createMembership
       tags:
-      - memberships
+      - Memberships
       requestBody:
         required: true
         content:
@@ -130,7 +130,7 @@ paths:
       summary: Fetch a specific Membership
       operationId: showMembershipById
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membership_id
         in: path
@@ -155,7 +155,7 @@ paths:
       summary: Update Membership
       operationId: updateMembership
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membership_id
         in: path
@@ -204,7 +204,7 @@ paths:
       summary: Destroy the membership
       operationId: deleteMembershipById
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membership_id
         in: path
@@ -231,17 +231,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    MembershipsListResponse:
-      type: object
-      properties:
-        reservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Membership'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    MembershipEmbed:
-      type: object
+    Membership:
       properties:
         id:
           description: The database ID of the Membership.
@@ -268,41 +258,16 @@ components:
           - active
           - pre_enrollment
           - cancelled
-        points:
-          description: The number of points available on the membership.
-          type: number
-          format: integer
-    Emails:
-      description: '[PII] A list of Email objects.'
-      type: array
-      items:
-        $ref: '#/components/schemas/Email'
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
+        customers:
           type: array
           items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
+            $ref: '#/components/schemas/CustomerEmbed'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Error:
       required:
       - errors
@@ -318,8 +283,11 @@ components:
               message:
                 type: string
                 example: Item not found
-    MembershipUpdateParams:
+    MembershipCreateParams:
       type: object
+      required:
+      - membership_program_id
+      - code
       properties:
         code:
           description: Membership code
@@ -355,152 +323,11 @@ components:
         expiry_date:
           type: string
           format: date
-    BadRequestError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: parameter_missing
-              message:
-                type: string
-                example: Required parameter is missing.
-    Social:
+    MembershipShowResponse:
       type: object
-      required:
-      - username
       properties:
-        id:
-          description: The database ID of the Social object.
-          type: string
-          format: bson-id
-        service:
-          type: string
-          enum:
-          - facebook
-          - google
-          - twitter
-          - line
-          - kakao
-          - naver
-          - yahoo
-          - mixi
-          - ameblo
-          - linkedin
-          - skype
-          - wechat
-          - weibo
-          - qq
-        username:
-          description: '[PII] The social media username.'
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    Email:
-      type: object
-      required:
-      - email
-      properties:
-        id:
-          description: The database ID of the Email object.
-          type: string
-          format: bson-id
-        email:
-          description: '[PII] The email address.'
-          type: string
-        tag:
-          type: string
-          enum:
-          - none
-          - home
-          - work
-          - mobile
-          - other
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    PhoneNumbersList:
-      description: '[PII] A list of phone numbers as strings.'
-      type: array
-      items:
-        type: string
-        format: phone-e164
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-    EmailAddressesList:
-      description: '[PII] Email addresses as an array of strings.'
-      type: array
-      items:
-        type: string
-        format: email
-    Event:
-      type: object
-      example:
-        date: 01-01-2020
-        tag: anniversary
-      properties:
-        id:
-          description: The database ID of the Event.
-          type: string
-          format: bson-id
-        tag:
-          type: string
-          enum:
-          - anniversary
-          - birthday
-          - single
-          - 1_month
-          - 2_month
-          - 3_month
-          - 6_month
-          - 1_year
-        date:
-          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
-          type: string
-          format: date
-        months:
-          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
-          type: array
-          items:
-            type: number
-            format: integer
-        day:
-          description: The day on which the event occurs.
-          type: number
-          format: integer
-        memo:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+        reservation:
+          $ref: '#/components/schemas/Membership'
     Address:
       type: object
       example:
@@ -548,11 +375,78 @@ components:
         updated_at:
           type: string
           format: date-time
-    MembershipCreateParams:
-      type: object
+    BadRequestError:
       required:
-      - membership_program_id
-      - code
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    Event:
+      type: object
+      example:
+        date: 01-01-2020
+        tag: anniversary
+      properties:
+        id:
+          description: The database ID of the Event.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          enum:
+          - anniversary
+          - birthday
+          - single
+          - 1_month
+          - 2_month
+          - 3_month
+          - 6_month
+          - 1_year
+        date:
+          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
+          type: string
+          format: date
+        months:
+          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
+          type: array
+          items:
+            type: number
+            format: integer
+        day:
+          description: The day on which the event occurs.
+          type: number
+          format: integer
+        memo:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PhoneNumbersList:
+      description: '[PII] A list of phone numbers as strings.'
+      type: array
+      items:
+        type: string
+        format: phone-e164
+    EmailAddressesList:
+      description: '[PII] Email addresses as an array of strings.'
+      type: array
+      items:
+        type: string
+        format: email
+    MembershipUpdateParams:
+      type: object
       properties:
         code:
           description: Membership code
@@ -588,12 +482,34 @@ components:
         expiry_date:
           type: string
           format: date
-    Phones:
-      description: '[PII] A list of Phone objects.'
-      type: array
-      items:
-        $ref: '#/components/schemas/Phone'
-    Membership:
+    Email:
+      type: object
+      required:
+      - email
+      properties:
+        id:
+          description: The database ID of the Email object.
+          type: string
+          format: bson-id
+        email:
+          description: '[PII] The email address.'
+          type: string
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MembershipEmbed:
+      type: object
       properties:
         id:
           description: The database ID of the Membership.
@@ -620,21 +536,10 @@ components:
           - active
           - pre_enrollment
           - cancelled
-        customers:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerEmbed'
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    MembershipShowResponse:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Membership'
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
     Phone:
       type: object
       required:
@@ -664,6 +569,66 @@ components:
         updated_at:
           type: string
           format: date-time
+    Phones:
+      description: '[PII] A list of Phone objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Phone'
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    MembershipsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Emails:
+      description: '[PII] A list of Email objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Email'
     CustomerEmbed:
       type: object
       properties:
@@ -824,15 +789,42 @@ components:
           items:
             type: string
             format: bson-id
+    Social:
+      type: object
+      required:
+      - username
+      properties:
+        id:
+          description: The database ID of the Social object.
+          type: string
+          format: bson-id
+        service:
+          type: string
+          enum:
+          - facebook
+          - google
+          - twitter
+          - line
+          - kakao
+          - naver
+          - yahoo
+          - mixi
+          - ameblo
+          - linkedin
+          - skype
+          - wechat
+          - weibo
+          - qq
+        username:
+          description: '[PII] The social media username.'
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
   parameters:
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
     IncludeFields:
       name: include_fields
       in: query
@@ -841,11 +833,19 @@ components:
       schema:
         type: string
       example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: AUTHORIZATION
+      name: Authorization
 externalDocs:
   description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1

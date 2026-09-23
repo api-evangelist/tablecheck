@@ -1,11 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability blockages API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  version: 1.0.1
+  title: TableCheck API - Booking V1 Blockages API
+  description: The Booking API is used to book reservations directly into TableCheck's inventory backend.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/booking/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
@@ -203,6 +203,119 @@ paths:
                 $ref: '#/components/schemas/UnprocessableEntityError'
 components:
   schemas:
+    BlockageCreateParams:
+      type: object
+      required:
+      - description
+      - start_at
+      - pax
+      properties:
+        shop_id:
+          description: The ID of Shop where the Blockage should be created.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        reservation_id:
+          description: The Reservation ID in TableCheck or reservation ref in your system. Use only when updating a Reservation.
+          type: string
+          format: bson-id
+          example: Use only if amending reservation
+        start_at:
+          description: The time at which the party wishes to arrive.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        expires_at:
+          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:20:00Z'
+        pax:
+          description: The party size.
+          type: number
+          format: integer
+          example: 3
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        table_ids:
+          description: The IDs of the Tables assigned to the Blockage.
+          type: array
+          items:
+            type: string
+            format: bson-id
+            example: 641d4902bc54f4a840119a49
+        expiry_ttl:
+          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
+          type: number
+          format: integer
+          example: 300
+        service_category_id:
+          description: The Service Category ID of the table.
+          type: string
+          format: bson-id
+          example: 63ac197654cef38651ccd896
+    ExpiredError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_expired
+              message:
+                type: string
+                example: Resource has expired.
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
     Blockage:
       type: object
       properties:
@@ -305,6 +418,41 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    BlockageShowResponse:
+      type: object
+      properties:
+        blockage:
+          $ref: '#/components/schemas/Blockage'
     BlockageUpdateParams:
       type: object
       properties:
@@ -352,154 +500,6 @@ components:
           type: string
           format: bson-id
           example: 63ac197654cef38651ccd896
-    BadRequestError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: parameter_missing
-              message:
-                type: string
-                example: Required parameter is missing.
-    NotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: resource_not_found
-              message:
-                type: string
-                example: Resource not found.
-    BlockageCreateParams:
-      type: object
-      required:
-      - description
-      - start_at
-      - pax
-      properties:
-        shop_id:
-          description: The ID of Shop where the Blockage should be created.
-          type: string
-          format: bson-id
-          example: ae5355ca1fd337ed5d6893e2
-        reservation_id:
-          description: The Reservation ID in TableCheck or reservation ref in your system. Use only when updating a Reservation.
-          type: string
-          format: bson-id
-          example: Use only if amending reservation
-        start_at:
-          description: The time at which the party wishes to arrive.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:15:00Z'
-        expires_at:
-          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:20:00Z'
-        pax:
-          description: The party size.
-          type: number
-          format: integer
-          example: 3
-        seat_types:
-          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
-          type: array
-          items:
-            type: string
-            enum:
-            - open
-            - counter
-            - outside
-            - curtain
-            - private
-            - tatami
-        smoking:
-          description: The customer's smoking preference.
-          type: string
-          enum:
-          - none
-          - 'true'
-          - 'false'
-        table_ids:
-          description: The IDs of the Tables assigned to the Blockage.
-          type: array
-          items:
-            type: string
-            format: bson-id
-            example: 641d4902bc54f4a840119a49
-        expiry_ttl:
-          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
-          type: number
-          format: integer
-          example: 300
-        service_category_id:
-          description: The Service Category ID of the table.
-          type: string
-          format: bson-id
-          example: 63ac197654cef38651ccd896
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
-    ExpiredError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: resource_expired
-              message:
-                type: string
-                example: Resource has expired.
-    BlockageShowResponse:
-      type: object
-      properties:
-        blockage:
-          $ref: '#/components/schemas/Blockage'
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
   parameters:
     IncludeFields:
       name: include_fields
@@ -524,4 +524,4 @@ components:
       name: AUTHORIZATION
 externalDocs:
   description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/160334455/Booking+v1

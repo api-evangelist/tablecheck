@@ -1,23 +1,23 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability tables API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  version: 1.1.0
+  title: TableCheck API - Pos V1 Tables API
+  description: The POS API is used to connect Point-of-Sale systems to the restaurants on the TableCheck platform.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/pos/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
 tags:
-- name: tables
+- name: Tables
 paths:
   /shops/{shop_id}/tables:
     get:
       summary: List all Tables
       operationId: listTables
       tags:
-      - tables
+      - Tables
       parameters:
       - name: shop_id
         in: path
@@ -56,40 +56,6 @@ paths:
                 - $ref: '#/components/schemas/ShopNotFoundError'
 components:
   schemas:
-    ShopNotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Venue not found.
-    TablesListResponse:
-      type: object
-      properties:
-        tables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Table'
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
     Table:
       type: object
       properties:
@@ -182,6 +148,40 @@ components:
               message:
                 type: string
                 example: Your API key is invalid.
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    TablesListResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -189,4 +189,4 @@ components:
       name: AUTHORIZATION
 externalDocs:
   description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44958898/POS+v1

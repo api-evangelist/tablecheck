@@ -1,11 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability reservation_flags API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  title: Tablecheck Reservation Flags API
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
+  version: '1.0'
+  description: 'Operations tagged reservation_flags across 2 of this provider''s published API definitions: tablecheck-booking.yml, tablecheck-crm.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/booking/v1/
+  description: Production (uses live data)
+- url: https://api.tablecheck.com/api/crm/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
@@ -110,6 +112,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnprocessableEntityError'
+    servers:
+    - url: https://api.tablecheck.com/api/booking/v1/
+      description: Production (uses live data)
   /reservation_flags/{reservation_flag_id}:
     get:
       summary: Fetch a specific Reservation Flag
@@ -154,23 +159,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnprocessableEntityError'
+    servers:
+    - url: https://api.tablecheck.com/api/booking/v1/
+      description: Production (uses live data)
 components:
   schemas:
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
     BadRequestError:
       required:
       - errors
@@ -186,6 +179,21 @@ components:
               message:
                 type: string
                 example: Required parameter is missing.
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
     NotFoundError:
       required:
       - errors
@@ -201,6 +209,26 @@ components:
               message:
                 type: string
                 example: Resource not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+    ReservationFlagShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/ReservationFlag'
     ReservationFlag:
       type: object
       properties:
@@ -250,30 +278,6 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
-    ReservationFlagsListResponse:
-      type: object
-      properties:
-        reservation_flags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationFlag'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
     PaginationData:
       type: object
       properties:
@@ -285,16 +289,20 @@ components:
           type: number
           format: integer
           example: 100
-    ReservationFlagShowResponse:
+    ReservationFlagsListResponse:
       type: object
       properties:
-        reservation:
-          $ref: '#/components/schemas/ReservationFlag'
+        reservation_flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationFlag'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: AUTHORIZATION
-externalDocs:
-  description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+x-refined-from:
+- tablecheck-booking.yml
+- tablecheck-crm.yml

@@ -1,23 +1,23 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability franchises API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  version: 1.0.2
+  title: TableCheck API - CRM V1 Franchises API
+  description: The CRM API is used by restaurant operators to obtain full customer, reservation, membership, and other related data from the TableSolution system.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/crm/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
 tags:
-- name: franchises
+- name: Franchises
 paths:
   /franchises:
     get:
       summary: List all Franchises
       operationId: listFranchises
       tags:
-      - franchises
+      - Franchises
       parameters:
       - name: ids
         in: query
@@ -78,7 +78,7 @@ paths:
       summary: Fetch a specific Franchise
       operationId: showFranchiseById
       tags:
-      - franchises
+      - Franchises
       parameters:
       - name: franchise_id
         in: path
@@ -100,6 +100,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   schemas:
     FranchisesListResponse:
       type: object
@@ -110,11 +127,6 @@ components:
             $ref: '#/components/schemas/Franchise'
         pagination:
           $ref: '#/components/schemas/PaginationData'
-    FranchiseShowResponse:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Franchise'
     Franchise:
       properties:
         id:
@@ -137,17 +149,6 @@ components:
           description: The web ID of the Shop.
           type: string
           example: rival-slug
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
     Error:
       required:
       - errors
@@ -163,28 +164,27 @@ components:
               message:
                 type: string
                 example: Item not found
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    FranchiseShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Franchise'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: AUTHORIZATION
+      name: Authorization
 externalDocs:
   description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1

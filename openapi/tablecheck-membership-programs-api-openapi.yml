@@ -1,11 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: TableCheck API - V1 availability membership_programs API
-  description: The Availability API is used to obtain near real-time table availability for online reservation booking.
+  version: 1.0.2
+  title: TableCheck API - CRM V1 Membership Programs API
+  description: The CRM API is used by restaurant operators to obtain full customer, reservation, membership, and other related data from the TableSolution system.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
-- url: https://api.tablecheck.com/api/availability/v1/
+- url: https://api.tablecheck.com/api/crm/v1/
   description: Production (uses live data)
 security:
 - ApiKeyAuth: []
@@ -131,31 +131,17 @@ components:
             $ref: '#/components/schemas/MembershipProgram'
         pagination:
           $ref: '#/components/schemas/PaginationData'
-    MembershipTierEmbed:
-      properties:
-        id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        name:
-          type: string
-        code:
-          type: string
-        tier:
-          type: number
-    FranchiseEmbed:
+    PaginationData:
       type: object
       properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
     MembershipProgram:
       properties:
         id:
@@ -173,22 +159,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MembershipTierEmbed'
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    MembershipProgramShowResponse:
-      type: object
-      properties:
-        membership_program:
-          $ref: '#/components/schemas/MembershipProgram'
     Error:
       required:
       - errors
@@ -204,6 +174,36 @@ components:
               message:
                 type: string
                 example: Item not found
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    MembershipTierEmbed:
+      properties:
+        id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        code:
+          type: string
+        tier:
+          type: number
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: '#/components/schemas/MembershipProgram'
   parameters:
     IncludeFields:
       name: include_fields
@@ -225,7 +225,7 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: AUTHORIZATION
+      name: Authorization
 externalDocs:
   description: Implementation Guide
-  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
+  url: https://tablecheck.atlassian.net/wiki/spaces/API/pages/44664326/CRM+v1

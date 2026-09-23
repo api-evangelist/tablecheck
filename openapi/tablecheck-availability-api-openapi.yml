@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0.0
-  title: TableCheck API - V1 availability API
+  title: TableCheck API - V1 Availability API
   description: The Availability API is used to obtain near real-time table availability for online reservation booking.
   termsOfService: https://tablecheck.atlassian.net/wiki/spaces/API/pages/61571353/TableCheck+API+Terms+of+Service
 servers:
@@ -10,13 +10,13 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: availability
+- name: Availability
 paths:
   /availability_tables/{shop_id}:
     get:
-      summary: Fetch availability tables of a specific shop.
+      summary: Fetch availability tables of a specific shop
       tags:
-      - availability
+      - Availability
       parameters:
       - name: shop_id
         in: path
@@ -74,40 +74,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getAvailabilityTablesByShopId
+      x-operation-id-source: derived
 components:
-  parameters:
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
   schemas:
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
     AvailabilityTableShowResponse:
       type: object
       properties:
@@ -137,6 +107,38 @@ components:
               example:
               - 65e963e36ff2a92b0fb1fcfd
               - 65e963756ff2a92b0fb1fcf6
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
