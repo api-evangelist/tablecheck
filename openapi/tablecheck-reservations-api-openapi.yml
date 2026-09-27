@@ -360,7 +360,7 @@ paths:
   /reservations/{reservation_id}:
     get:
       summary: Fetch a specific Reservation
-      operationId: showReservationById
+      operationId: getReservationsByReservationId
       tags:
       - Reservations
       parameters:
@@ -385,9 +385,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      x-operation-id-source: normalized
+      x-operation-id-original: showReservationById
     put:
       summary: Update Reservation
-      operationId: updateReservation
+      operationId: putReservationsByReservationId
       tags:
       - Reservations
       parameters:
@@ -434,13 +436,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnprocessableEntityError'
+      x-operation-id-source: normalized
+      x-operation-id-original: updateReservation
     servers:
     - url: https://api.tablecheck.com/api/crm/v1/
       description: Production (uses live data)
   /shops/{shop_id}/reservations:
     get:
       summary: List all Reservations
-      operationId: listReservations
+      operationId: getShopsByShopIdReservations
       tags:
       - Reservations
       parameters:
@@ -545,6 +549,8 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/UnprocessableEntityError'
                 - $ref: '#/components/schemas/ShopNotFoundError'
+      x-operation-id-source: normalized
+      x-operation-id-original: listReservations
     servers:
     - url: https://api.tablecheck.com/api/pos/v1/
       description: Production (uses live data)
@@ -590,7 +596,7 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
     put:
       summary: Update Reservation
-      operationId: updateReservation
+      operationId: putShopsByShopIdReservationsByReservationId
       tags:
       - Reservations
       parameters:
@@ -645,35 +651,13 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/UnprocessableEntityError'
                 - $ref: '#/components/schemas/ShopNotFoundError'
+      x-operation-id-source: normalized
+      x-operation-id-original: updateReservation
     servers:
     - url: https://api.tablecheck.com/api/pos/v1/
       description: Production (uses live data)
 components:
   schemas:
-    MenuItemNameTranslation:
-      type: object
-      properties:
-        translation:
-          type: string
-          example: sushi
-        locale:
-          type: string
-          example: en
-    BadRequestError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: parameter_missing
-              message:
-                type: string
-                example: Required parameter is missing.
     Reservation:
       type: object
       properties:
@@ -1124,30 +1108,60 @@ components:
           description: The sum of cash_total_amt and payment_total_amt, which represents the total monetary amount for the booking.
           type: string
           format: amt
-    ReservationCancelParams:
+    PaginationData:
       type: object
       properties:
-        cancel_reason_type:
-          description: The enumerated reason for cancellation.
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ReservationOrder:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the Order.
           type: string
-          enum:
-          - mistake
-          - shop
-          - travel
-          - deal
-          - delay
-          - personal
-          - covid
-          - other
-        cancel_reason:
-          description: Free-text reason for cancellation.
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        menu_item_name_translations:
+          description: An array of translation strings of the menu item name.
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItemNameTranslation'
+          example:
+            en: Sushi
+            ja: 寿司
+        price:
+          description: The price of a single menu item within the order.
           type: string
-          example: Cancelled due to weather
-        cancel_policy_html:
-          description: HTML representation of the venue's cancellation policy, including any applicable cancel fee rules.
+          format: decimal
+        qty:
+          description: The quantity of the Order, i.e. the number of menu item to purchase.
+          type: number
+          format: integer
+    ReservationsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    MenuItemNameTranslation:
+      type: object
+      properties:
+        translation:
           type: string
-          format: html
-    ForbiddenError:
+          example: sushi
+        locale:
+          type: string
+          example: en
+    UnprocessableEntityError:
       required:
       - errors
       properties:
@@ -1158,184 +1172,10 @@ components:
             properties:
               code:
                 type: string
-                example: api_key_invalid
+                example: not_created
               message:
                 type: string
-                example: Your API key is invalid.
-    ReservationsListResponse:
-      type: object
-      properties:
-        reservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reservation'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    ReservationUpdateParams:
-      type: object
-      properties:
-        user_agent:
-          description: The browser user agent string of the end user.
-          type: string
-          example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
-        user_ip:
-          description: The IP address of the end user.
-          type: string
-          format: ip-address
-          example: 145.0.34.255
-        utm_id:
-          description: Aggregate identifier for all UTM parameters.
-          type: string
-          example: my-id-124723
-        utm_source:
-          description: Identifies which site sent the traffic.
-          type: string
-          example: google
-        utm_medium:
-          description: Identifies what type of link was used, such as cost per click or email.
-          type: string
-          example: cpc
-        utm_campaign:
-          description: Identifies a specific product promotion or strategic campaign.
-          type: string
-          example: spring_sale
-        utm_term:
-          description: Identifies search terms.
-          type: string
-          example: ginza+italian
-        utm_content:
-          description: Identifies what specifically was clicked to bring the user to the site, such as a banner ad or a text link. It is often used for A/B testing and content-targeted ads.
-          type: string
-          example: logolink
-        blockage_id:
-          description: A non-expired Blockage ID obtained via API (see /blockages/ endpoint). The Blockage will be deleted once the Reservation is created/updated. This parameter is used only when creating/updating Reservations and is not included in the Reservation response.
-          type: string
-          format: bson-id
-          example: ae5355ca1fd337ed5d6893e2
-        source:
-          description: The general method by which the Reservation was made ("web", "phone", etc.) If not set, when creating a Reservation it will be defaulted to source "web" to indicate an online booking.
-          type: string
-          enum:
-          - phone
-          - ivrs
-          - sms
-          - web
-          - email
-          - in_person
-          - walk_in
-          - app
-          - other
-        channel:
-          description: The website or sales channel by which the Reservation was made. Can be modified by the merchant.
-          type: string
-          example: instagram
-        special_request:
-          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
-          type: string
-        memo:
-          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details. If special_request is not set, memo will be automatically copied to special_request.
-          type: string
-        memo2:
-          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
-          type: string
-        purpose:
-          description: The occasion for which customer booked.
-          type: string
-          example: birthday
-          enum:
-          - birthday
-          - birthday_self
-          - birthday_friends
-          - birthday_couple
-          - birthday_spouse
-          - birthday_family
-          - group
-          - group_women
-          - group_farewell
-          - group_holiday
-          - group_reunion
-          - group_wedding
-          - group_travel
-          - business
-          - business_internal
-          - business_farewell
-          - business_holiday
-          - family
-          - family_celebration
-          - family_baby
-          - family_kids
-          - family_intro
-          - family_engagement
-          - family_memorial
-          - date
-          - date_group
-          - date_proposal
-          - date_anniversary
-          - date_celebration
-          - event
-          - event_seminar
-          - event_recital
-          - event_expo
-          - event_film
-          - other
-        seat_types:
-          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
-          type: array
-          items:
-            type: string
-            enum:
-            - open
-            - counter
-            - outside
-            - curtain
-            - private
-            - tatami
-        smoking:
-          description: The customer's smoking preference.
-          type: string
-          enum:
-          - none
-          - 'true'
-          - 'false'
-        ref:
-          description: Your identifier for the Reservation.
-          type: string
-        pax_adult:
-          description: The number of adults attending the Reservation.
-          type: number
-          format: integer
-          example: 3
-        pax_senior:
-          description: The number of senior citizens attending the Reservation.
-          type: number
-          format: integer
-          example: 2
-        pax_child:
-          description: The number of children attending the Reservation.
-          type: number
-          format: integer
-          example: 0
-        pax_baby:
-          description: The number of babies attending the Reservation.
-          type: number
-          format: integer
-          example: 1
-        reservation_flag_ids:
-          description: The IDs of the ReservationFlags assigned to the Reservation.
-          type: array
-          items:
-            type: string
-            format: bson-id
-        pax:
-          description: The party size of the Reservation. Must match the Blockage pax value.
-          type: number
-          format: integer
-          example: 3
-        start_at:
-          description: The time at which the party wishes to arrive for the Reservation. Must match the Blockage start_at value.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:15:00Z'
+                example: Could not create resource due to missing parameter.
     ReservationCreateParams:
       type: object
       description: The API validates that at least one of first_name or last_name is present. This schema requires last_name so that requests valid against the schema always satisfy the API (OpenAPI cannot express "at least one of").
@@ -1650,11 +1490,209 @@ components:
               answer:
                 description: The customer's answer.
                 type: string
-    ReservationShowResponse:
+    ReservationCancelParams:
       type: object
       properties:
-        reservation:
-          $ref: '#/components/schemas/Reservation'
+        cancel_reason_type:
+          description: The enumerated reason for cancellation.
+          type: string
+          enum:
+          - mistake
+          - shop
+          - travel
+          - deal
+          - delay
+          - personal
+          - covid
+          - other
+        cancel_reason:
+          description: Free-text reason for cancellation.
+          type: string
+          example: Cancelled due to weather
+        cancel_policy_html:
+          description: HTML representation of the venue's cancellation policy, including any applicable cancel fee rules.
+          type: string
+          format: html
+    ReservationUpdateParams:
+      type: object
+      properties:
+        user_agent:
+          description: The browser user agent string of the end user.
+          type: string
+          example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+        user_ip:
+          description: The IP address of the end user.
+          type: string
+          format: ip-address
+          example: 145.0.34.255
+        utm_id:
+          description: Aggregate identifier for all UTM parameters.
+          type: string
+          example: my-id-124723
+        utm_source:
+          description: Identifies which site sent the traffic.
+          type: string
+          example: google
+        utm_medium:
+          description: Identifies what type of link was used, such as cost per click or email.
+          type: string
+          example: cpc
+        utm_campaign:
+          description: Identifies a specific product promotion or strategic campaign.
+          type: string
+          example: spring_sale
+        utm_term:
+          description: Identifies search terms.
+          type: string
+          example: ginza+italian
+        utm_content:
+          description: Identifies what specifically was clicked to bring the user to the site, such as a banner ad or a text link. It is often used for A/B testing and content-targeted ads.
+          type: string
+          example: logolink
+        blockage_id:
+          description: A non-expired Blockage ID obtained via API (see /blockages/ endpoint). The Blockage will be deleted once the Reservation is created/updated. This parameter is used only when creating/updating Reservations and is not included in the Reservation response.
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        source:
+          description: The general method by which the Reservation was made ("web", "phone", etc.) If not set, when creating a Reservation it will be defaulted to source "web" to indicate an online booking.
+          type: string
+          enum:
+          - phone
+          - ivrs
+          - sms
+          - web
+          - email
+          - in_person
+          - walk_in
+          - app
+          - other
+        channel:
+          description: The website or sales channel by which the Reservation was made. Can be modified by the merchant.
+          type: string
+          example: instagram
+        special_request:
+          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
+          type: string
+        memo:
+          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details. If special_request is not set, memo will be automatically copied to special_request.
+          type: string
+        memo2:
+          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
+          type: string
+        purpose:
+          description: The occasion for which customer booked.
+          type: string
+          example: birthday
+          enum:
+          - birthday
+          - birthday_self
+          - birthday_friends
+          - birthday_couple
+          - birthday_spouse
+          - birthday_family
+          - group
+          - group_women
+          - group_farewell
+          - group_holiday
+          - group_reunion
+          - group_wedding
+          - group_travel
+          - business
+          - business_internal
+          - business_farewell
+          - business_holiday
+          - family
+          - family_celebration
+          - family_baby
+          - family_kids
+          - family_intro
+          - family_engagement
+          - family_memorial
+          - date
+          - date_group
+          - date_proposal
+          - date_anniversary
+          - date_celebration
+          - event
+          - event_seminar
+          - event_recital
+          - event_expo
+          - event_film
+          - other
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        ref:
+          description: Your identifier for the Reservation.
+          type: string
+        pax_adult:
+          description: The number of adults attending the Reservation.
+          type: number
+          format: integer
+          example: 3
+        pax_senior:
+          description: The number of senior citizens attending the Reservation.
+          type: number
+          format: integer
+          example: 2
+        pax_child:
+          description: The number of children attending the Reservation.
+          type: number
+          format: integer
+          example: 0
+        pax_baby:
+          description: The number of babies attending the Reservation.
+          type: number
+          format: integer
+          example: 1
+        reservation_flag_ids:
+          description: The IDs of the ReservationFlags assigned to the Reservation.
+          type: array
+          items:
+            type: string
+            format: bson-id
+        pax:
+          description: The party size of the Reservation. Must match the Blockage pax value.
+          type: number
+          format: integer
+          example: 3
+        start_at:
+          description: The time at which the party wishes to arrive for the Reservation. Must match the Blockage start_at value.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
     NotFoundError:
       required:
       - errors
@@ -1670,7 +1708,7 @@ components:
               message:
                 type: string
                 example: Resource not found.
-    UnprocessableEntityError:
+    ForbiddenError:
       required:
       - errors
       properties:
@@ -1681,287 +1719,15 @@ components:
             properties:
               code:
                 type: string
-                example: not_created
+                example: api_key_invalid
               message:
                 type: string
-                example: Could not create resource due to missing parameter.
-    PaginationData:
+                example: Your API key is invalid.
+    ReservationShowResponse:
       type: object
       properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    ReservationOrder:
-      type: object
-      properties:
-        id:
-          description: TableCheck's database ID of the Order.
-          type: string
-          format: bson-id
-          example: ae5355ca1fd337ed5d6893e2
-        menu_item_name_translations:
-          description: An array of translation strings of the menu item name.
-          type: array
-          items:
-            $ref: '#/components/schemas/MenuItemNameTranslation'
-          example:
-            en: Sushi
-            ja: 寿司
-        price:
-          description: The price of a single menu item within the order.
-          type: string
-          format: decimal
-        qty:
-          description: The quantity of the Order, i.e. the number of menu item to purchase.
-          type: number
-          format: integer
-    ImageEmbedCreate:
-      type: object
-      properties:
-        image_upload_url:
-          description: The publicly accessible URL of the image to upload.
-          type: string
-          format: url
-          example: https://your.domain.com/image.png
-    PosOrder:
-      type: object
-      properties:
-        id:
-          description: TableCheck's database ID of the PosOrder object.
-          type: string
-          format: bson-id
-        ref:
-          description: The identifier (as used by the POS system database) of the order.
-          type: string
-        order_at:
-          description: The timestamp of when the order was entered into the POS system.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:12:34Z'
-        menu_category_ref:
-          description: The identifier (as used by the POS system database) of the category of the order's menu item.
-          type: string
-          example: ABC123DEF
-        menu_category_name:
-          description: The human-readable name of the category of the order's menu item.
-          type: string
-          example: Appetizer
-        menu_department_ref:
-          description: The identifier (as used by the POS system database) of the department of the order's menu item.
-          type: string
-          example: DEF456GHI
-        menu_department_name:
-          description: The human-readable name of the department of the order's menu item.
-          type: string
-          example: Kitchen
-        menu_item_ref:
-          description: The identifier (as used by the POS system database) of the order's menu item.
-          type: string
-          example: ABC123DEF
-        menu_item_name:
-          description: The human-readable name of the order's menu item. This should match the line item displayed on the receipt.
-          type: string
-          example: Chicken Soup
-        sku:
-          description: The Stock Keeping Unit identifier for the order's menu item. This may differ from menu_item_ref (the POS system database ID).
-          type: string
-        qty:
-          description: The order quantity, i.e. how many units are ordered.
-          type: number
-          format: integer
-        unit_price:
-          description: The price of a single unit within the order. (The unit_price is multiplied by qty to obtain the total price.)
-          type: string
-          format: decimal
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
-    PosJournalEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the PosJournal.
-          type: string
-          format: bson-id
-        reservation_id:
-          description: The ID of the Reservation to which the PosJournal belongs.
-          type: string
-          format: bson-id
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        batch_date:
-          type: string
-          format: date
-        order_at:
-          type: string
-          format: date-time
-        payment_at:
-          type: string
-          format: date-time
-        transaction_at:
-          type: string
-          format: date-time
-        currency:
-          type: string
-          format: currency
-        country:
-          type: string
-          format: country
-        receipt_num:
-          type: string
-        terminal_name:
-          type: string
-        staff_name:
-          type: string
-        subtotal_amt:
-          type: string
-          format: decimal
-        discount_amt:
-          type: string
-          format: decimal
-        coupon_amt:
-          type: string
-          format: decimal
-        service_fee_amt:
-          type: string
-          format: decimal
-        tax_amt:
-          type: string
-          format: decimal
-        tax_included_amt:
-          type: string
-          format: decimal
-        total_amt:
-          type: string
-          format: decimal
-        pos_orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/PosOrder'
-        pos_payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/PosPayment'
-        pos_discounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/PosDiscount'
-    ServiceCategoryEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the ServiceCategory selected by the customer for the Reservation.
-          type: string
-          format: bson-id
-        name_translations:
-          description: The name of the ServiceCategory selected by the customer for the Reservation.
-          type: object
-          format: translations
-          example:
-            en: Terrace
-            ja: テラス
-    TableEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the Table assigned to the Reservation.
-          type: string
-          format: bson-id
-        name_translations:
-          description: The name of the Table assigned to the Reservation.
-          type: string
-    Address:
-      type: object
-      example:
-        tag: home
-        street: 123 Main St
-        city: Seattle
-        state: WA
-        country: US
-      properties:
-        id:
-          description: The database ID of the Address object.
-          type: string
-          format: bson-id
-        tag:
-          type: string
-          description: A tag which indicates the type of address.
-          enum:
-          - none
-          - home
-          - work
-          - other
-        street:
-          type: string
-          description: '[PII] The first line of the street address.'
-        street2:
-          type: string
-          description: '[PII] The second line of the street address.'
-        city:
-          type: string
-          description: '[PII] The city of the address.'
-        region:
-          type: string
-          description: '[PII] The region, state, province, or prefecture of the address.'
-        postal_code:
-          type: string
-          description: '[PII] The postal code of the address.'
-        country:
-          description: The ISO 3166 Alpha-2 code of the country.
-          type: string
-          format: iso-country
-          example: JP
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    ImageVariants:
-      properties:
-        variant:
-          type: string
-          enum:
-          - original
-          - large
-          - medium
-          - small
-        url:
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
-        dimensions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDimensions'
-          example:
-          - 2000
-          - 1500
-        content_type:
-          description: The MIME content type of the image variant.
-          type: string
-          example: image/jpeg
+        reservation:
+          $ref: '#/components/schemas/Reservation'
     Reservation_2:
       properties:
         id:
@@ -2217,134 +1983,44 @@ components:
           $ref: '#/components/schemas/ServiceCategoryEmbed'
         promo:
           $ref: '#/components/schemas/PromoEmbed'
-    Event:
-      type: object
-      example:
-        date: 01-01-2020
-        tag: anniversary
-      properties:
-        id:
-          description: The database ID of the Event.
-          type: string
-          format: bson-id
-        tag:
-          type: string
-          enum:
-          - anniversary
-          - birthday
-          - single
-          - 1_month
-          - 2_month
-          - 3_month
-          - 6_month
-          - 1_year
-        date:
-          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
-          type: string
-          format: date
-        months:
-          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
-          type: array
-          items:
-            type: number
-            format: integer
-        day:
-          description: The day on which the event occurs.
-          type: number
-          format: integer
-        memo:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    ImageEmbedDestroy:
-      type: object
-      example:
-        id: 65dcd5f935288116d268b45b
-        _destroy: true
-      properties:
-        id:
-          description: The database ID of the Image object.
-          type: string
-          format: bson-id
-          example: 65dcd5f935288116d268b45b
-        _destroy:
-          description: Destroys the image
-          type: boolean
-          example: true
-    MenuItemEmbed:
-      type: object
-      properties:
-        id:
-          type: string
-          format: bson-id
-        name_translations:
-          type: string
-        internal_name:
-          type: string
-    FranchiseEmbed:
-      type: object
-      properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
     PhoneNumbersList:
       description: '[PII] A list of phone numbers as strings.'
       type: array
       items:
         type: string
         format: phone-e164
-    EmailAddressesList:
-      description: '[PII] Email addresses as an array of strings.'
-      type: array
-      items:
-        type: string
-        format: email
-    Email:
-      type: object
-      required:
-      - email
+    ImageDimensions:
       properties:
-        id:
-          description: The database ID of the Email object.
-          type: string
-          format: bson-id
-        email:
-          description: '[PII] The email address.'
-          type: string
-        tag:
-          type: string
-          enum:
-          - none
-          - home
-          - work
-          - mobile
-          - other
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    PaymentEmbed:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
+    OrderEmbed:
       type: object
       properties:
         id:
-          description: The database ID of the Payment.
+          description: The database ID of the Order.
           type: string
           format: bson-id
-        reservation_id:
-          description: The ID of the Reservation to which the Payment belongs.
+        menu_item_id:
+          description: The database ID of the MenuItem being ordered.
           type: string
           format: bson-id
         created_at:
@@ -2353,81 +2029,16 @@ components:
         updated_at:
           type: string
           format: date-time
-        payment_type:
-          type: string
-        payment_status:
-          type: string
-        total_amt:
+        unit_price:
           type: string
           format: decimal
-        authorized_amt:
-          type: string
-          format: decimal
-        captured_amt:
-          type: string
-          format: decimal
-        currency:
-          type: string
-          format: currency
-        brand:
-          type: string
-        card_digits:
-          type: string
-    MembershipEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the Membership.
-          type: string
-          format: bson-id
-        code:
-          type: string
-        membership_program_id:
-          description: The database ID of the Membership Program.
-          type: string
-          format: bson-id
-        membership_program_name:
-          type: string
-        membership_tier_id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        membership_tier_name:
-          type: string
-        status:
-          description: The status of the membership.
-          type: string
-          enum:
-          - active
-          - pre_enrollment
-          - cancelled
-        points:
-          description: The number of points available on the membership.
+        qty:
           type: number
           format: integer
-    PosDiscount:
-      type: object
-      properties:
-        id:
-          description: TableCheck's database ID of the PosDiscount object.
-          type: string
-          format: bson-id
-        ref:
-          description: The identifier (as used by the POS system database) of the discount.
-          type: string
-        order_at:
-          description: The timestamp of when the discount was entered into the POS system.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:12:34Z'
-        name:
-          description: The human-readable name of the discount. This should match the line item displayed on the receipt, if applicable.
-          type: string
-          example: Summer Sale 20%
-        amt:
-          description: The monetary amount of the discount.
-          type: string
-          format: decimal
+        is_group_order:
+          type: boolean
+        menu_item:
+          $ref: '#/components/schemas/MenuItemEmbed'
     Phone:
       type: object
       required:
@@ -2457,269 +2068,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    OrderEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the Order.
-          type: string
-          format: bson-id
-        menu_item_id:
-          description: The database ID of the MenuItem being ordered.
-          type: string
-          format: bson-id
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        unit_price:
-          type: string
-          format: decimal
-        qty:
-          type: number
-          format: integer
-        is_group_order:
-          type: boolean
-        menu_item:
-          $ref: '#/components/schemas/MenuItemEmbed'
-    PosPayment:
-      type: object
-      properties:
-        id:
-          description: TableCheck's database ID of the PosPayment object.
-          type: string
-          format: bson-id
-        ref:
-          description: The identifier (as used by the POS system database) of the payment.
-          type: string
-        payment_at:
-          description: The transaction time of the payment used to settle the check.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:12:34Z'
-        amt:
-          description: The monetary amount of the payment used to settle the check.
-          type: string
-          format: decimal
-        tender:
-          description: The payment method used in the transaction. Please transmit the raw value from the POS system as-is. Example values include "cash", "credit_card", "cashless", "voucher", etc.
-          type: string
-          example: credit_card
-        brand:
-          description: Brand of credit card or cashless wallet used to make payment. Please transmit the raw value from the POS system as-is. Examples values include "visa", "mastercard", "amex", "paypal", "apple_pay", etc.
-          type: string
-          example: visa
-        issuer:
-          description: The credit card issuer. Please transmit the raw value from the POS system as-is. Examples values include "citibank", "chase_bank", etc.
-          type: string
-          example: citibank
-    Phones:
-      description: '[PII] A list of Phone objects.'
-      type: array
-      items:
-        $ref: '#/components/schemas/Phone'
-    ImageDimensions:
-      properties:
-        large:
-          type: array
-          items:
-            type: number
-          example:
-          - 1280
-          - 704
-        medium:
-          type: array
-          items:
-            type: number
-          example:
-          - 800
-          - 440
-        small:
-          type: array
-          items:
-            type: number
-          example:
-          - 256
-          - 141
-    ReservationUpdateParams_2:
-      type: object
-      properties:
-        customer_ref:
-          description: The identifier you supplied for an existing customer.
-          type: string
-        customer_id:
-          description: The identifier of an existing customer.
-          type: string
-        ref:
-          description: Your identifier for the reservation.
-          type: string
-        pax:
-          description: The total party size of the Reservation. May be specified as an alternative to pax_adult.
-          type: number
-          format: integer
-          example: 6
-        pax_adult:
-          description: The number of adults attending the Reservation.
-          type: number
-          format: integer
-          example: 3
-        pax_senior:
-          description: The number of senior citizens attending the Reservation.
-          type: number
-          format: integer
-          example: 2
-        pax_child:
-          description: The number of children attending the Reservation.
-          type: number
-          format: integer
-          example: 0
-        pax_baby:
-          description: The number of babies attending the Reservation.
-          type: number
-          format: integer
-          example: 1
-        start_at:
-          description: The time at which the party is scheduled to arrive for the Reservation.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:15:00Z'
-        duration:
-          description: The planned duration of the Reservation in seconds. It is recommended not to set this parameter, as the system will determine duration automatically. If you have previously set duration, transmitting duration as null will revert to the auto-set state.
-          type: number
-          format: seconds
-          example: 7200
-        source:
-          description: The general method by which the Reservation was made ("web", "phone", etc.) If not set, when creating a Reservation it will be defaulted to source "web" to indicate an online booking.
-          type: string
-          enum:
-          - phone
-          - ivrs
-          - sms
-          - web
-          - email
-          - in_person
-          - walk_in
-          - app
-          - other
-        channel:
-          description: The web site or sales channel by which the Reservation was made.
-          type: string
-          example: instagram
-        special_request:
-          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
-          type: string
-        memo:
-          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details.
-          type: string
-        memo2:
-          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
-          type: string
-        seat_types:
-          description: The seating or table type(s) requested by the customer.
-          type: array
-          items:
-            type: string
-            enum:
-            - open
-            - counter
-            - outside
-            - curtain
-            - private
-            - tatami
-        smoking:
-          description: Indicates whether the customer has requested smoking or non-smoking seats.
-          type: string
-          enum:
-          - none
-          - 'true'
-          - 'false'
-        status:
-          description: The status of the Reservation. It is recommended not to set this parameter, as the system will assign status automatically.
-          type: string
-          enum:
-          - tentative
-          - pending
-          - request
-          - accepted
-          - confirmed
-          - delay
-          - call_absent
-          - call_message
-          - call_wrong
-          - cancelled
-          - noshow
-          - rejected
-          - arrived
-          - arrived_part
-          - waiting
-          - waitlist_called
-          - seated
-          - seated_part
-          - service_drink
-          - service_main
-          - service_dessert
-          - check_req
-          - paid
-          - turnover
-          - turned_over
-        points:
-          description: The number of reward points redeemed by the customer via the provider system.
-          type: number
-          format: integer
-          example: 200
-        party_name:
-          description: The party or group name for the reservation.
-          type: string
-        room_name:
-          description: The hotel room number associated with the reservation.
-          type: string
-        cancel_reason_type:
-          description: The enumerated reason for cancellation, if the reservation was cancelled.
-          type: string
-          enum:
-          - mistake
-          - shop
-          - travel
-          - deal
-          - delay
-          - personal
-          - covid
-          - other
-        cancel_reason:
-          description: The memo explaining the reason for cancellation, if the reservation was cancelled.
-          type: string
-        cancelled_by_customer:
-          description: If the reservation was cancelled, this flag if true indicates the cancellation action was performed by the customer (diner) via the web. A false value indicates the cancellation was performed either by the merchant or (in rare cases) automatically by the system.
-          type: boolean
-        send_emails:
-          description: Indicates whether to send email notifications to the Customer for this Reservation. Default false.
-          type: boolean
-        send_texts:
-          description: Indicates whether to send text message notifications to the Customer for this Reservation. Requires phone parameter to be a mobile number. Default false.
-          type: boolean
-        email:
-          description: The email address designated by the customer to receive notifications for this reservation.
-          type: string
-          format: email
-        phone:
-          description: The phone number designated by the customer to receive text messages and calls regarding this reservation.
-          type: string
-          format: phone-e164
-        reservation_flag_ids:
-          description: The reservation flags ids.
-          type: array
-          items:
-            type: string
-            example: 64ddfe5b6ff2a916b29dc902
-        images:
-          description: Images
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ImageEmbedCreate'
-            - $ref: '#/components/schemas/ImageEmbedDestroy'
     QuestionEmbed:
       type: object
       properties:
@@ -2733,6 +2081,148 @@ components:
         answer:
           description: The response from the customer.
           type: string
+    Social:
+      type: object
+      required:
+      - username
+      properties:
+        id:
+          description: The database ID of the Social object.
+          type: string
+          format: bson-id
+        service:
+          type: string
+          enum:
+          - facebook
+          - google
+          - twitter
+          - line
+          - kakao
+          - naver
+          - yahoo
+          - mixi
+          - ameblo
+          - linkedin
+          - skype
+          - wechat
+          - weibo
+          - qq
+        username:
+          description: '[PII] The social media username.'
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    EmailAddressesList:
+      description: '[PII] Email addresses as an array of strings.'
+      type: array
+      items:
+        type: string
+        format: email
+    PromoEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Promo to utilize on the Reservation.
+          type: string
+          format: bson-id
+        code:
+          description: The alphanumeric code of the Promo to utilize on the Reservation.
+          type: string
+    ServiceCategoryEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the ServiceCategory selected by the customer for the Reservation.
+          type: string
+          format: bson-id
+        name_translations:
+          description: The name of the ServiceCategory selected by the customer for the Reservation.
+          type: object
+          format: translations
+          example:
+            en: Terrace
+            ja: テラス
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    PosDiscount:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosDiscount object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the discount.
+          type: string
+        order_at:
+          description: The timestamp of when the discount was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        name:
+          description: The human-readable name of the discount. This should match the line item displayed on the receipt, if applicable.
+          type: string
+          example: Summer Sale 20%
+        amt:
+          description: The monetary amount of the discount.
+          type: string
+          format: decimal
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 200
+          - 200
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariants'
+        tags:
+          description: Not used.
+          type: array
+          example: []
+        created_at:
+          type: string
+          format: date-time
     ReservationCreateParams_2:
       type: object
       required:
@@ -2917,94 +2407,267 @@ components:
           type: string
           format: bson-id
           example: ae5355ca1fd337ed5d6893e2
-    ImageEmbed:
+    Email:
+      type: object
+      required:
+      - email
       properties:
         id:
-          description: The database ID of the Image.
+          description: The database ID of the Email object.
           type: string
           format: bson-id
-          example: 65dcd5f935288116d268b45b
-        url:
-          description: The URL of the image as a large size JPEG.
+        email:
+          description: '[PII] The email address.'
           type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
-        content_type:
-          description: The MIME content type of the image.
+        tag:
           type: string
-          example: image/jpeg
-        dimensions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDimensions'
-          example:
-          - 200
-          - 200
-        fingerprint:
-          description: The fingerprint of the image used for deduplication.
-          type: string
-          example: af6515a29e04ac61d4379a3181140647
-        image_variants:
-          description: A list of image size variants scaled to different sizes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageVariants'
-        tags:
-          description: Not used.
-          type: array
-          example: []
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - other
         created_at:
           type: string
           format: date-time
-    ReservationShowResponse_2:
+        updated_at:
+          type: string
+          format: date-time
+    ImageEmbedDestroy:
       type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Reservation_2'
-        reservation_flags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationFlag'
-    ShopEmbed:
-      type: object
+      example:
+        id: 65dcd5f935288116d268b45b
+        _destroy: true
       properties:
         id:
-          description: ID of the Shop to which the Reservation belongs.
+          description: The database ID of the Image object.
           type: string
           format: bson-id
-          example: ede535ea33fd275ca15d6893
-        name_translations:
-          description: The name of the Shop where the reservation was booked.
-          type: object
-          format: translations
-          example:
-            en: Paris Cafe
-            fr: Café de Paris
-            ja: カフェデパリ
-        internal_name:
-          description: The shorthand name of the Shop where the reservation was booked.
-          type: object
-          format: string
-          example: Paris Cafe
-        slug:
-          description: The web ID of the Shop where the reservation was booked.
+          example: 65dcd5f935288116d268b45b
+        _destroy:
+          description: Destroys the image
+          type: boolean
+          example: true
+    ReservationUpdateParams_2:
+      type: object
+      properties:
+        customer_ref:
+          description: The identifier you supplied for an existing customer.
           type: string
-          example: my-shop-slug
-        country:
-          description: The country where the Shop is located.
+        customer_id:
+          description: The identifier of an existing customer.
           type: string
-          format: country
-          example: JP
-        currency:
-          description: The monetary currency used by the Shop.
+        ref:
+          description: Your identifier for the reservation.
           type: string
-          format: currency
-          example: JPY
-        time_zone:
-          description: The time zone used by the Shop.
+        pax:
+          description: The total party size of the Reservation. May be specified as an alternative to pax_adult.
+          type: number
+          format: integer
+          example: 6
+        pax_adult:
+          description: The number of adults attending the Reservation.
+          type: number
+          format: integer
+          example: 3
+        pax_senior:
+          description: The number of senior citizens attending the Reservation.
+          type: number
+          format: integer
+          example: 2
+        pax_child:
+          description: The number of children attending the Reservation.
+          type: number
+          format: integer
+          example: 0
+        pax_baby:
+          description: The number of babies attending the Reservation.
+          type: number
+          format: integer
+          example: 1
+        start_at:
+          description: The time at which the party is scheduled to arrive for the Reservation.
           type: string
-          format: time-zone
-          example: Asia/Tokyo
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        duration:
+          description: The planned duration of the Reservation in seconds. It is recommended not to set this parameter, as the system will determine duration automatically. If you have previously set duration, transmitting duration as null will revert to the auto-set state.
+          type: number
+          format: seconds
+          example: 7200
+        source:
+          description: The general method by which the Reservation was made ("web", "phone", etc.) If not set, when creating a Reservation it will be defaulted to source "web" to indicate an online booking.
+          type: string
+          enum:
+          - phone
+          - ivrs
+          - sms
+          - web
+          - email
+          - in_person
+          - walk_in
+          - app
+          - other
+        channel:
+          description: The web site or sales channel by which the Reservation was made.
+          type: string
+          example: instagram
+        special_request:
+          description: Free-text additional request made by the customer at time of booking. May be used to include special requests, dietary restrictions, etc.
+          type: string
+        memo:
+          description: A free-text internal memo for the Reservation used only by merchant staff. Contains notes about the reservation, customer, or other details.
+          type: string
+        memo2:
+          description: Secondary free-text internal memo for the Reservation used only by merchant staff.
+          type: string
+        seat_types:
+          description: The seating or table type(s) requested by the customer.
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: Indicates whether the customer has requested smoking or non-smoking seats.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        status:
+          description: The status of the Reservation. It is recommended not to set this parameter, as the system will assign status automatically.
+          type: string
+          enum:
+          - tentative
+          - pending
+          - request
+          - accepted
+          - confirmed
+          - delay
+          - call_absent
+          - call_message
+          - call_wrong
+          - cancelled
+          - noshow
+          - rejected
+          - arrived
+          - arrived_part
+          - waiting
+          - waitlist_called
+          - seated
+          - seated_part
+          - service_drink
+          - service_main
+          - service_dessert
+          - check_req
+          - paid
+          - turnover
+          - turned_over
+        points:
+          description: The number of reward points redeemed by the customer via the provider system.
+          type: number
+          format: integer
+          example: 200
+        party_name:
+          description: The party or group name for the reservation.
+          type: string
+        room_name:
+          description: The hotel room number associated with the reservation.
+          type: string
+        cancel_reason_type:
+          description: The enumerated reason for cancellation, if the reservation was cancelled.
+          type: string
+          enum:
+          - mistake
+          - shop
+          - travel
+          - deal
+          - delay
+          - personal
+          - covid
+          - other
+        cancel_reason:
+          description: The memo explaining the reason for cancellation, if the reservation was cancelled.
+          type: string
+        cancelled_by_customer:
+          description: If the reservation was cancelled, this flag if true indicates the cancellation action was performed by the customer (diner) via the web. A false value indicates the cancellation was performed either by the merchant or (in rare cases) automatically by the system.
+          type: boolean
+        send_emails:
+          description: Indicates whether to send email notifications to the Customer for this Reservation. Default false.
+          type: boolean
+        send_texts:
+          description: Indicates whether to send text message notifications to the Customer for this Reservation. Requires phone parameter to be a mobile number. Default false.
+          type: boolean
+        email:
+          description: The email address designated by the customer to receive notifications for this reservation.
+          type: string
+          format: email
+        phone:
+          description: The phone number designated by the customer to receive text messages and calls regarding this reservation.
+          type: string
+          format: phone-e164
+        reservation_flag_ids:
+          description: The reservation flags ids.
+          type: array
+          items:
+            type: string
+            example: 64ddfe5b6ff2a916b29dc902
+        images:
+          description: Images
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ImageEmbedCreate'
+            - $ref: '#/components/schemas/ImageEmbedDestroy'
+    Event:
+      type: object
+      example:
+        date: 01-01-2020
+        tag: anniversary
+      properties:
+        id:
+          description: The database ID of the Event.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          enum:
+          - anniversary
+          - birthday
+          - single
+          - 1_month
+          - 2_month
+          - 3_month
+          - 6_month
+          - 1_year
+        date:
+          description: '[PII] The first occurrence date of the event. Note the year value 9996 means the year is unspecified.'
+          type: string
+          format: date
+        months:
+          description: The integer month(s) in which the event occurs, with January = 1, February = 2, etc.
+          type: array
+          items:
+            type: number
+            format: integer
+        day:
+          description: The day on which the event occurs.
+          type: number
+          format: integer
+        memo:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     ReservationFlag:
       type: object
       properties:
@@ -3054,11 +2717,322 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
-    Emails:
-      description: '[PII] A list of Email objects.'
+    Phones:
+      description: '[PII] A list of Phone objects.'
       type: array
       items:
-        $ref: '#/components/schemas/Email'
+        $ref: '#/components/schemas/Phone'
+    PosOrder:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosOrder object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the order.
+          type: string
+        order_at:
+          description: The timestamp of when the order was entered into the POS system.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        menu_category_ref:
+          description: The identifier (as used by the POS system database) of the category of the order's menu item.
+          type: string
+          example: ABC123DEF
+        menu_category_name:
+          description: The human-readable name of the category of the order's menu item.
+          type: string
+          example: Appetizer
+        menu_department_ref:
+          description: The identifier (as used by the POS system database) of the department of the order's menu item.
+          type: string
+          example: DEF456GHI
+        menu_department_name:
+          description: The human-readable name of the department of the order's menu item.
+          type: string
+          example: Kitchen
+        menu_item_ref:
+          description: The identifier (as used by the POS system database) of the order's menu item.
+          type: string
+          example: ABC123DEF
+        menu_item_name:
+          description: The human-readable name of the order's menu item. This should match the line item displayed on the receipt.
+          type: string
+          example: Chicken Soup
+        sku:
+          description: The Stock Keeping Unit identifier for the order's menu item. This may differ from menu_item_ref (the POS system database ID).
+          type: string
+        qty:
+          description: The order quantity, i.e. how many units are ordered.
+          type: number
+          format: integer
+        unit_price:
+          description: The price of a single unit within the order. (The unit_price is multiplied by qty to obtain the total price.)
+          type: string
+          format: decimal
+    Address:
+      type: object
+      example:
+        tag: home
+        street: 123 Main St
+        city: Seattle
+        state: WA
+        country: US
+      properties:
+        id:
+          description: The database ID of the Address object.
+          type: string
+          format: bson-id
+        tag:
+          type: string
+          description: A tag which indicates the type of address.
+          enum:
+          - none
+          - home
+          - work
+          - other
+        street:
+          type: string
+          description: '[PII] The first line of the street address.'
+        street2:
+          type: string
+          description: '[PII] The second line of the street address.'
+        city:
+          type: string
+          description: '[PII] The city of the address.'
+        region:
+          type: string
+          description: '[PII] The region, state, province, or prefecture of the address.'
+        postal_code:
+          type: string
+          description: '[PII] The postal code of the address.'
+        country:
+          description: The ISO 3166 Alpha-2 code of the country.
+          type: string
+          format: iso-country
+          example: JP
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MembershipEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+    TableEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Table assigned to the Reservation.
+          type: string
+          format: bson-id
+        name_translations:
+          description: The name of the Table assigned to the Reservation.
+          type: string
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    PosPayment:
+      type: object
+      properties:
+        id:
+          description: TableCheck's database ID of the PosPayment object.
+          type: string
+          format: bson-id
+        ref:
+          description: The identifier (as used by the POS system database) of the payment.
+          type: string
+        payment_at:
+          description: The transaction time of the payment used to settle the check.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:12:34Z'
+        amt:
+          description: The monetary amount of the payment used to settle the check.
+          type: string
+          format: decimal
+        tender:
+          description: The payment method used in the transaction. Please transmit the raw value from the POS system as-is. Example values include "cash", "credit_card", "cashless", "voucher", etc.
+          type: string
+          example: credit_card
+        brand:
+          description: Brand of credit card or cashless wallet used to make payment. Please transmit the raw value from the POS system as-is. Examples values include "visa", "mastercard", "amex", "paypal", "apple_pay", etc.
+          type: string
+          example: visa
+        issuer:
+          description: The credit card issuer. Please transmit the raw value from the POS system as-is. Examples values include "citibank", "chase_bank", etc.
+          type: string
+          example: citibank
+    PaymentEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Payment.
+          type: string
+          format: bson-id
+        reservation_id:
+          description: The ID of the Reservation to which the Payment belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        payment_type:
+          type: string
+        payment_status:
+          type: string
+        total_amt:
+          type: string
+          format: decimal
+        authorized_amt:
+          type: string
+          format: decimal
+        captured_amt:
+          type: string
+          format: decimal
+        currency:
+          type: string
+          format: currency
+        brand:
+          type: string
+        card_digits:
+          type: string
+    ImageEmbedCreate:
+      type: object
+      properties:
+        image_upload_url:
+          description: The publicly accessible URL of the image to upload.
+          type: string
+          format: url
+          example: https://your.domain.com/image.png
+    PosJournalEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the PosJournal.
+          type: string
+          format: bson-id
+        reservation_id:
+          description: The ID of the Reservation to which the PosJournal belongs.
+          type: string
+          format: bson-id
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        batch_date:
+          type: string
+          format: date
+        order_at:
+          type: string
+          format: date-time
+        payment_at:
+          type: string
+          format: date-time
+        transaction_at:
+          type: string
+          format: date-time
+        currency:
+          type: string
+          format: currency
+        country:
+          type: string
+          format: country
+        receipt_num:
+          type: string
+        terminal_name:
+          type: string
+        staff_name:
+          type: string
+        subtotal_amt:
+          type: string
+          format: decimal
+        discount_amt:
+          type: string
+          format: decimal
+        coupon_amt:
+          type: string
+          format: decimal
+        service_fee_amt:
+          type: string
+          format: decimal
+        tax_amt:
+          type: string
+          format: decimal
+        tax_included_amt:
+          type: string
+          format: decimal
+        total_amt:
+          type: string
+          format: decimal
+        pos_orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PosOrder'
+        pos_payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PosPayment'
+        pos_discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PosDiscount'
+    ReservationShowResponse_2:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Reservation_2'
+        reservation_flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationFlag'
     CustomerEmbed:
       type: object
       properties:
@@ -3219,51 +3193,85 @@ components:
           items:
             type: string
             format: bson-id
-    PromoEmbed:
+    ShopEmbed:
       type: object
       properties:
         id:
-          description: The database ID of the Promo to utilize on the Reservation.
+          description: ID of the Shop to which the Reservation belongs.
           type: string
           format: bson-id
-        code:
-          description: The alphanumeric code of the Promo to utilize on the Reservation.
+          example: ede535ea33fd275ca15d6893
+        name_translations:
+          description: The name of the Shop where the reservation was booked.
+          type: object
+          format: translations
+          example:
+            en: Paris Cafe
+            fr: Café de Paris
+            ja: カフェデパリ
+        internal_name:
+          description: The shorthand name of the Shop where the reservation was booked.
+          type: object
+          format: string
+          example: Paris Cafe
+        slug:
+          description: The web ID of the Shop where the reservation was booked.
           type: string
-    Social:
-      type: object
-      required:
-      - username
+          example: my-shop-slug
+        country:
+          description: The country where the Shop is located.
+          type: string
+          format: country
+          example: JP
+        currency:
+          description: The monetary currency used by the Shop.
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          description: The time zone used by the Shop.
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+    Emails:
+      description: '[PII] A list of Email objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Email'
+    ImageVariants:
       properties:
-        id:
-          description: The database ID of the Social object.
-          type: string
-          format: bson-id
-        service:
+        variant:
           type: string
           enum:
-          - facebook
-          - google
-          - twitter
-          - line
-          - kakao
-          - naver
-          - yahoo
-          - mixi
-          - ameblo
-          - linkedin
-          - skype
-          - wechat
-          - weibo
-          - qq
-        username:
-          description: '[PII] The social media username.'
+          - original
+          - large
+          - medium
+          - small
+        url:
           type: string
-        created_at:
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
           type: string
-          format: date-time
-        updated_at:
+          example: image/jpeg
+    MenuItemEmbed:
+      type: object
+      properties:
+        id:
           type: string
-          format: date-time
+          format: bson-id
+        name_translations:
+          type: string
+        internal_name:
+          type: string
     Reservation_3:
       type: object
       properties:
@@ -3474,6 +3482,11 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
+    ReservationSingleResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Reservation_3'
     ReservationUpdateParams_3:
       type: object
       properties:
@@ -3510,11 +3523,6 @@ components:
               message:
                 type: string
                 example: Venue not found.
-    ReservationSingleResponse:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Reservation_3'
   parameters:
     IncludeFields:
       name: include_fields

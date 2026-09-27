@@ -322,55 +322,7 @@ paths:
     - url: https://api.tablecheck.com/api/pos/v1/
       description: Production (uses live data)
 components:
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
   schemas:
-    ShopsListResponse:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShopAvailability'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    PaginationData:
-      type: object
-      properties:
-        search_after:
-          description: The value to use as the search_after parameter for the next page of results.
-          type: string
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-        page_count:
-          type: number
-          format: integer
-          example: 8
-        item_count:
-          type: number
-          format: integer
-          example: 742
     Shop:
       required:
       - id
@@ -537,21 +489,6 @@ components:
           type: string
           format: url
           description: (Deprecated) Please use "images" field instead.
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
     ImageEmbed:
       properties:
         id:
@@ -590,26 +527,6 @@ components:
         created_at:
           type: string
           format: date-time
-    Address:
-      properties:
-        street:
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          type: string
-          example: Chuo-ku
-        region:
-          type: string
-          example: Tokyo
-        postal_code:
-          type: string
-          example: 104-0061
-        country:
-          type: string
-          example: JP
     ImageVariant:
       properties:
         variant:
@@ -632,11 +549,28 @@ components:
           description: The MIME content type of the image variant.
           type: string
           example: image/jpeg
-    ShopShowResponse:
+    PaginationData:
       type: object
       properties:
-        shop:
-          $ref: '#/components/schemas/Shop'
+        search_after:
+          description: The value to use as the search_after parameter for the next page of results.
+          type: string
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+        page_count:
+          type: number
+          format: integer
+          example: 8
+        item_count:
+          type: number
+          format: integer
+          example: 742
     ServiceCategory:
       properties:
         id:
@@ -663,6 +597,55 @@ components:
           description: (Deprecated) Please use "image" field instead.
           type: string
           format: url
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopAvailability'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    ShopShowResponse:
+      type: object
+      properties:
+        shop:
+          $ref: '#/components/schemas/Shop'
+    Address:
+      properties:
+        street:
+          type: string
+          example: 2-14-5 Ginza
+        street2:
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          type: string
+          example: Chuo-ku
+        region:
+          type: string
+          example: Tokyo
+        postal_code:
+          type: string
+          example: 104-0061
+        country:
+          type: string
+          example: JP
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
     ShopAvailability:
       properties:
         id:
@@ -835,26 +818,6 @@ components:
         availability_cached_at:
           type: string
           format: date-time
-    ShopsListResponse_2:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shop_2'
-        pagination:
-          $ref: '#/components/schemas/PaginationData_2'
-    PaginationData_2:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
     Shop_2:
       required:
       - id
@@ -1040,6 +1003,17 @@ components:
           $ref: '#/components/schemas/Address'
         alt_address:
           $ref: '#/components/schemas/Address'
+    PaginationData_2:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
     ServiceCategory_2:
       properties:
         id:
@@ -1063,49 +1037,15 @@ components:
           description: Image of the service category.
           type: string
           format: url
-    ImageDimensions:
-      properties:
-        large:
-          type: array
-          items:
-            type: number
-          example:
-          - 1280
-          - 704
-        medium:
-          type: array
-          items:
-            type: number
-          example:
-          - 800
-          - 440
-        small:
-          type: array
-          items:
-            type: number
-          example:
-          - 256
-          - 141
-    ShopsListResponse_3:
+    ShopsListResponse_2:
       type: object
       properties:
         shops:
           type: array
           items:
-            $ref: '#/components/schemas/Shop_3'
+            $ref: '#/components/schemas/Shop_2'
         pagination:
-          $ref: '#/components/schemas/PaginationData_3'
-    PaginationData_3:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
+          $ref: '#/components/schemas/PaginationData_2'
     Shop_3:
       properties:
         id:
@@ -1191,6 +1131,76 @@ components:
         created_at:
           type: string
           format: date-time
+    PaginationData_3:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ServiceCategory_3:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: 5e281bfa7df93f63e0000003
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: This is the sushi bar at our restaurant.
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: '#/components/schemas/ImageEmbed_2'
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
+    ShopsListResponse_3:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_3'
+        pagination:
+          $ref: '#/components/schemas/PaginationData_3'
+    ShopShowResponse_2:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Shop_3'
     FranchiseEmbed:
       type: object
       properties:
@@ -1204,11 +1214,6 @@ components:
           type: object
           format: string
           example: The Midtown Hotel
-    ShopShowResponse_2:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Shop_3'
     ImageVariants:
       properties:
         variant:
@@ -1233,50 +1238,6 @@ components:
           description: The MIME content type of the image variant.
           type: string
           example: image/jpeg
-    ServiceCategory_3:
-      properties:
-        id:
-          description: Identifer for the ServiceCategory object.
-          type: string
-          format: bson-id
-          example: 5e281bfa7df93f63e0000003
-        name_translations:
-          description: The name of the ServiceCategory.
-          type: array
-          example:
-            en: Sushi Bar
-            ja: 寿司バー
-        description_translations:
-          description: The description of the ServiceCategory.
-          type: array
-          example:
-            en: This is the sushi bar at our restaurant.
-            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
-        image:
-          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
-          $ref: '#/components/schemas/ImageEmbed_2'
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-    ShopsListResponse_4:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shop_4'
     Shop_4:
       type: object
       properties:
@@ -1612,18 +1573,13 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
-    ShopNotFoundError:
-      required:
-      - errors
+    ShopsListResponse_4:
+      type: object
       properties:
-        errors:
+        shops:
           type: array
           items:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Venue not found.
+            $ref: '#/components/schemas/Shop_4'
     UnprocessableEntityError:
       required:
       - errors
@@ -1931,6 +1887,50 @@ components:
           - work
           - other
           example: home
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

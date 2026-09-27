@@ -61,7 +61,7 @@ modified: '2026-07-05'
 specificationVersion: '0.23'
 apis:
 - aid: tablecheck:tablecheck-availability-api
-  name: TableCheck availability API
+  name: TableCheck Availability API
   description: The availability API from TableCheck — 1 operation(s) for availability.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -101,7 +101,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-blockages-api
-  name: TableCheck blockages API
+  name: TableCheck Blockages API
   description: The blockages API from TableCheck — 2 operation(s) for blockages.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -139,7 +139,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-calendar-api
-  name: TableCheck calendar API
+  name: TableCheck Calendar API
   description: The calendar API from TableCheck — 1 operation(s) for calendar.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -179,7 +179,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-customers-api
-  name: TableCheck customers API
+  name: TableCheck Customers API
   description: The customers API from TableCheck — 3 operation(s) for customers.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -219,7 +219,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-franchises-api
-  name: TableCheck franchises API
+  name: TableCheck Franchises API
   description: The franchises API from TableCheck — 2 operation(s) for franchises.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -259,7 +259,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-membership-programs-api
-  name: TableCheck membership_programs API
+  name: TableCheck Membership Programs API
   description: The membership_programs API from TableCheck — 2 operation(s) for membership_programs.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -298,7 +298,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-memberships-api
-  name: TableCheck memberships API
+  name: TableCheck Memberships API
   description: The memberships API from TableCheck — 2 operation(s) for memberships.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -338,7 +338,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-pos-journals-api
-  name: TableCheck pos_journals API
+  name: TableCheck Pos Journals API
   description: The pos_journals API from TableCheck — 3 operation(s) for pos_journals.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -377,7 +377,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-reservation-flags-api
-  name: TableCheck reservation_flags API
+  name: TableCheck Reservation Flags API
   description: The reservation_flags API from TableCheck — 2 operation(s) for reservation_flags.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -416,7 +416,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-reservations-api
-  name: TableCheck reservations API
+  name: TableCheck Reservations API
   description: The reservations API from TableCheck — 6 operation(s) for reservations.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -456,7 +456,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-shops-api
-  name: TableCheck shops API
+  name: TableCheck Shops API
   description: The shops API from TableCheck — 3 operation(s) for shops.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -496,7 +496,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-table-status-api
-  name: TableCheck table_status API
+  name: TableCheck Table Status API
   description: The table_status API from TableCheck — 2 operation(s) for table_status.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -535,7 +535,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-tables-api
-  name: TableCheck tables API
+  name: TableCheck Tables API
   description: The tables API from TableCheck — 1 operation(s) for tables.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
@@ -575,7 +575,7 @@ apis:
   - type: APIReference
     url: https://api.tablecheck.com/api/site/v1/docs
 - aid: tablecheck:tablecheck-timetable-api
-  name: TableCheck timetable API
+  name: TableCheck Timetable API
   description: The timetable API from TableCheck — 1 operation(s) for timetable.
   humanURL: https://tablecheck.atlassian.net/wiki/spaces/API/pages/46301274/Availability+v1
   baseURL: https://api.tablecheck.com/api/availability/v1
