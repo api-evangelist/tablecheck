@@ -121,89 +121,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  schemas:
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    MembershipProgramsListResponse:
-      type: object
-      properties:
-        membership_programs:
-          type: array
-          items:
-            $ref: '#/components/schemas/MembershipProgram'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    MembershipProgram:
-      properties:
-        id:
-          description: The database ID of the Membership Program.
-          type: string
-          format: bson-id
-        name:
-          type: string
-        point_multiplier:
-          description: Point multiplier
-          type: string
-        franchise:
-          $ref: '#/components/schemas/FranchiseEmbed'
-        membership_tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MembershipTierEmbed'
-    FranchiseEmbed:
-      type: object
-      properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
-    MembershipProgramShowResponse:
-      type: object
-      properties:
-        membership_program:
-          $ref: '#/components/schemas/MembershipProgram'
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
-    MembershipTierEmbed:
-      properties:
-        id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        name:
-          type: string
-        code:
-          type: string
-        tier:
-          type: number
   parameters:
     IncludeFields:
       name: include_fields
@@ -221,6 +138,89 @@ components:
       schema:
         type: string
       example: created_at,socials.username
+  schemas:
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    MembershipProgram:
+      properties:
+        id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        point_multiplier:
+          description: Point multiplier
+          type: string
+        franchise:
+          $ref: '#/components/schemas/FranchiseEmbed'
+        membership_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipTierEmbed'
+    MembershipTierEmbed:
+      properties:
+        id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        code:
+          type: string
+        tier:
+          type: number
+    MembershipProgramsListResponse:
+      type: object
+      properties:
+        membership_programs:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipProgram'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: '#/components/schemas/MembershipProgram'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

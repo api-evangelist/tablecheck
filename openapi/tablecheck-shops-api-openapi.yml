@@ -322,6 +322,23 @@ paths:
     - url: https://api.tablecheck.com/api/pos/v1/
       description: Production (uses live data)
 components:
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   schemas:
     Shop:
       required:
@@ -489,44 +506,6 @@ components:
           type: string
           format: url
           description: (Deprecated) Please use "images" field instead.
-    ImageEmbed:
-      properties:
-        id:
-          description: The database ID of the Image.
-          type: string
-          format: bson-id
-        url:
-          description: The URL of the image as a large size JPEG.
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
-        dimensions:
-          description: The dimensions of the image as a large size JPEG.
-          type: array
-          example:
-          - 1280
-          - 960
-        content_type:
-          description: The MIME content type of the image.
-          type: string
-          example: image/jpeg
-        fingerprint:
-          description: The fingerprint of the image used for deduplication.
-          type: string
-          example: af6515a29e04ac61d4379a3181140647
-        image_variants:
-          description: A list of image size variants scaled to different sizes. Note that "original" size variant may be a format other than JPEG.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageVariant'
-        tags:
-          description: Identifier tags associated with the image.
-          type: array
-          example:
-          - primary
-        created_at:
-          type: string
-          format: date-time
     ImageVariant:
       properties:
         variant:
@@ -571,6 +550,84 @@ components:
           type: number
           format: integer
           example: 742
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    ImageEmbed:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          description: The dimensions of the image as a large size JPEG.
+          type: array
+          example:
+          - 1280
+          - 960
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes. Note that "original" size variant may be a format other than JPEG.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariant'
+        tags:
+          description: Identifier tags associated with the image.
+          type: array
+          example:
+          - primary
+        created_at:
+          type: string
+          format: date-time
+    ShopShowResponse:
+      type: object
+      properties:
+        shop:
+          $ref: '#/components/schemas/Shop'
+    Address:
+      properties:
+        street:
+          type: string
+          example: 2-14-5 Ginza
+        street2:
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          type: string
+          example: Chuo-ku
+        region:
+          type: string
+          example: Tokyo
+        postal_code:
+          type: string
+          example: 104-0061
+        country:
+          type: string
+          example: JP
     ServiceCategory:
       properties:
         id:
@@ -606,46 +663,6 @@ components:
             $ref: '#/components/schemas/ShopAvailability'
         pagination:
           $ref: '#/components/schemas/PaginationData'
-    ShopShowResponse:
-      type: object
-      properties:
-        shop:
-          $ref: '#/components/schemas/Shop'
-    Address:
-      properties:
-        street:
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          type: string
-          example: Chuo-ku
-        region:
-          type: string
-          example: Tokyo
-        postal_code:
-          type: string
-          example: 104-0061
-        country:
-          type: string
-          example: JP
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
     ShopAvailability:
       properties:
         id:
@@ -818,6 +835,49 @@ components:
         availability_cached_at:
           type: string
           format: date-time
+    PaginationData_2:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ServiceCategory_2:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: 5e281bfa7df93f63e0000003
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: This is the sushi bar at our restaurant.
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image_url:
+          description: Image of the service category.
+          type: string
+          format: url
+    ShopsListResponse_2:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_2'
+        pagination:
+          $ref: '#/components/schemas/PaginationData_2'
     Shop_2:
       required:
       - id
@@ -1003,7 +1063,67 @@ components:
           $ref: '#/components/schemas/Address'
         alt_address:
           $ref: '#/components/schemas/Address'
-    PaginationData_2:
+    ImageVariants:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    PaginationData_3:
       type: object
       properties:
         page:
@@ -1014,7 +1134,51 @@ components:
           type: number
           format: integer
           example: 100
-    ServiceCategory_2:
+    ImageEmbed_2:
+      properties:
+        id:
+          description: The database ID of the Image.
+          type: string
+          format: bson-id
+          example: 65dcd5f935288116d268b45b
+        url:
+          description: The URL of the image as a large size JPEG.
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        content_type:
+          description: The MIME content type of the image.
+          type: string
+          example: image/jpeg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 200
+          - 200
+        fingerprint:
+          description: The fingerprint of the image used for deduplication.
+          type: string
+          example: af6515a29e04ac61d4379a3181140647
+        image_variants:
+          description: A list of image size variants scaled to different sizes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariants'
+        tags:
+          description: Not used.
+          type: array
+          example: []
+        created_at:
+          type: string
+          format: date-time
+    ShopShowResponse_2:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Shop_3'
+    ServiceCategory_3:
       properties:
         id:
           description: Identifer for the ServiceCategory object.
@@ -1033,19 +1197,18 @@ components:
           example:
             en: This is the sushi bar at our restaurant.
             ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
-        image_url:
-          description: Image of the service category.
-          type: string
-          format: url
-    ShopsListResponse_2:
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: '#/components/schemas/ImageEmbed_2'
+    ShopsListResponse_3:
       type: object
       properties:
         shops:
           type: array
           items:
-            $ref: '#/components/schemas/Shop_2'
+            $ref: '#/components/schemas/Shop_3'
         pagination:
-          $ref: '#/components/schemas/PaginationData_2'
+          $ref: '#/components/schemas/PaginationData_3'
     Shop_3:
       properties:
         id:
@@ -1092,152 +1255,347 @@ components:
             $ref: '#/components/schemas/ServiceCategory_3'
         franchise:
           $ref: '#/components/schemas/FranchiseEmbed'
-    ImageEmbed_2:
+    ShopNotFoundError:
+      required:
+      - errors
       properties:
-        id:
-          description: The database ID of the Image.
-          type: string
-          format: bson-id
-          example: 65dcd5f935288116d268b45b
-        url:
-          description: The URL of the image as a large size JPEG.
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
-        content_type:
-          description: The MIME content type of the image.
-          type: string
-          example: image/jpeg
-        dimensions:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/ImageDimensions'
-          example:
-          - 200
-          - 200
-        fingerprint:
-          description: The fingerprint of the image used for deduplication.
-          type: string
-          example: af6515a29e04ac61d4379a3181140647
-        image_variants:
-          description: A list of image size variants scaled to different sizes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageVariants'
-        tags:
-          description: Not used.
-          type: array
-          example: []
-        created_at:
-          type: string
-          format: date-time
-    PaginationData_3:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    Address_2:
       type: object
+      required:
+      - street
+      - city
+      - postal_code
+      - country
+      - tag
       properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    ServiceCategory_3:
-      properties:
-        id:
-          description: Identifer for the ServiceCategory object.
+        street:
+          description: The first street line of the address.
           type: string
-          format: bson-id
-          example: 5e281bfa7df93f63e0000003
-        name_translations:
-          description: The name of the ServiceCategory.
-          type: array
-          example:
-            en: Sushi Bar
-            ja: 寿司バー
-        description_translations:
-          description: The description of the ServiceCategory.
-          type: array
-          example:
-            en: This is the sushi bar at our restaurant.
-            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
-        image:
-          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
-          $ref: '#/components/schemas/ImageEmbed_2'
-    ImageDimensions:
-      properties:
-        large:
-          type: array
-          items:
-            type: number
-          example:
-          - 1280
-          - 704
-        medium:
-          type: array
-          items:
-            type: number
-          example:
-          - 800
-          - 440
-        small:
-          type: array
-          items:
-            type: number
-          example:
-          - 256
-          - 141
-    ShopsListResponse_3:
+          example: 2-14-5 Ginza
+        street2:
+          description: The second street line of the address. Often this is a building name.
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          description: The city or town of the address.
+          type: string
+          example: Chuo-ku
+        region:
+          description: The administrative region of the address, which could be a state, province, or prefecture.
+          type: string
+          example: Tokyo
+        postal_code:
+          description: The postal code or ZIP code of the address.
+          type: string
+          example: 104-0061
+        country:
+          description: The country code of the address (ISO 3166-1 alpha-2).
+          type: string
+          enum:
+          - AD
+          - AE
+          - AF
+          - AG
+          - AI
+          - AL
+          - AM
+          - AO
+          - AQ
+          - AR
+          - AS
+          - AT
+          - AU
+          - AW
+          - AX
+          - AZ
+          - BA
+          - BB
+          - BD
+          - BE
+          - BF
+          - BG
+          - BH
+          - BI
+          - BJ
+          - BL
+          - BM
+          - BN
+          - BO
+          - BQ
+          - BR
+          - BS
+          - BT
+          - BV
+          - BW
+          - BY
+          - BZ
+          - CA
+          - CC
+          - CD
+          - CF
+          - CG
+          - CH
+          - CI
+          - CK
+          - CL
+          - CM
+          - CN
+          - CO
+          - CR
+          - CU
+          - CV
+          - CW
+          - CX
+          - CY
+          - CZ
+          - DE
+          - DJ
+          - DK
+          - DM
+          - DO
+          - DZ
+          - EC
+          - EE
+          - EG
+          - EH
+          - ER
+          - ES
+          - ET
+          - FI
+          - FJ
+          - FK
+          - FM
+          - FO
+          - FR
+          - GA
+          - GB
+          - GD
+          - GE
+          - GF
+          - GG
+          - GH
+          - GI
+          - GL
+          - GM
+          - GN
+          - GP
+          - GQ
+          - GR
+          - GS
+          - GT
+          - GU
+          - GW
+          - GY
+          - HK
+          - HM
+          - HN
+          - HR
+          - HT
+          - HU
+          - ID
+          - IE
+          - IL
+          - IM
+          - IN
+          - IO
+          - IQ
+          - IR
+          - IS
+          - IT
+          - JE
+          - JM
+          - JO
+          - JP
+          - KE
+          - KG
+          - KH
+          - KI
+          - KM
+          - KN
+          - KP
+          - KR
+          - KW
+          - KY
+          - KZ
+          - LA
+          - LB
+          - LC
+          - LI
+          - LK
+          - LR
+          - LS
+          - LT
+          - LU
+          - LV
+          - LY
+          - MA
+          - MC
+          - MD
+          - ME
+          - MF
+          - MG
+          - MH
+          - MK
+          - ML
+          - MM
+          - MN
+          - MO
+          - MP
+          - MQ
+          - MR
+          - MS
+          - MT
+          - MU
+          - MV
+          - MW
+          - MX
+          - MY
+          - MZ
+          - NA
+          - NC
+          - NE
+          - NF
+          - NG
+          - NI
+          - NL
+          - 'NO'
+          - NP
+          - NR
+          - NU
+          - NZ
+          - OM
+          - PA
+          - PE
+          - PF
+          - PG
+          - PH
+          - PK
+          - PL
+          - PM
+          - PN
+          - PR
+          - PS
+          - PT
+          - PW
+          - PY
+          - QA
+          - RE
+          - RO
+          - RS
+          - RU
+          - RW
+          - SA
+          - SB
+          - SC
+          - SD
+          - SE
+          - SG
+          - SH
+          - SI
+          - SJ
+          - SK
+          - SL
+          - SM
+          - SN
+          - SO
+          - SR
+          - SS
+          - ST
+          - SV
+          - SX
+          - SY
+          - SZ
+          - TC
+          - TD
+          - TF
+          - TG
+          - TH
+          - TJ
+          - TK
+          - TL
+          - TM
+          - TN
+          - TO
+          - TR
+          - TT
+          - TV
+          - TW
+          - TZ
+          - UA
+          - UG
+          - UM
+          - US
+          - UY
+          - UZ
+          - VA
+          - VC
+          - VE
+          - VG
+          - VI
+          - VN
+          - VU
+          - WF
+          - WS
+          - YE
+          - YT
+          - ZA
+          - ZM
+          - ZW
+          example: JP
+        tag:
+          description: A tag or label for the address.
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - other
+          example: home
+    ShopsListResponse_4:
       type: object
       properties:
         shops:
           type: array
           items:
-            $ref: '#/components/schemas/Shop_3'
-        pagination:
-          $ref: '#/components/schemas/PaginationData_3'
-    ShopShowResponse_2:
-      type: object
+            $ref: '#/components/schemas/Shop_4'
+    ForbiddenError:
+      required:
+      - errors
       properties:
-        reservation:
-          $ref: '#/components/schemas/Shop_3'
-    FranchiseEmbed:
-      type: object
-      properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
-    ImageVariants:
-      properties:
-        variant:
-          type: string
-          enum:
-          - original
-          - large
-          - medium
-          - small
-        url:
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
-        dimensions:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/ImageDimensions'
-          example:
-          - 2000
-          - 1500
-        content_type:
-          description: The MIME content type of the image variant.
-          type: string
-          example: image/jpeg
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
     Shop_4:
       type: object
       properties:
@@ -1573,364 +1931,6 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
-    ShopsListResponse_4:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shop_4'
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
-    Address_2:
-      type: object
-      required:
-      - street
-      - city
-      - postal_code
-      - country
-      - tag
-      properties:
-        street:
-          description: The first street line of the address.
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          description: The second street line of the address. Often this is a building name.
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          description: The city or town of the address.
-          type: string
-          example: Chuo-ku
-        region:
-          description: The administrative region of the address, which could be a state, province, or prefecture.
-          type: string
-          example: Tokyo
-        postal_code:
-          description: The postal code or ZIP code of the address.
-          type: string
-          example: 104-0061
-        country:
-          description: The country code of the address (ISO 3166-1 alpha-2).
-          type: string
-          enum:
-          - AD
-          - AE
-          - AF
-          - AG
-          - AI
-          - AL
-          - AM
-          - AO
-          - AQ
-          - AR
-          - AS
-          - AT
-          - AU
-          - AW
-          - AX
-          - AZ
-          - BA
-          - BB
-          - BD
-          - BE
-          - BF
-          - BG
-          - BH
-          - BI
-          - BJ
-          - BL
-          - BM
-          - BN
-          - BO
-          - BQ
-          - BR
-          - BS
-          - BT
-          - BV
-          - BW
-          - BY
-          - BZ
-          - CA
-          - CC
-          - CD
-          - CF
-          - CG
-          - CH
-          - CI
-          - CK
-          - CL
-          - CM
-          - CN
-          - CO
-          - CR
-          - CU
-          - CV
-          - CW
-          - CX
-          - CY
-          - CZ
-          - DE
-          - DJ
-          - DK
-          - DM
-          - DO
-          - DZ
-          - EC
-          - EE
-          - EG
-          - EH
-          - ER
-          - ES
-          - ET
-          - FI
-          - FJ
-          - FK
-          - FM
-          - FO
-          - FR
-          - GA
-          - GB
-          - GD
-          - GE
-          - GF
-          - GG
-          - GH
-          - GI
-          - GL
-          - GM
-          - GN
-          - GP
-          - GQ
-          - GR
-          - GS
-          - GT
-          - GU
-          - GW
-          - GY
-          - HK
-          - HM
-          - HN
-          - HR
-          - HT
-          - HU
-          - ID
-          - IE
-          - IL
-          - IM
-          - IN
-          - IO
-          - IQ
-          - IR
-          - IS
-          - IT
-          - JE
-          - JM
-          - JO
-          - JP
-          - KE
-          - KG
-          - KH
-          - KI
-          - KM
-          - KN
-          - KP
-          - KR
-          - KW
-          - KY
-          - KZ
-          - LA
-          - LB
-          - LC
-          - LI
-          - LK
-          - LR
-          - LS
-          - LT
-          - LU
-          - LV
-          - LY
-          - MA
-          - MC
-          - MD
-          - ME
-          - MF
-          - MG
-          - MH
-          - MK
-          - ML
-          - MM
-          - MN
-          - MO
-          - MP
-          - MQ
-          - MR
-          - MS
-          - MT
-          - MU
-          - MV
-          - MW
-          - MX
-          - MY
-          - MZ
-          - NA
-          - NC
-          - NE
-          - NF
-          - NG
-          - NI
-          - NL
-          - 'NO'
-          - NP
-          - NR
-          - NU
-          - NZ
-          - OM
-          - PA
-          - PE
-          - PF
-          - PG
-          - PH
-          - PK
-          - PL
-          - PM
-          - PN
-          - PR
-          - PS
-          - PT
-          - PW
-          - PY
-          - QA
-          - RE
-          - RO
-          - RS
-          - RU
-          - RW
-          - SA
-          - SB
-          - SC
-          - SD
-          - SE
-          - SG
-          - SH
-          - SI
-          - SJ
-          - SK
-          - SL
-          - SM
-          - SN
-          - SO
-          - SR
-          - SS
-          - ST
-          - SV
-          - SX
-          - SY
-          - SZ
-          - TC
-          - TD
-          - TF
-          - TG
-          - TH
-          - TJ
-          - TK
-          - TL
-          - TM
-          - TN
-          - TO
-          - TR
-          - TT
-          - TV
-          - TW
-          - TZ
-          - UA
-          - UG
-          - UM
-          - US
-          - UY
-          - UZ
-          - VA
-          - VC
-          - VE
-          - VG
-          - VI
-          - VN
-          - VU
-          - WF
-          - WS
-          - YE
-          - YT
-          - ZA
-          - ZM
-          - ZW
-          example: JP
-        tag:
-          description: A tag or label for the address.
-          type: string
-          enum:
-          - none
-          - home
-          - work
-          - other
-          example: home
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-    ShopNotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Venue not found.
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
