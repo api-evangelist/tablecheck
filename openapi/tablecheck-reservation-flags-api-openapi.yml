@@ -164,21 +164,17 @@ paths:
       description: Production (uses live data)
 components:
   schemas:
-    UnprocessableEntityError:
-      required:
-      - errors
+    PaginationData:
+      type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
     BadRequestError:
       required:
       - errors
@@ -194,41 +190,6 @@ components:
               message:
                 type: string
                 example: Required parameter is missing.
-    ReservationFlagsListResponse:
-      type: object
-      properties:
-        reservation_flags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationFlag'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    NotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: resource_not_found
-              message:
-                type: string
-                example: Resource not found.
     ForbiddenError:
       required:
       - errors
@@ -244,6 +205,30 @@ components:
               message:
                 type: string
                 example: Your API key is invalid.
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    ReservationFlagsListResponse:
+      type: object
+      properties:
+        reservation_flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationFlag'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
     ReservationFlag:
       type: object
       properties:
@@ -298,6 +283,21 @@ components:
       properties:
         reservation:
           $ref: '#/components/schemas/ReservationFlag'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

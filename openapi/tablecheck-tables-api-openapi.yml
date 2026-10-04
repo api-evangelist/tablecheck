@@ -56,21 +56,6 @@ paths:
                 - $ref: '#/components/schemas/ShopNotFoundError'
 components:
   schemas:
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
     ShopNotFoundError:
       required:
       - errors
@@ -83,13 +68,6 @@ components:
               message:
                 type: string
                 example: Venue not found.
-    TablesListResponse:
-      type: object
-      properties:
-        tables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Table'
     ForbiddenError:
       required:
       - errors
@@ -182,6 +160,28 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
+    TablesListResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

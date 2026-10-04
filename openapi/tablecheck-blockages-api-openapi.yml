@@ -203,6 +203,88 @@ paths:
                 $ref: '#/components/schemas/UnprocessableEntityError'
 components:
   schemas:
+    BlockageUpdateParams:
+      type: object
+      properties:
+        start_at:
+          description: The time at which the party wishes to arrive. If blank, will be unchanged.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:15:00Z'
+        expires_at:
+          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
+          type: string
+          format: date-time
+          example: '2020-01-29T19:20:00Z'
+        expiry_ttl:
+          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
+          type: number
+          format: integer
+          example: 300
+        pax:
+          description: The party size. If blank, will be unchanged.
+          type: number
+          format: integer
+          example: 3
+        seat_types:
+          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - counter
+            - outside
+            - curtain
+            - private
+            - tatami
+        smoking:
+          description: The customer's smoking preference.
+          type: string
+          enum:
+          - none
+          - 'true'
+          - 'false'
+        service_category_id:
+          description: The Service Category ID of the table.
+          type: string
+          format: bson-id
+          example: 63ac197654cef38651ccd896
+    BlockageShowResponse:
+      type: object
+      properties:
+        blockage:
+          $ref: '#/components/schemas/Blockage'
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
     Blockage:
       type: object
       properties:
@@ -373,118 +455,6 @@ components:
           type: string
           format: bson-id
           example: 63ac197654cef38651ccd896
-    BlockageShowResponse:
-      type: object
-      properties:
-        blockage:
-          $ref: '#/components/schemas/Blockage'
-    BadRequestError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: parameter_missing
-              message:
-                type: string
-                example: Required parameter is missing.
-    BlockageUpdateParams:
-      type: object
-      properties:
-        start_at:
-          description: The time at which the party wishes to arrive. If blank, will be unchanged.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:15:00Z'
-        expires_at:
-          description: The timestamp for when the blockage will expire. The valid range is from 59 seconds into the future until 1 day and 1 second ahead of the current time.
-          type: string
-          format: date-time
-          example: '2020-01-29T19:20:00Z'
-        expiry_ttl:
-          description: The time-to-live in seconds for the Blockage (from 59 to 86401). If expires_at is set, this will be ignored.
-          type: number
-          format: integer
-          example: 300
-        pax:
-          description: The party size. If blank, will be unchanged.
-          type: number
-          format: integer
-          example: 3
-        seat_types:
-          description: Indicates what kind of seating the customer would like to receive, e.g. table, counter, private room, etc. (array or comma-separated list)
-          type: array
-          items:
-            type: string
-            enum:
-            - open
-            - counter
-            - outside
-            - curtain
-            - private
-            - tatami
-        smoking:
-          description: The customer's smoking preference.
-          type: string
-          enum:
-          - none
-          - 'true'
-          - 'false'
-        service_category_id:
-          description: The Service Category ID of the table.
-          type: string
-          format: bson-id
-          example: 63ac197654cef38651ccd896
-    NotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: resource_not_found
-              message:
-                type: string
-                example: Resource not found.
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
     ExpiredError:
       required:
       - errors
@@ -500,6 +470,36 @@ components:
               message:
                 type: string
                 example: Resource has expired.
+    NotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: resource_not_found
+              message:
+                type: string
+                example: Resource not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
   parameters:
     IncludeFields:
       name: include_fields

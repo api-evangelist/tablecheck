@@ -322,212 +322,7 @@ paths:
     - url: https://api.tablecheck.com/api/pos/v1/
       description: Production (uses live data)
 components:
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
   schemas:
-    Shop:
-      required:
-      - id
-      - name_translations
-      properties:
-        id:
-          type: string
-          format: bson-id
-          example: ae5355ca1fd337ed5d6893e2
-        slug:
-          type: string
-          example: my-shop-slug
-        name_translations:
-          type: object
-          format: translations
-          example:
-            en: Paris Cafe
-            fr: Café de Paris
-            ja: カフェデパリ
-        alt_name:
-          type: string
-          example: カフェデパリ
-        location_name_translations:
-          type: object
-          format: translations
-          example:
-            en: Hotel Kyoto
-            fr: Hôtel Kyoto
-            ja: ホテル京都
-        alt_location_name:
-          type: string
-          example: ホテルキョウト
-        latitude:
-          type: number
-          format: float
-          example: 35.0116
-        longitude:
-          type: number
-          format: float
-          example: 135.768
-        google_place_ref:
-          type: string
-          example: ChIJ39ZjD-GLGGARBF5Aq0l7iPE
-        google_place_cid:
-          description: DEPRECATED. Use google_place_ref instead.
-          type: string
-          example: Use-google_place_ref-instead
-        country:
-          type: string
-          format: country
-          example: JP
-        currency:
-          type: string
-          format: currency
-          example: JPY
-        time_zone:
-          type: string
-          format: time-zone
-          example: Asia/Tokyo
-        phone:
-          type: string
-          format: phone-e164
-          example: '+81355650112'
-        phone_natl:
-          type: string
-          format: phone-national
-          example: 03-5565-0112
-        homepage_url:
-          type: string
-          format: url
-          example: https://www.myrestaurant.com/ja
-        homepage_url_translations:
-          type: object
-          format: translations
-          example:
-            en: https://www.myrestaurant.com/en
-            ja: https://www.myrestaurant.com/ja
-        tablecheck_shop_url:
-          type: string
-          format: url
-          example: https://www.tablecheck.com/my-shop-slug
-        tablecheck_booking_url:
-          type: string
-          format: url
-          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
-        tags:
-          type: array
-          example:
-          - outdoor
-          - quiet
-          items:
-            type: string
-        cuisines:
-          type: array
-          example:
-          - sushi
-          - tempura
-          items:
-            type: string
-        budget_lunch:
-          type: string
-          format: float
-          example: '10000.0'
-        budget_dinner:
-          type: string
-          format: float
-          example: '10000.0'
-        updated_at:
-          type: string
-          format: date-time
-        content_title_translations:
-          type: object
-          format: translations
-          description: Short catchphrase for the restaurant.
-          example:
-            en: A truly great restuarant
-            ja: 本当にすごいレストランです
-        content_body_translations:
-          type: object
-          format: translations
-          description: Paragraph of content about the restaurant.
-          example:
-            en: I love this restuarant!
-            ja: このレストラン大好きです！
-        show_pax_senior:
-          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
-          type: boolean
-        show_pax_child:
-          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
-          type: boolean
-        show_pax_baby:
-          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
-          type: boolean
-        pax_senior_age_min:
-          description: The minimum age for a person to be considered a senior.
-          type: number
-          format: integer
-          example: 65
-        pax_child_age_max:
-          description: The maximum age for a person to be considered a child.
-          type: number
-          format: integer
-          example: 12
-        pax_baby_age_max:
-          description: The maximum age for a person to be considered a baby.
-          type: number
-          format: integer
-          example: 5
-        service_categories:
-          description: The ServiceCategories of the Shop.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceCategory'
-        address:
-          $ref: '#/components/schemas/Address'
-        alt_address:
-          $ref: '#/components/schemas/Address'
-        images:
-          description: List of images depicting the shop. Consistent sizing of images is not guaranteed.
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageEmbed'
-        image_url:
-          type: string
-          format: url
-          description: (Deprecated) Please use "images" field instead.
-    ImageVariant:
-      properties:
-        variant:
-          type: string
-          enum:
-          - original
-          - large
-          - medium
-          - small
-        url:
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
-        dimensions:
-          type: array
-          example:
-          - 2000
-          - 1500
-        content_type:
-          description: The MIME content type of the image variant.
-          type: string
-          example: image/jpeg
     PaginationData:
       type: object
       properties:
@@ -550,21 +345,6 @@ components:
           type: number
           format: integer
           example: 742
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
     ImageEmbed:
       properties:
         id:
@@ -603,66 +383,6 @@ components:
         created_at:
           type: string
           format: date-time
-    ShopShowResponse:
-      type: object
-      properties:
-        shop:
-          $ref: '#/components/schemas/Shop'
-    Address:
-      properties:
-        street:
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          type: string
-          example: Chuo-ku
-        region:
-          type: string
-          example: Tokyo
-        postal_code:
-          type: string
-          example: 104-0061
-        country:
-          type: string
-          example: JP
-    ServiceCategory:
-      properties:
-        id:
-          description: Identifer for the ServiceCategory object.
-          type: string
-          format: bson-id
-          example: 5e281bfa7df93f63e0000003
-        name_translations:
-          description: The name of the ServiceCategory.
-          type: array
-          example:
-            en: Sushi Bar
-            ja: 寿司バー
-        description_translations:
-          description: The description of the ServiceCategory.
-          type: array
-          example:
-            en: This is the sushi bar at our restaurant.
-            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
-        image:
-          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
-          $ref: '#/components/schemas/ImageEmbed'
-        image_url:
-          description: (Deprecated) Please use "image" field instead.
-          type: string
-          format: url
-    ShopsListResponse:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShopAvailability'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
     ShopAvailability:
       properties:
         id:
@@ -835,6 +555,269 @@ components:
         availability_cached_at:
           type: string
           format: date-time
+    Shop:
+      required:
+      - id
+      - name_translations
+      properties:
+        id:
+          type: string
+          format: bson-id
+          example: ae5355ca1fd337ed5d6893e2
+        slug:
+          type: string
+          example: my-shop-slug
+        name_translations:
+          type: object
+          format: translations
+          example:
+            en: Paris Cafe
+            fr: Café de Paris
+            ja: カフェデパリ
+        alt_name:
+          type: string
+          example: カフェデパリ
+        location_name_translations:
+          type: object
+          format: translations
+          example:
+            en: Hotel Kyoto
+            fr: Hôtel Kyoto
+            ja: ホテル京都
+        alt_location_name:
+          type: string
+          example: ホテルキョウト
+        latitude:
+          type: number
+          format: float
+          example: 35.0116
+        longitude:
+          type: number
+          format: float
+          example: 135.768
+        google_place_ref:
+          type: string
+          example: ChIJ39ZjD-GLGGARBF5Aq0l7iPE
+        google_place_cid:
+          description: DEPRECATED. Use google_place_ref instead.
+          type: string
+          example: Use-google_place_ref-instead
+        country:
+          type: string
+          format: country
+          example: JP
+        currency:
+          type: string
+          format: currency
+          example: JPY
+        time_zone:
+          type: string
+          format: time-zone
+          example: Asia/Tokyo
+        phone:
+          type: string
+          format: phone-e164
+          example: '+81355650112'
+        phone_natl:
+          type: string
+          format: phone-national
+          example: 03-5565-0112
+        homepage_url:
+          type: string
+          format: url
+          example: https://www.myrestaurant.com/ja
+        homepage_url_translations:
+          type: object
+          format: translations
+          example:
+            en: https://www.myrestaurant.com/en
+            ja: https://www.myrestaurant.com/ja
+        tablecheck_shop_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/my-shop-slug
+        tablecheck_booking_url:
+          type: string
+          format: url
+          example: https://www.tablecheck.com/shops/my-shop-slug/reserve
+        tags:
+          type: array
+          example:
+          - outdoor
+          - quiet
+          items:
+            type: string
+        cuisines:
+          type: array
+          example:
+          - sushi
+          - tempura
+          items:
+            type: string
+        budget_lunch:
+          type: string
+          format: float
+          example: '10000.0'
+        budget_dinner:
+          type: string
+          format: float
+          example: '10000.0'
+        updated_at:
+          type: string
+          format: date-time
+        content_title_translations:
+          type: object
+          format: translations
+          description: Short catchphrase for the restaurant.
+          example:
+            en: A truly great restuarant
+            ja: 本当にすごいレストランです
+        content_body_translations:
+          type: object
+          format: translations
+          description: Paragraph of content about the restaurant.
+          example:
+            en: I love this restuarant!
+            ja: このレストラン大好きです！
+        show_pax_senior:
+          description: Whether the venue prefers to allow users to select the "pax_senior" field (number of elderly persons in the party.)
+          type: boolean
+        show_pax_child:
+          description: Whether the venue prefers to allow users to select the "pax_child" field (number of children in the party.)
+          type: boolean
+        show_pax_baby:
+          description: Whether the venue prefers to allow users to select the "pax_baby" field (number of babies in the party.)
+          type: boolean
+        pax_senior_age_min:
+          description: The minimum age for a person to be considered a senior.
+          type: number
+          format: integer
+          example: 65
+        pax_child_age_max:
+          description: The maximum age for a person to be considered a child.
+          type: number
+          format: integer
+          example: 12
+        pax_baby_age_max:
+          description: The maximum age for a person to be considered a baby.
+          type: number
+          format: integer
+          example: 5
+        service_categories:
+          description: The ServiceCategories of the Shop.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCategory'
+        address:
+          $ref: '#/components/schemas/Address'
+        alt_address:
+          $ref: '#/components/schemas/Address'
+        images:
+          description: List of images depicting the shop. Consistent sizing of images is not guaranteed.
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageEmbed'
+        image_url:
+          type: string
+          format: url
+          description: (Deprecated) Please use "images" field instead.
+    ServiceCategory:
+      properties:
+        id:
+          description: Identifer for the ServiceCategory object.
+          type: string
+          format: bson-id
+          example: 5e281bfa7df93f63e0000003
+        name_translations:
+          description: The name of the ServiceCategory.
+          type: array
+          example:
+            en: Sushi Bar
+            ja: 寿司バー
+        description_translations:
+          description: The description of the ServiceCategory.
+          type: array
+          example:
+            en: This is the sushi bar at our restaurant.
+            ja: 当店の特設寿司バーで至福のひとときをお楽しみください。
+        image:
+          description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
+          $ref: '#/components/schemas/ImageEmbed'
+        image_url:
+          description: (Deprecated) Please use "image" field instead.
+          type: string
+          format: url
+    ShopShowResponse:
+      type: object
+      properties:
+        shop:
+          $ref: '#/components/schemas/Shop'
+    Address:
+      properties:
+        street:
+          type: string
+          example: 2-14-5 Ginza
+        street2:
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          type: string
+          example: Chuo-ku
+        region:
+          type: string
+          example: Tokyo
+        postal_code:
+          type: string
+          example: 104-0061
+        country:
+          type: string
+          example: JP
+    ImageVariant:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/original/image.jpg
+        dimensions:
+          type: array
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+    ShopsListResponse:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopAvailability'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
     PaginationData_2:
       type: object
       properties:
@@ -1063,66 +1046,6 @@ components:
           $ref: '#/components/schemas/Address'
         alt_address:
           $ref: '#/components/schemas/Address'
-    ImageVariants:
-      properties:
-        variant:
-          type: string
-          enum:
-          - original
-          - large
-          - medium
-          - small
-        url:
-          type: string
-          format: url
-          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
-        dimensions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageDimensions'
-          example:
-          - 2000
-          - 1500
-        content_type:
-          description: The MIME content type of the image variant.
-          type: string
-          example: image/jpeg
-    ImageDimensions:
-      properties:
-        large:
-          type: array
-          items:
-            type: number
-          example:
-          - 1280
-          - 704
-        medium:
-          type: array
-          items:
-            type: number
-          example:
-          - 800
-          - 440
-        small:
-          type: array
-          items:
-            type: number
-          example:
-          - 256
-          - 141
-    FranchiseEmbed:
-      type: object
-      properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
     PaginationData_3:
       type: object
       properties:
@@ -1173,11 +1096,43 @@ components:
         created_at:
           type: string
           format: date-time
-    ShopShowResponse_2:
+    FranchiseEmbed:
       type: object
       properties:
-        reservation:
-          $ref: '#/components/schemas/Shop_3'
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
+    ImageVariants:
+      properties:
+        variant:
+          type: string
+          enum:
+          - original
+          - large
+          - medium
+          - small
+        url:
+          type: string
+          format: url
+          example: https://cdn1.tablecheck.com/images/92a543f5085ea8b1ffbe000a/images/xl/image.jpg
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageDimensions'
+          example:
+          - 2000
+          - 1500
+        content_type:
+          description: The MIME content type of the image variant.
+          type: string
+          example: image/jpeg
     ServiceCategory_3:
       properties:
         id:
@@ -1200,6 +1155,34 @@ components:
         image:
           description: Image depicting the ServiceCategory. Consistent sizing of images is not guaranteed.
           $ref: '#/components/schemas/ImageEmbed_2'
+    ShopShowResponse_2:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Shop_3'
+    ImageDimensions:
+      properties:
+        large:
+          type: array
+          items:
+            type: number
+          example:
+          - 1280
+          - 704
+        medium:
+          type: array
+          items:
+            type: number
+          example:
+          - 800
+          - 440
+        small:
+          type: array
+          items:
+            type: number
+          example:
+          - 256
+          - 141
     ShopsListResponse_3:
       type: object
       properties:
@@ -1255,347 +1238,6 @@ components:
             $ref: '#/components/schemas/ServiceCategory_3'
         franchise:
           $ref: '#/components/schemas/FranchiseEmbed'
-    ShopNotFoundError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Venue not found.
-    Address_2:
-      type: object
-      required:
-      - street
-      - city
-      - postal_code
-      - country
-      - tag
-      properties:
-        street:
-          description: The first street line of the address.
-          type: string
-          example: 2-14-5 Ginza
-        street2:
-          description: The second street line of the address. Often this is a building name.
-          type: string
-          example: Dai-27 Chuo Bldg 4F
-        city:
-          description: The city or town of the address.
-          type: string
-          example: Chuo-ku
-        region:
-          description: The administrative region of the address, which could be a state, province, or prefecture.
-          type: string
-          example: Tokyo
-        postal_code:
-          description: The postal code or ZIP code of the address.
-          type: string
-          example: 104-0061
-        country:
-          description: The country code of the address (ISO 3166-1 alpha-2).
-          type: string
-          enum:
-          - AD
-          - AE
-          - AF
-          - AG
-          - AI
-          - AL
-          - AM
-          - AO
-          - AQ
-          - AR
-          - AS
-          - AT
-          - AU
-          - AW
-          - AX
-          - AZ
-          - BA
-          - BB
-          - BD
-          - BE
-          - BF
-          - BG
-          - BH
-          - BI
-          - BJ
-          - BL
-          - BM
-          - BN
-          - BO
-          - BQ
-          - BR
-          - BS
-          - BT
-          - BV
-          - BW
-          - BY
-          - BZ
-          - CA
-          - CC
-          - CD
-          - CF
-          - CG
-          - CH
-          - CI
-          - CK
-          - CL
-          - CM
-          - CN
-          - CO
-          - CR
-          - CU
-          - CV
-          - CW
-          - CX
-          - CY
-          - CZ
-          - DE
-          - DJ
-          - DK
-          - DM
-          - DO
-          - DZ
-          - EC
-          - EE
-          - EG
-          - EH
-          - ER
-          - ES
-          - ET
-          - FI
-          - FJ
-          - FK
-          - FM
-          - FO
-          - FR
-          - GA
-          - GB
-          - GD
-          - GE
-          - GF
-          - GG
-          - GH
-          - GI
-          - GL
-          - GM
-          - GN
-          - GP
-          - GQ
-          - GR
-          - GS
-          - GT
-          - GU
-          - GW
-          - GY
-          - HK
-          - HM
-          - HN
-          - HR
-          - HT
-          - HU
-          - ID
-          - IE
-          - IL
-          - IM
-          - IN
-          - IO
-          - IQ
-          - IR
-          - IS
-          - IT
-          - JE
-          - JM
-          - JO
-          - JP
-          - KE
-          - KG
-          - KH
-          - KI
-          - KM
-          - KN
-          - KP
-          - KR
-          - KW
-          - KY
-          - KZ
-          - LA
-          - LB
-          - LC
-          - LI
-          - LK
-          - LR
-          - LS
-          - LT
-          - LU
-          - LV
-          - LY
-          - MA
-          - MC
-          - MD
-          - ME
-          - MF
-          - MG
-          - MH
-          - MK
-          - ML
-          - MM
-          - MN
-          - MO
-          - MP
-          - MQ
-          - MR
-          - MS
-          - MT
-          - MU
-          - MV
-          - MW
-          - MX
-          - MY
-          - MZ
-          - NA
-          - NC
-          - NE
-          - NF
-          - NG
-          - NI
-          - NL
-          - 'NO'
-          - NP
-          - NR
-          - NU
-          - NZ
-          - OM
-          - PA
-          - PE
-          - PF
-          - PG
-          - PH
-          - PK
-          - PL
-          - PM
-          - PN
-          - PR
-          - PS
-          - PT
-          - PW
-          - PY
-          - QA
-          - RE
-          - RO
-          - RS
-          - RU
-          - RW
-          - SA
-          - SB
-          - SC
-          - SD
-          - SE
-          - SG
-          - SH
-          - SI
-          - SJ
-          - SK
-          - SL
-          - SM
-          - SN
-          - SO
-          - SR
-          - SS
-          - ST
-          - SV
-          - SX
-          - SY
-          - SZ
-          - TC
-          - TD
-          - TF
-          - TG
-          - TH
-          - TJ
-          - TK
-          - TL
-          - TM
-          - TN
-          - TO
-          - TR
-          - TT
-          - TV
-          - TW
-          - TZ
-          - UA
-          - UG
-          - UM
-          - US
-          - UY
-          - UZ
-          - VA
-          - VC
-          - VE
-          - VG
-          - VI
-          - VN
-          - VU
-          - WF
-          - WS
-          - YE
-          - YT
-          - ZA
-          - ZM
-          - ZW
-          example: JP
-        tag:
-          description: A tag or label for the address.
-          type: string
-          enum:
-          - none
-          - home
-          - work
-          - other
-          example: home
-    ShopsListResponse_4:
-      type: object
-      properties:
-        shops:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shop_4'
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
     Shop_4:
       type: object
       properties:
@@ -1931,6 +1573,364 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
+    ShopNotFoundError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Venue not found.
+    Address_2:
+      type: object
+      required:
+      - street
+      - city
+      - postal_code
+      - country
+      - tag
+      properties:
+        street:
+          description: The first street line of the address.
+          type: string
+          example: 2-14-5 Ginza
+        street2:
+          description: The second street line of the address. Often this is a building name.
+          type: string
+          example: Dai-27 Chuo Bldg 4F
+        city:
+          description: The city or town of the address.
+          type: string
+          example: Chuo-ku
+        region:
+          description: The administrative region of the address, which could be a state, province, or prefecture.
+          type: string
+          example: Tokyo
+        postal_code:
+          description: The postal code or ZIP code of the address.
+          type: string
+          example: 104-0061
+        country:
+          description: The country code of the address (ISO 3166-1 alpha-2).
+          type: string
+          enum:
+          - AD
+          - AE
+          - AF
+          - AG
+          - AI
+          - AL
+          - AM
+          - AO
+          - AQ
+          - AR
+          - AS
+          - AT
+          - AU
+          - AW
+          - AX
+          - AZ
+          - BA
+          - BB
+          - BD
+          - BE
+          - BF
+          - BG
+          - BH
+          - BI
+          - BJ
+          - BL
+          - BM
+          - BN
+          - BO
+          - BQ
+          - BR
+          - BS
+          - BT
+          - BV
+          - BW
+          - BY
+          - BZ
+          - CA
+          - CC
+          - CD
+          - CF
+          - CG
+          - CH
+          - CI
+          - CK
+          - CL
+          - CM
+          - CN
+          - CO
+          - CR
+          - CU
+          - CV
+          - CW
+          - CX
+          - CY
+          - CZ
+          - DE
+          - DJ
+          - DK
+          - DM
+          - DO
+          - DZ
+          - EC
+          - EE
+          - EG
+          - EH
+          - ER
+          - ES
+          - ET
+          - FI
+          - FJ
+          - FK
+          - FM
+          - FO
+          - FR
+          - GA
+          - GB
+          - GD
+          - GE
+          - GF
+          - GG
+          - GH
+          - GI
+          - GL
+          - GM
+          - GN
+          - GP
+          - GQ
+          - GR
+          - GS
+          - GT
+          - GU
+          - GW
+          - GY
+          - HK
+          - HM
+          - HN
+          - HR
+          - HT
+          - HU
+          - ID
+          - IE
+          - IL
+          - IM
+          - IN
+          - IO
+          - IQ
+          - IR
+          - IS
+          - IT
+          - JE
+          - JM
+          - JO
+          - JP
+          - KE
+          - KG
+          - KH
+          - KI
+          - KM
+          - KN
+          - KP
+          - KR
+          - KW
+          - KY
+          - KZ
+          - LA
+          - LB
+          - LC
+          - LI
+          - LK
+          - LR
+          - LS
+          - LT
+          - LU
+          - LV
+          - LY
+          - MA
+          - MC
+          - MD
+          - ME
+          - MF
+          - MG
+          - MH
+          - MK
+          - ML
+          - MM
+          - MN
+          - MO
+          - MP
+          - MQ
+          - MR
+          - MS
+          - MT
+          - MU
+          - MV
+          - MW
+          - MX
+          - MY
+          - MZ
+          - NA
+          - NC
+          - NE
+          - NF
+          - NG
+          - NI
+          - NL
+          - 'NO'
+          - NP
+          - NR
+          - NU
+          - NZ
+          - OM
+          - PA
+          - PE
+          - PF
+          - PG
+          - PH
+          - PK
+          - PL
+          - PM
+          - PN
+          - PR
+          - PS
+          - PT
+          - PW
+          - PY
+          - QA
+          - RE
+          - RO
+          - RS
+          - RU
+          - RW
+          - SA
+          - SB
+          - SC
+          - SD
+          - SE
+          - SG
+          - SH
+          - SI
+          - SJ
+          - SK
+          - SL
+          - SM
+          - SN
+          - SO
+          - SR
+          - SS
+          - ST
+          - SV
+          - SX
+          - SY
+          - SZ
+          - TC
+          - TD
+          - TF
+          - TG
+          - TH
+          - TJ
+          - TK
+          - TL
+          - TM
+          - TN
+          - TO
+          - TR
+          - TT
+          - TV
+          - TW
+          - TZ
+          - UA
+          - UG
+          - UM
+          - US
+          - UY
+          - UZ
+          - VA
+          - VC
+          - VE
+          - VG
+          - VI
+          - VN
+          - VU
+          - WF
+          - WS
+          - YE
+          - YT
+          - ZA
+          - ZM
+          - ZW
+          example: JP
+        tag:
+          description: A tag or label for the address.
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - other
+          example: home
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    ShopsListResponse_4:
+      type: object
+      properties:
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shop_4'
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

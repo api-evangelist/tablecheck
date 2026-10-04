@@ -100,24 +100,47 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
   schemas:
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    FranchiseShowResponse:
+      type: object
+      properties:
+        reservation:
+          $ref: '#/components/schemas/Franchise'
+    FranchisesListResponse:
+      type: object
+      properties:
+        franchises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Franchise'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
     Franchise:
       properties:
         id:
@@ -140,46 +163,23 @@ components:
           description: The web ID of the Shop.
           type: string
           example: rival-slug
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
-    FranchisesListResponse:
-      type: object
-      properties:
-        franchises:
-          type: array
-          items:
-            $ref: '#/components/schemas/Franchise'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
-    FranchiseShowResponse:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Franchise'
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

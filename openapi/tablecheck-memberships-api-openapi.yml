@@ -230,82 +230,66 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   schemas:
-    Emails:
-      description: '[PII] A list of Email objects.'
-      type: array
-      items:
-        $ref: '#/components/schemas/Email'
-    PaginationData:
+    MembershipShowResponse:
       type: object
       properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    Error:
-      required:
-      - errors
+        reservation:
+          $ref: '#/components/schemas/Membership'
+    MembershipUpdateParams:
+      type: object
       properties:
-        errors:
+        code:
+          description: Membership code
+          type: string
+        customer_ids:
+          description: Ids of the customers using this membership
           type: array
           items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
-    Phone:
-      type: object
-      required:
-      - number
-      properties:
-        id:
-          description: The database ID of the Phone object.
+            type: string
+            format: bson-id
+        membership_program_id:
+          description: The database ID of the Membership Program.
           type: string
           format: bson-id
-        number:
-          description: '[PII] The phone number in E.164 format.'
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
           type: string
-          format: phone-e164
-        tag:
+          format: bson-id
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+        status:
+          description: The status of the membership.
           type: string
           enum:
-          - none
-          - home
-          - work
-          - mobile
-          - assistant
-          - fax
-          - other
-        created_at:
+          - active
+          - pre_enrollment
+          - cancelled
+        start_date:
           type: string
-          format: date-time
-        updated_at:
+          format: date
+        expiry_date:
           type: string
-          format: date-time
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
+          format: date
     Membership:
       properties:
         id:
@@ -343,6 +327,27 @@ components:
         updated_at:
           type: string
           format: date-time
+    EmailAddressesList:
+      description: '[PII] Email addresses as an array of strings.'
+      type: array
+      items:
+        type: string
+        format: email
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
     Address:
       type: object
       example:
@@ -390,8 +395,16 @@ components:
         updated_at:
           type: string
           format: date-time
-    MembershipUpdateParams:
+    Phones:
+      description: '[PII] A list of Phone objects.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Phone'
+    MembershipCreateParams:
       type: object
+      required:
+      - membership_program_id
+      - code
       properties:
         code:
           description: Membership code
@@ -427,26 +440,6 @@ components:
         expiry_date:
           type: string
           format: date
-    EmailAddressesList:
-      description: '[PII] Email addresses as an array of strings.'
-      type: array
-      items:
-        type: string
-        format: email
-    MembershipShowResponse:
-      type: object
-      properties:
-        reservation:
-          $ref: '#/components/schemas/Membership'
-    MembershipsListResponse:
-      type: object
-      properties:
-        reservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Membership'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
     BadRequestError:
       required:
       - errors
@@ -462,12 +455,113 @@ components:
               message:
                 type: string
                 example: Required parameter is missing.
-    PhoneNumbersList:
-      description: '[PII] A list of phone numbers as strings.'
+    MembershipEmbed:
+      type: object
+      properties:
+        id:
+          description: The database ID of the Membership.
+          type: string
+          format: bson-id
+        code:
+          type: string
+        membership_program_id:
+          description: The database ID of the Membership Program.
+          type: string
+          format: bson-id
+        membership_program_name:
+          type: string
+        membership_tier_id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        membership_tier_name:
+          type: string
+        status:
+          description: The status of the membership.
+          type: string
+          enum:
+          - active
+          - pre_enrollment
+          - cancelled
+        points:
+          description: The number of points available on the membership.
+          type: number
+          format: integer
+    Phone:
+      type: object
+      required:
+      - number
+      properties:
+        id:
+          description: The database ID of the Phone object.
+          type: string
+          format: bson-id
+        number:
+          description: '[PII] The phone number in E.164 format.'
+          type: string
+          format: phone-e164
+        tag:
+          type: string
+          enum:
+          - none
+          - home
+          - work
+          - mobile
+          - assistant
+          - fax
+          - other
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PaginationData:
+      type: object
+      properties:
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    Emails:
+      description: '[PII] A list of Email objects.'
       type: array
       items:
-        type: string
-        format: phone-e164
+        $ref: '#/components/schemas/Email'
+    Error:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
     Email:
       type: object
       required:
@@ -494,11 +588,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    Phones:
-      description: '[PII] A list of Phone objects.'
-      type: array
-      items:
-        $ref: '#/components/schemas/Phone'
     Social:
       type: object
       required:
@@ -534,38 +623,12 @@ components:
         updated_at:
           type: string
           format: date-time
-    MembershipEmbed:
-      type: object
-      properties:
-        id:
-          description: The database ID of the Membership.
-          type: string
-          format: bson-id
-        code:
-          type: string
-        membership_program_id:
-          description: The database ID of the Membership Program.
-          type: string
-          format: bson-id
-        membership_program_name:
-          type: string
-        membership_tier_id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        membership_tier_name:
-          type: string
-        status:
-          description: The status of the membership.
-          type: string
-          enum:
-          - active
-          - pre_enrollment
-          - cancelled
-        points:
-          description: The number of points available on the membership.
-          type: number
-          format: integer
+    PhoneNumbersList:
+      description: '[PII] A list of phone numbers as strings.'
+      type: array
+      items:
+        type: string
+        format: phone-e164
     CustomerEmbed:
       type: object
       properties:
@@ -726,6 +789,15 @@ components:
           items:
             type: string
             format: bson-id
+    MembershipsListResponse:
+      type: object
+      properties:
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
     Event:
       type: object
       example:
@@ -769,78 +841,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    MembershipCreateParams:
-      type: object
-      required:
-      - membership_program_id
-      - code
-      properties:
-        code:
-          description: Membership code
-          type: string
-        customer_ids:
-          description: Ids of the customers using this membership
-          type: array
-          items:
-            type: string
-            format: bson-id
-        membership_program_id:
-          description: The database ID of the Membership Program.
-          type: string
-          format: bson-id
-        membership_tier_id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        points:
-          description: The number of points available on the membership.
-          type: number
-          format: integer
-        status:
-          description: The status of the membership.
-          type: string
-          enum:
-          - active
-          - pre_enrollment
-          - cancelled
-        start_date:
-          type: string
-          format: date
-        expiry_date:
-          type: string
-          format: date
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
-  parameters:
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

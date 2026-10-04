@@ -121,37 +121,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    IncludeFields:
-      name: include_fields
-      in: query
-      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: id,name,addresses.city
-    ExcludeFields:
-      name: exclude_fields
-      in: query
-      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
-      required: false
-      schema:
-        type: string
-      example: created_at,socials.username
   schemas:
-    FranchiseEmbed:
-      type: object
-      properties:
-        id:
-          description: ID of the Franchise.
-          type: string
-          format: bson-id
-          example: a33e5357ed5d6893e5ca1fd2
-        name:
-          description: The name of the Franchise.
-          type: object
-          format: string
-          example: The Midtown Hotel
     PaginationData:
       type: object
       properties:
@@ -163,21 +133,6 @@ components:
           type: number
           format: integer
           example: 100
-    Error:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_found
-              message:
-                type: string
-                example: Item not found
     MembershipProgram:
       properties:
         id:
@@ -195,6 +150,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MembershipTierEmbed'
+    FranchiseEmbed:
+      type: object
+      properties:
+        id:
+          description: ID of the Franchise.
+          type: string
+          format: bson-id
+          example: a33e5357ed5d6893e5ca1fd2
+        name:
+          description: The name of the Franchise.
+          type: object
+          format: string
+          example: The Midtown Hotel
     MembershipTierEmbed:
       properties:
         id:
@@ -207,6 +175,11 @@ components:
           type: string
         tier:
           type: number
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: '#/components/schemas/MembershipProgram'
     MembershipProgramsListResponse:
       type: object
       properties:
@@ -216,11 +189,38 @@ components:
             $ref: '#/components/schemas/MembershipProgram'
         pagination:
           $ref: '#/components/schemas/PaginationData'
-    MembershipProgramShowResponse:
-      type: object
+    Error:
+      required:
+      - errors
       properties:
-        membership_program:
-          $ref: '#/components/schemas/MembershipProgram'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_found
+              message:
+                type: string
+                example: Item not found
+  parameters:
+    IncludeFields:
+      name: include_fields
+      in: query
+      description: Comma-separated list of fields to include in the response (whitelist). If specified, only the listed fields will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: id,name,addresses.city
+    ExcludeFields:
+      name: exclude_fields
+      in: query
+      description: Comma-separated list of fields to exclude from the response (blacklist). All fields except the given ones will be returned. Supports dot notation for nested fields.
+      required: false
+      schema:
+        type: string
+      example: created_at,socials.username
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
