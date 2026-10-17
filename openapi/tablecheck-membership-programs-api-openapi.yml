@@ -163,23 +163,6 @@ components:
           type: object
           format: string
           example: The Midtown Hotel
-    MembershipTierEmbed:
-      properties:
-        id:
-          description: The database ID of the Membership Tier.
-          type: string
-          format: bson-id
-        name:
-          type: string
-        code:
-          type: string
-        tier:
-          type: number
-    MembershipProgramShowResponse:
-      type: object
-      properties:
-        membership_program:
-          $ref: '#/components/schemas/MembershipProgram'
     MembershipProgramsListResponse:
       type: object
       properties:
@@ -189,6 +172,11 @@ components:
             $ref: '#/components/schemas/MembershipProgram'
         pagination:
           $ref: '#/components/schemas/PaginationData'
+    MembershipProgramShowResponse:
+      type: object
+      properties:
+        membership_program:
+          $ref: '#/components/schemas/MembershipProgram'
     Error:
       required:
       - errors
@@ -204,6 +192,18 @@ components:
               message:
                 type: string
                 example: Item not found
+    MembershipTierEmbed:
+      properties:
+        id:
+          description: The database ID of the Membership Tier.
+          type: string
+          format: bson-id
+        name:
+          type: string
+        code:
+          type: string
+        tier:
+          type: number
   parameters:
     IncludeFields:
       name: include_fields

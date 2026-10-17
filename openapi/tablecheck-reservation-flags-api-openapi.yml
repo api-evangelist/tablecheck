@@ -164,47 +164,6 @@ paths:
       description: Production (uses live data)
 components:
   schemas:
-    PaginationData:
-      type: object
-      properties:
-        page:
-          type: number
-          format: integer
-          example: 3
-        per_page:
-          type: number
-          format: integer
-          example: 100
-    BadRequestError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: parameter_missing
-              message:
-                type: string
-                example: Required parameter is missing.
-    ForbiddenError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: api_key_invalid
-              message:
-                type: string
-                example: Your API key is invalid.
     NotFoundError:
       required:
       - errors
@@ -220,15 +179,11 @@ components:
               message:
                 type: string
                 example: Resource not found.
-    ReservationFlagsListResponse:
+    ReservationFlagShowResponse:
       type: object
       properties:
-        reservation_flags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationFlag'
-        pagination:
-          $ref: '#/components/schemas/PaginationData'
+        reservation:
+          $ref: '#/components/schemas/ReservationFlag'
     ReservationFlag:
       type: object
       properties:
@@ -278,11 +233,26 @@ components:
           type: string
           format: date-time
           example: '2020-01-29T19:12:34Z'
-    ReservationFlagShowResponse:
+    PaginationData:
       type: object
       properties:
-        reservation:
-          $ref: '#/components/schemas/ReservationFlag'
+        page:
+          type: number
+          format: integer
+          example: 3
+        per_page:
+          type: number
+          format: integer
+          example: 100
+    ReservationFlagsListResponse:
+      type: object
+      properties:
+        reservation_flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationFlag'
+        pagination:
+          $ref: '#/components/schemas/PaginationData'
     UnprocessableEntityError:
       required:
       - errors
@@ -298,6 +268,36 @@ components:
               message:
                 type: string
                 example: Could not create resource due to missing parameter.
+    ForbiddenError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: api_key_invalid
+              message:
+                type: string
+                example: Your API key is invalid.
+    BadRequestError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: parameter_missing
+              message:
+                type: string
+                example: Required parameter is missing.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

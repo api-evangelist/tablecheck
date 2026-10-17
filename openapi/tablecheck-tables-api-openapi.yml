@@ -68,6 +68,21 @@ components:
               message:
                 type: string
                 example: Venue not found.
+    UnprocessableEntityError:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: not_created
+              message:
+                type: string
+                example: Could not create resource due to missing parameter.
     ForbiddenError:
       required:
       - errors
@@ -167,21 +182,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Table'
-    UnprocessableEntityError:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                example: not_created
-              message:
-                type: string
-                example: Could not create resource due to missing parameter.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
